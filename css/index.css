@@ -1,0 +1,99 @@
+@import './../src/runtime/components/AdminToolbar/Palette/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.vuepal-admin-toolbar {
+  @apply relative top-0 left-0 w-full bg-white shadow-md font-sans;
+  z-index: 900001;
+  background: white;
+  font-size: 14px;
+  --vuepal-environment-color: #ccc;
+  border-top: 6px solid var(--vuepal-environment-color);
+
+  a {
+    @apply flex px-15 py-10 text-black justify-between items-center hover:bg-slate-100 no-underline whitespace-nowrap;
+    svg {
+      @apply w-[14px] h-[14px];
+    }
+  }
+
+  > ul {
+    @apply flex m-0 list-none p-0;
+    margin-left: min(5vw, 32px);
+    margin-right: min(5vw, 48px);
+    ul {
+      @apply absolute bg-white list-none p-0 min-w-[200px];
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    > li > ul {
+      top: 100%;
+      left: 0;
+
+      > li ul {
+        left: 100%;
+        top: 0;
+      }
+    }
+  }
+  li {
+    position: relative;
+    &:hover {
+      > a {
+        background: #eee;
+      }
+    }
+  }
+}
+
+.vuepal-admin-toolbar-icon {
+  @apply w-18 h-18;
+  background: currentColor;
+  display: inline-block;
+  margin-right: 0.5em;
+  -webkit-mask-position: center center;
+  mask-position: center center;
+  -webkit-mask-size: 17px 17px;
+  mask-size: 17px 17px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.vuepal-admin-toolbar-link {
+  @apply py-18;
+
+  &.vp-is-first {
+    @apply py-20;
+  }
+
+  &[data-route-name='<front>'] {
+    @apply h-full;
+    padding: 0;
+    width: 54px;
+    .vuepal-admin-toolbar-icon {
+      width: 100%;
+      height: 100%;
+      -webkit-mask-size: 28px 28px;
+      mask-size: 28px 28px;
+      mask-position: 14px center;
+      background: var(--vuepal-environment-color);
+    }
+    .vuepal-admin-toolbar-text {
+      display: none;
+    }
+  }
+}
+
+.vuepal-local-tasks > ul {
+  @apply list-none flex gap-15;
+  a {
+    @apply flex items-center py-0 px-16 h-[43px] font-bold no-underline text-[15px] font-sans rounded-full;
+    &.vp-is-active,
+    &:hover {
+      background: #d9e0f9;
+      color: #043cad;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+.vuepal-command-palette {
+  @apply fixed bg-slate-900 z-[99999999999] w-[700px] left-1/2 -translate-x-1/2 rounded;
+  @apply top-70;
+  @apply shadow-2xl;
+  @apply border border-slate-600;
+
+  --vuepal-command-palette-item-height: 46px;
+}
+
+.vuepal-command-palette-input {
+  @apply text-slate-100 relative border-b border-b-slate-700;
+  border-bottom-style: solid;
+
+  svg {
+    @apply fill-current;
+    @apply absolute top-1/2 left-15 -translate-y-1/2 w-20 h-20;
+  }
+
+  input {
+    @apply h-60 appearance-none w-full bg-transparent !outline-none !ring-0;
+    @apply pl-[45px];
+    @apply !border-none;
+    @apply text-lg font-bold;
+    @apply text-white;
+
+    &::placeholder {
+      @apply font-normal text-slate-600;
+    }
+  }
+}
+
+.vuepal-command-palette-results {
+  @apply border-t border-t-slate-800 overflow-auto p-5;
+  height: calc(var(--vuepal-command-palette-item-height) * 10);
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-slate-900;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-slate-500 border-slate-900 border-3;
+    border-radius: 20px;
+  }
+}
+
+.vuepal-command-palette-item {
+  @apply flex text-slate-400 px-15 py-5 w-full text-left gap-10 items-center rounded border border-transparent bg-transparent;
+  @apply text-base border-solid;
+  min-height: var(--vuepal-command-palette-item-height);
+
+  em {
+    @apply font-bold text-white;
+    @apply not-italic;
+  }
+
+  &.vp-is-focused {
+    @apply bg-slate-800 border-slate-600 text-white;
+
+    .vuepal-command-icon {
+      @apply text-slate-100;
+    }
+  }
+}
+
+.vuepal-command-icon {
+  @apply w-20 h-20 text-slate-500;
+
+  .vuepal-blokkli-item-icon,
+  .vuepal-icon {
+    @apply w-full h-full;
+    svg {
+      @apply w-full h-full;
+      @apply fill-current;
+    }
+  }
+}

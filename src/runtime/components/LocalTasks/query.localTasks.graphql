@@ -1,0 +1,22 @@
+query localTasks($path: String!) {
+  route(path: $path) {
+    ... on InternalUrl {
+      localTasks {
+        ...localTask
+      }
+    }
+  }
+}
+
+fragment localTask on LocalTask {
+  baseId
+  active
+  title
+  url {
+    __typename
+    path
+    ... on InternalUrl {
+      routeName
+    }
+  }
+}

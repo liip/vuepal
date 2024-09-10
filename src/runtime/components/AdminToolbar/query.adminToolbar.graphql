@@ -1,0 +1,39 @@
+query adminToolbar {
+  activeEnvironment {
+    name
+    bgColor
+    fgColor
+  }
+  menu: entityById(entityType: MENU, id: "admin") {
+    ... on Menu {
+      id
+      links {
+        ...adminMenuLink
+        subtree {
+          ...adminMenuLink
+          subtree {
+            ...adminMenuLink
+            subtree {
+              ...adminMenuLink
+              subtree {
+                ...adminMenuLink
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment adminMenuLink on MenuLinkTreeElement {
+  link {
+    label
+    url {
+      path
+      ... on InternalUrl {
+        routeName
+      }
+    }
+  }
+}

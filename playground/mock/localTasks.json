@@ -1,0 +1,58 @@
+{
+  "data": {
+    "route": {
+      "localTasks": [
+        {
+          "baseId": "entity.node.canonical",
+          "active": true,
+          "title": "View",
+          "url": {
+            "__typename": "EntityCanonicalUrl",
+            "path": "/en",
+            "routeName": "entity.node.canonical"
+          }
+        },
+        {
+          "baseId": "entity.node.edit_form",
+          "active": false,
+          "title": "Edit",
+          "url": {
+            "__typename": "DefaultEntityUrl",
+            "path": "/en/node/6728/edit",
+            "routeName": "entity.node.edit_form"
+          }
+        },
+        {
+          "baseId": "entity.node.delete_form",
+          "active": false,
+          "title": "Delete",
+          "url": {
+            "__typename": "DefaultEntityUrl",
+            "path": "/en/node/6728/delete",
+            "routeName": "entity.node.delete_form"
+          }
+        },
+        {
+          "baseId": "entity.node.version_history",
+          "active": false,
+          "title": "Revisions",
+          "url": {
+            "__typename": "DefaultEntityUrl",
+            "path": "/en/node/6728/revisions",
+            "routeName": "entity.node.version_history"
+          }
+        },
+        {
+          "baseId": "content_translation.local_tasks:entity.node.content_translation_overview",
+          "active": false,
+          "title": "Translate",
+          "url": {
+            "__typename": "DefaultEntityUrl",
+            "path": "/en/node/6728/translations",
+            "routeName": "entity.node.content_translation_overview"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+fragment useDrupalRoute on Query {
+  route(path: $path) {
+    path
+    ...drupalRouteInternal
+    ...drupalRouteRedirect
+    ...drupalRouteEntity
+  }
+}
+
+fragment drupalRouteInternal on InternalUrl {
+  metatags {
+    ...metatag
+  }
+  routeName
+}
+
+fragment drupalRouteEntity on EntityUrl {
+  metatags {
+    ...metatag
+  }
+  drupalRouteEntity: entity {
+    uuid
+    entityBundle
+    entityTypeId
+    id
+  }
+  routeName
+}
+
+fragment metatag on Metatag {
+  id
+  tag
+  attributes {
+    ...metatagAttribute
+  }
+}
+
+fragment metatagAttribute on MetatagAttribute {
+  key
+  value
+}
+
+fragment drupalRouteRedirect on RedirectUrl {
+  redirect {
+    statusCode
+  }
+}
