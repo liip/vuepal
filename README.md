@@ -62,7 +62,7 @@ export default defineNuxtConfig({
 ```
 
 The admin toolbar component fetches the Drupal administration menu and displays it in your frontend application.
-![toolbar.png](/screenshots/toolbar.png)
+![toolbar.png](https://github.com/liip/vuepal/blob/main/screenshots/toolbar.png)
 
 ### Usage
 
@@ -102,7 +102,7 @@ export default defineNuxtConfig({
 ```
 
 The local tasks component fetches the local tasks of a Drupal page and displays them in your frontend application.
-![localtasks.png](/screenshots/localtasks.png)
+![localtasks.png](https://github.com/liip/vuepal/blob/main/screenshots/localtasks.png)
 
 ```vue
 
