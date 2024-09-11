@@ -1,6 +1,6 @@
 {
   "name": "vuepal",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Nuxt+Vue Drupal Integration",
   "license": "MIT",
   "type": "module",
