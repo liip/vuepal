@@ -38,7 +38,7 @@ const kind = computed<VideoSourcePlatform | undefined>(() => {
   if (props.url.toLowerCase().includes('vimeo')) {
     return VideoSourcePlatform.VIMEO
   }
-  return ''
+  return undefined
 })
 
 const videoId = computed(() => {
