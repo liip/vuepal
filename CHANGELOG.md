@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.5
+
+[compare changes](https://github.com/liip/vuepal/compare/v2.5.4...v2.5.5)
+
+### 🩹 Fixes
+
+- Typescript issue resolved. ([7ad769b](https://github.com/liip/vuepal/commit/7ad769b))
+
+### ❤️ Contributors
+
+- Ayalon <info@ayalon.ch>
+
 ## v2.5.4
 
 [compare changes](https://github.com/liip/vuepal/compare/v2.5.3...v2.5.4)
