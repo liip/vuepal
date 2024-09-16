@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.4
+
+[compare changes](https://github.com/liip/vuepal/compare/v2.5.3...v2.5.4)
+
+### 🩹 Fixes
+
+- Remove unwanted styles ([cf99c13](https://github.com/liip/vuepal/commit/cf99c13))
+
+### ❤️ Contributors
+
+- Ayalon <info@ayalon.ch>
+
 ## v2.5.3
 
 [compare changes](https://github.com/liip/vuepal/compare/v2.5.2...v2.5.3)
