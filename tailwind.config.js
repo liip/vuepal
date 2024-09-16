@@ -5,7 +5,7 @@ module.exports = {
     preflight: false,
     container: false,
   },
-  content: ['./src/runtime/components/**/*.{vue,ts,js}'],
+  content: [], // This is important, else unwanted styles will leak.
   theme: {
     extend: {
       transitionTimingFunction: {
