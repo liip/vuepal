@@ -1,6 +1,6 @@
 import type { SerializableHead, Link } from '@unhead/vue'
 import type { HookResult } from '@nuxt/schema'
-import type { UseDrupalRouteQuery } from './graphqlTypeMock'
+import type { UseDrupalRouteFragment } from '#graphql-operations'
 import { buildDrupalMetatags } from './../buildDrupalMetatags'
 import {
   useNuxtApp,
@@ -78,12 +78,9 @@ type UseDrupalRoute<T> = {
 }
 
 type UseDrupalRouteQueryInput =
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | UseDrupalRouteQuery<any>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | ComputedRef<UseDrupalRouteQuery<any> | undefined | null>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  | Ref<UseDrupalRouteQuery<any> | undefined | null>
+  | UseDrupalRouteFragment
+  | ComputedRef<UseDrupalRouteFragment | undefined | null>
+  | Ref<UseDrupalRouteFragment | undefined | null>
   | undefined
   | null
 
@@ -116,7 +113,7 @@ export async function useDrupalRoute<T extends object = object>(
 ): Promise<UseDrupalRoute<T | undefined>> {
   const app = useNuxtApp()
 
-  const query = computed<UseDrupalRouteQuery<T> | undefined | null>(() => {
+  const query = computed<UseDrupalRouteFragment | undefined | null>(() => {
     if (!queryInput) {
       return
     }
@@ -130,25 +127,43 @@ export async function useDrupalRoute<T extends object = object>(
     }
   })
 
-  const metatags = computed(() =>
-    buildDrupalMetatags(query.value?.route?.metatags),
-  )
+  const metatags = computed<DrupalRouteMetatags>(() => {
+    const route = query.value?.route
+    if (route && 'metatags' in route) {
+      return buildDrupalMetatags(route.metatags)
+    }
+    return { link: [], meta: [], title: '', schema: '' }
+  })
 
   useHead(metatags)
 
-  const drupalRoute = computed<DrupalRoute>(() => ({
-    name: query.value?.route?.routeName || undefined,
-    entityBundle:
-      query.value?.route?.drupalRouteEntity?.entityBundle || undefined,
-    entityType:
-      query.value?.route?.drupalRouteEntity?.entityTypeId || undefined,
-    entityId: query.value?.route?.drupalRouteEntity?.id || undefined,
-    entityUuid: query.value?.route?.drupalRouteEntity?.uuid || undefined,
-  }))
-
-  const entity = computed<T | undefined>(
-    () => query.value?.route?.entity || undefined,
+  const entity = computed<T | undefined>(() =>
+    query.value?.route &&
+    'entity' in query.value.route &&
+    query.value.route.entity
+      ? (query.value.route.entity as T)
+      : undefined,
   )
+
+  const drupalRoute = computed<DrupalRoute>(() => {
+    const route = query.value?.route
+    if (route && 'drupalRouteEntity' in route && route.drupalRouteEntity) {
+      const entity = route.drupalRouteEntity
+      return {
+        name: route.routeName,
+        entityBundle: entity.entityBundle,
+        entityType: entity.entityTypeId,
+        entityId: entity.id,
+        entityUuid: entity.uuid,
+      }
+    } else if (route && 'routeName' in route) {
+      return {
+        name: route.routeName || undefined,
+      }
+    }
+
+    return {}
+  })
 
   const hookPayload = computed<DrupalRouteHookPayload>(() => ({
     drupalRoute: drupalRoute.value,

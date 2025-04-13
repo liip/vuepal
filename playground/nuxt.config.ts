@@ -1,6 +1,24 @@
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['../src/module', 'nuxt-language-negotiation', '@nuxt/eslint'],
+  modules: [
+    'nuxt-graphql-middleware',
+    '../src/module',
+    'nuxt-language-negotiation',
+    '@nuxt/eslint',
+  ],
+
+  graphqlMiddleware: {
+    // For local development:
+    // Set this to true to update the schema.
+    // Make sure the starterkit app is running.
+    downloadSchema: false,
+    graphqlEndpoint: 'http://starterkit.ddev.site/de/graphql',
+    schemaPath: './../schema.graphql',
+
+    codegenConfig: {
+      skipUnusedFragments: false,
+    },
+  },
 
   imports: {
     autoImport: false,
@@ -50,6 +68,9 @@ export default defineNuxtConfig({
       enabled: true,
       langcodes: ['de', 'en'],
       outputPath: './../drupal/frontend_routing.settings.yml',
+    },
+    drupalRoute: {
+      enabled: true,
     },
   },
 

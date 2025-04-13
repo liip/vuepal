@@ -6,12 +6,17 @@ import {
   addTemplate,
   addTypeTemplate,
   createResolver,
-  resolveFiles,
   type Resolver,
 } from '@nuxt/kit'
+import { isObjectType, isInterfaceType } from 'graphql'
 import { relative } from 'pathe'
 import type { Nuxt, ResolvedNuxtTemplate } from 'nuxt/schema'
 import { fileExists, logger } from '../helpers'
+import { useGraphqlModuleContext } from 'nuxt-graphql-middleware/utils'
+
+type GraphqlModuleContext = NonNullable<
+  ReturnType<typeof useGraphqlModuleContext>
+>
 
 type ModuleHelperResolvers = {
   /**
@@ -65,15 +70,17 @@ export class ModuleHelper {
   private nitroExternals: string[] = []
   private tsPaths: Record<string, string> = {}
 
-  private templateContents: Map<string, string> = new Map()
+  public readonly graphql: GraphqlModuleContext
 
   constructor(
     public nuxt: Nuxt,
     moduleUrl: string,
-    options: { debug?: boolean },
+    options: { debug?: boolean; isModuleBuild: boolean },
   ) {
-    this.isModuleBuild = process.env.PLAYGROUND_MODULE_BUILD === 'true'
+    this.isModuleBuild = options.isModuleBuild
     this.isDebug = !!options.debug
+
+    this.graphql = useGraphqlModuleContext()
 
     // Gather all aliases for each layer.
     const layerAliases = nuxt.options._layers.map((layer) => {
@@ -163,22 +170,6 @@ export class ModuleHelper {
    */
   public toSourceRelative(path: string): string {
     return relative(process.cwd(), path)
-  }
-
-  /**
-   * Get all file paths that match the import patterns.
-   */
-  public getImportPatternFiles(): Promise<string[]> {
-    return resolveFiles(this.nuxt.options.srcDir, this.options.pattern)
-  }
-
-  public matchesImportPattern(filePath: string): boolean {
-    // Use micromatch to match using globs, but also check if the file path
-    // exists as a literal string in the patterns array.
-    return (
-      micromatch.isMatch(filePath, this.options.pattern) ||
-      this.options.pattern.includes(filePath)
-    )
   }
 
   public addAlias(name: string, path: string) {
@@ -310,5 +301,58 @@ export class ModuleHelper {
         logger.info(args[0], ...args.slice(1))
       }
     }
+  }
+
+  public assertGraphqlEntityType(entityType: string): ModuleHelper {
+    return this.assertGraphqlObjectField({ entityType }, entityType)
+  }
+
+  public assertGraphqlEntityBaseField(fieldName: string): ModuleHelper {
+    return this.assertGraphqlObjectField(
+      `Please enable the "${fieldName}" entity base field in your GraphQL schema in Drupal.`,
+      'Entity',
+      fieldName,
+    )
+  }
+
+  public assertGraphqlObjectField(
+    context: { extension: string } | { entityType: string } | string,
+    typeName: string,
+    fieldName?: string,
+  ): ModuleHelper {
+    const message =
+      typeof context === 'string'
+        ? context
+        : 'extension' in context
+          ? `Please enable the "${context.extension}" GraphQL schema extension in Drupal.`
+          : `Please enable the "${context.entityType}" entity type in your GraphQL schema in Drupal.`
+
+    const type = this.graphql.schemaGetType(typeName)
+    if (!type) {
+      throw new Error(
+        `Missing type "${typeName}" in GraphQL schema. ${message}`,
+      )
+    }
+
+    if (fieldName) {
+      if (!isObjectType(type) && !isInterfaceType(type)) {
+        throw new Error('Can only check fields on object or interface types.')
+      }
+      const fields = type.getFields()
+      if (!fields[fieldName]) {
+        throw new Error(
+          `Missing field "${fieldName}" on type "${typeName}". ${message}`,
+        )
+      }
+    }
+
+    return this
+  }
+
+  public addGraphqlFile(fileName: string) {
+    const resolved = this.resolvers.module.resolve(
+      './runtime/graphql/' + fileName,
+    )
+    this.graphql.addImportFile(resolved)
   }
 }

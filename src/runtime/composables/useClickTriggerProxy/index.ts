@@ -1,4 +1,4 @@
-import { isExternal, toRelativeUrl } from './../helpers/url'
+import { isExternal, toRelativeUrl } from './../../helpers/url'
 import { useRouter } from '#imports'
 
 export function useClickTriggerProxy() {

@@ -1,4 +1,4 @@
-import type { Link, Meta } from '@unhead/schema'
+import type { Link, Meta } from '@unhead/vue'
 
 type GraphqlDrupalMetatagAttribute = {
   key: string

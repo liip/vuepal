@@ -10,6 +10,30 @@ export default defineVuepalFeature<{
   description:
     'Provides a component and GraphQL query to display a Drupal Admin Toolbar.',
   setup(helper, options) {
+    helper
+      .assertGraphqlObjectField(
+        {
+          extension: 'environment_indicator',
+        },
+        'Query',
+        'activeEnvironment',
+      )
+      .assertGraphqlObjectField(
+        {
+          extension: 'entity_query',
+        },
+        'Query',
+        'entityById',
+      )
+      .assertGraphqlEntityType('Menu')
+      .assertGraphqlObjectField(
+        {
+          extension: 'menu',
+        },
+        'Menu',
+        'links',
+      )
+
     helper.addTemplate(
       'admin-config',
       () => {
@@ -52,5 +76,6 @@ declare module '#vuepal-build/admin-config' {
     )
 
     helper.addComponent('VuepalAdminToolbar')
+    helper.addGraphqlFile('query.adminToolbar.graphql')
   },
 })

@@ -64,6 +64,7 @@
     "eslint-plugin-prettier": "^5.2.6",
     "happy-dom": "^13.3.8",
     "nuxt": "^3.16.2",
+    "nuxt-graphql-middleware": "^5.0.0-alpha.17",
     "nuxt-language-negotiation": "^1.0.1",
     "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
@@ -72,6 +73,7 @@
     "postcss-nested-import": "^1.3.0",
     "postcss-replace": "^2.0.1",
     "postcss-url": "^10.1.3",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "vue-tsc": "^2.2.8"
   }
 }

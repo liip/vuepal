@@ -1,13 +1,13 @@
 import { defineVuepalAdapter } from './../../src/adapter'
-import { useCurrentLanguage } from '#imports'
+import { useCurrentLanguage, useGraphqlQuery } from '#imports'
 
 export default defineVuepalAdapter(() => {
   return {
     getAdminMenu() {
-      return $fetch('/api/adminMenu').then((v) => v.data || {})
+      return useGraphqlQuery('adminToolbar').then((v) => v.data)
     },
     getLocalTasks() {
-      return $fetch('/api/localTasks').then(
+      return $fetch<any>('/api/localTasks').then(
         (v) => v.data.route.localTasks || [],
       )
     },
