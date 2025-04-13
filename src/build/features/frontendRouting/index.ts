@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import { addTemplate } from '@nuxt/kit'
+import { relative } from 'pathe'
 import type { NuxtPage } from '@nuxt/schema'
 import { defineVuepalFeature } from '../defineFeature'
 import type { FileCache } from '../../classes/FileCache'
@@ -149,8 +150,14 @@ export default defineVuepalFeature<{
   description: '',
   setup(helper, options) {
     helper.addTemplate('page-meta', null, () => {
+      const relativePath = relative(
+        helper.paths.moduleBuildDir,
+        helper.nuxt.options.workspaceDir +
+          '/node_modules/nuxt/dist/pages/runtime/composables',
+      )
+
       return `
-declare module "#app" {
+declare module "${relativePath}" {
   interface PageMeta {
     /**
       * If set to true, this route is considered a "Drupal Frontend Route".
