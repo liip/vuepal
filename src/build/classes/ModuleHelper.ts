@@ -13,6 +13,7 @@ import { relative } from 'pathe'
 import type { Nuxt, ResolvedNuxtTemplate } from 'nuxt/schema'
 import { fileExists, logger } from '../helpers'
 import { useGraphqlModuleContext } from 'nuxt-graphql-middleware/utils'
+import { FileCache } from './FileCache'
 
 type GraphqlModuleContext = NonNullable<
   ReturnType<typeof useGraphqlModuleContext>
@@ -71,6 +72,8 @@ export class ModuleHelper {
   private tsPaths: Record<string, string> = {}
 
   public readonly graphql: GraphqlModuleContext
+
+  public readonly caches: FileCache<unknown>[] = []
 
   constructor(
     public nuxt: Nuxt,
@@ -354,5 +357,15 @@ export class ModuleHelper {
       './runtime/graphql/' + fileName,
     )
     this.graphql.addImportFile(resolved)
+  }
+
+  public createFileCache<T>(): FileCache<T> {
+    const cache = new FileCache<T>()
+    this.caches.push(cache)
+    return cache
+  }
+
+  public clearFilePathCaches(filePath: string) {
+    this.caches.forEach((cache) => cache.clear(filePath))
   }
 }

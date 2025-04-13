@@ -45,3 +45,5 @@ export type VuepalAdapter = {
 }
 
 export type VuepalAdapterFactory = () => VuepalAdapter
+
+export {}

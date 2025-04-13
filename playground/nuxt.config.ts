@@ -25,7 +25,7 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    scanPageMeta: true,
+    scanPageMeta: 'after-resolve',
   },
 
   languageNegotiation: {

@@ -13,5 +13,13 @@ export default defineBuildConfig({
     'webpack-sources',
     'webpack-virtual-modules',
     '@jridgewell/sourcemap-codec',
+    'graphql',
+    'nuxt-graphql-middleware/utils',
+    /#vuepal-build/,
+    /#nuxt-graphql-middleware/,
+    /#graphql-operations/,
   ],
+  replace: {
+    'process.env.PLAYGROUND_MODULE_BUILD': 'undefined',
+  },
 })

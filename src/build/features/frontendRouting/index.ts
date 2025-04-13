@@ -1,9 +1,14 @@
 import fs from 'node:fs'
 import { addTemplate } from '@nuxt/kit'
-import { stringify } from 'yaml'
 import type { NuxtPage } from '@nuxt/schema'
-import { nonNullable } from './../../../runtime/helpers/type'
 import { defineVuepalFeature } from '../defineFeature'
+import type { FileCache } from '../../classes/FileCache'
+import type { ModuleHelper } from '../../classes/ModuleHelper'
+import { logger } from '../../helpers'
+
+function nonNullable<T>(value: T): value is NonNullable<T> {
+  return value !== null && value !== undefined
+}
 
 /**
  * Extracts the language mapping.
@@ -20,97 +25,111 @@ const extractLanguageMapping = (
     return
   }
 
-  try {
-    const jsonString = `{${match.trim().replace(/'/g, '"')}}`
+  const jsonString = `{${match.trim().replace(/'/g, '"')}}`
 
-    const mapping = eval(`(${jsonString})`)
-    if (typeof mapping !== 'object') {
+  const fn = new Function(`return ${jsonString}`)
+  const mapping = fn()
+  if (typeof mapping !== 'object') {
+    return
+  }
+
+  for (const key in mapping) {
+    if (typeof key !== 'string') {
       return
     }
 
-    for (const key in mapping) {
-      if (typeof key !== 'string') {
-        return
-      }
+    const value = mapping[key]
 
-      const value = mapping[key]
+    if (typeof value !== 'string') {
+      return
+    }
+  }
 
-      if (typeof value !== 'string') {
-        return
+  return mapping
+}
+
+type ExtractedPage = {
+  filePath: string
+  isDrupalFrontendRoute: boolean
+  yml?: string
+}
+
+class PageCollector {
+  private cache: FileCache<ExtractedPage>
+  private templateContents = ''
+
+  constructor(
+    helper: ModuleHelper,
+    private langcodes: string[],
+  ) {
+    this.cache = helper.createFileCache()
+  }
+
+  private async handlePage(page: NuxtPage): Promise<ExtractedPage | undefined> {
+    if (!page.file) {
+      return
+    }
+
+    if (!page.name) {
+      return
+    }
+
+    const name = page.name
+
+    const cached = this.cache.get(page.file)
+    if (cached) {
+      return cached
+    }
+
+    const contents = await fs.promises
+      .readFile(page.file)
+      .then((v) => v.toString())
+
+    const extracted: ExtractedPage = {
+      filePath: page.file,
+      isDrupalFrontendRoute: false,
+    }
+
+    if (contents.includes('drupalFrontendRoute')) {
+      extracted.isDrupalFrontendRoute = true
+      try {
+        const languageMapping = extractLanguageMapping(contents)
+        if (languageMapping) {
+          const mapping = Object.entries(languageMapping)
+            .map(([langcode, path]) => {
+              return `      ${langcode}: '${path}'`
+            })
+            .join('\n')
+          extracted.yml = `  ${name}:\n    aliases:\n${mapping}`
+        }
+      } catch (e) {
+        logger.warn(
+          `Failed to extract language mapping in page "${page.file}"`,
+          e,
+        )
       }
     }
 
-    return mapping
-  } catch (e) {
-    console.log('Error in Vuepal:')
-    console.log(e)
-  }
-}
-
-type ExtractedDrupalFrontendRoute = {
-  aliases: Record<string, string>
-  path: string
-  name: string
-}
-
-type DrupalFrontendRouteEntry = {
-  aliases: Record<string, string>
-}
-
-const extractFrontendRouteData = async (
-  page: NuxtPage,
-  isSingleLanguage: boolean,
-): Promise<ExtractedDrupalFrontendRoute | undefined> => {
-  if (!page.file || !page.name) {
-    return
-  }
-  const code = await fs.promises.readFile(page.file).then((v) => v.toString())
-
-  if (!code.includes('drupalFrontendRoute')) {
-    return
+    this.cache.set(page.file, extracted)
+    return extracted
   }
 
-  const aliases = extractLanguageMapping(code)
-  if (!aliases && !isSingleLanguage) {
-    return
-  }
-  return {
-    path: page.path,
-    name: page.name,
-    aliases: aliases || {},
-  }
-}
-
-const generateFrontendRoutesYaml = (
-  pages: NuxtPage[],
-  langcodes: string[],
-): Promise<string> => {
-  const isSingleLanguage = langcodes.length === 1
-  return Promise.all(
-    pages.map((v) => extractFrontendRouteData(v, isSingleLanguage)),
-  ).then((routes) => {
-    const sortedRoutes = routes
-      .filter(nonNullable)
-      .sort((a, b) => a.name.localeCompare(b.name))
-    const keys = sortedRoutes.reduce<Record<string, DrupalFrontendRouteEntry>>(
-      (acc, v) => {
-        const allLangcodes: Record<string, string> = langcodes.reduce<
-          Record<string, string>
-        >((acc, langcode) => {
-          acc[langcode] = v.aliases[langcode] || v.path
-          return acc
-        }, {})
-        acc[v.name] = {
-          aliases: allLangcodes,
-        }
-
-        return acc
-      },
-      {},
+  public async handlePages(pages: NuxtPage[]) {
+    const mapped = await Promise.all(
+      pages.map((page) => this.handlePage(page)),
+    ).then((result) =>
+      result
+        .map((v) => v?.yml)
+        .filter(nonNullable)
+        .sort(),
     )
 
-    return stringify({ keys }, { sortMapEntries: true })
-  })
+    this.templateContents = `keys:\n${mapped.join('\n')}`
+  }
+
+  getTemplateContents(): string {
+    return this.templateContents
+  }
 }
 
 export default defineVuepalFeature<{
@@ -129,24 +148,6 @@ export default defineVuepalFeature<{
   name: 'frontendRouting',
   description: '',
   setup(helper, options) {
-    if (!helper.isModuleBuild && options?.outputPath) {
-      let templateContents = ''
-      const templatePath = helper.resolvers.root.resolve(options.outputPath)
-
-      addTemplate({
-        filename: templatePath,
-        write: true,
-        getContents: (ctx) => {
-          return ''
-        },
-      })
-    }
-
-    // function buildTemplateContents() {
-    //   const pages: NuxtPage[] = ctx.app.pages || []
-    //   return generateFrontendRoutesYaml(pages, options.langcodes)
-    // }
-
     helper.addTemplate('page-meta', null, () => {
       return `
 declare module "#app" {
@@ -155,7 +156,7 @@ declare module "#app" {
       * If set to true, this route is considered a "Drupal Frontend Route".
       * It will generate an entry in the frontend_routing.settings.yml file.
       *
-      * This will make sure that the node connected to this route will always
+      * This will make sure that the node connected to this Nuxt page will always
       * have the paths defined in this component. It will not be possible to
       * override the path in Drupal.
       */
@@ -165,6 +166,37 @@ declare module "#app" {
 
 export {}
 `
+    })
+
+    if (helper.isModuleBuild) {
+      return
+    }
+
+    const outputPath = options?.outputPath
+    const langcodes = options?.langcodes
+    if (!outputPath) {
+      throw new Error(`Missing required option "frontendRouting.outputPath".`)
+    }
+
+    if (!langcodes?.length) {
+      throw new Error(`Missing required option "frontendRouting.langcodes".`)
+    }
+
+    const collector = new PageCollector(helper, langcodes)
+
+    addTemplate({
+      filename: helper.resolvers.root.resolve(options.outputPath),
+      write: true,
+      getContents: () => collector.getTemplateContents(),
+    })
+
+    // This hook is called by Nuxt when any page changes.
+    // During development, the hook is called *after* the builder:watch
+    // event.
+    helper.nuxt.hooks.hook('pages:resolved', async (pages) => {
+      helper.logDebug('frontendRouting: pages:resolved start')
+      await collector.handlePages(pages)
+      helper.logDebug('frontendRouting: pages:resolved done')
     })
   },
 })

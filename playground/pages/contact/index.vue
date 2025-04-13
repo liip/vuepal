@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>This is the contact page, a static node.</h1>
+    <h1>This is the contact page, a static node asdf.</h1>
   </div>
 </template>
 
@@ -9,12 +9,14 @@ import { definePageMeta } from '#imports'
 
 definePageMeta({
   name: 'contact-page',
-  drupalFrontendRoute: true,
+  meta: {
+    drupalFrontendRoute: true,
+  },
   languageMapping: {
     de: '/de/kontakt',
     fr: '/fr/contactez-nous',
     en: '/en/contact-us',
-    it: '/it/contactioasdfasdf',
+    it: '/it/conatactio',
   },
 })
 </script>
