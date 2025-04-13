@@ -6,10 +6,13 @@ export default defineVuepalAdapter(() => {
     getAdminMenu() {
       return useGraphqlQuery('adminToolbar').then((v) => v.data)
     },
-    getLocalTasks() {
-      return $fetch<any>('/api/localTasks').then(
-        (v) => v.data.route.localTasks || [],
-      )
+    getLocalTasks(path: string) {
+      return useGraphqlQuery('localTasks', { path }).then((v) => {
+        if (v.data.route && 'localTasks' in v.data.route) {
+          return v.data.route.localTasks
+        }
+        return []
+      })
     },
     getCurrentLanguage() {
       return useCurrentLanguage()

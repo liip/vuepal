@@ -5,50 +5,50 @@
         {
           "baseId": "entity.node.canonical",
           "active": true,
-          "title": "View",
+          "title": "Ansicht",
           "url": {
             "__typename": "EntityCanonicalUrl",
-            "path": "/en",
+            "path": "/de",
             "routeName": "entity.node.canonical"
           }
         },
         {
           "baseId": "entity.node.edit_form",
           "active": false,
-          "title": "Edit",
+          "title": "Bearbeiten",
           "url": {
             "__typename": "DefaultEntityUrl",
-            "path": "/en/node/6728/edit",
+            "path": "/de/node/1/edit",
             "routeName": "entity.node.edit_form"
           }
         },
         {
           "baseId": "entity.node.delete_form",
           "active": false,
-          "title": "Delete",
+          "title": "Löschen",
           "url": {
             "__typename": "DefaultEntityUrl",
-            "path": "/en/node/6728/delete",
+            "path": "/de/node/1/delete",
             "routeName": "entity.node.delete_form"
           }
         },
         {
           "baseId": "entity.node.version_history",
           "active": false,
-          "title": "Revisions",
+          "title": "Revisionen",
           "url": {
             "__typename": "DefaultEntityUrl",
-            "path": "/en/node/6728/revisions",
+            "path": "/de/node/1/revisions",
             "routeName": "entity.node.version_history"
           }
         },
         {
           "baseId": "content_translation.local_tasks:entity.node.content_translation_overview",
           "active": false,
-          "title": "Translate",
+          "title": "Übersetzen",
           "url": {
             "__typename": "DefaultEntityUrl",
-            "path": "/en/node/6728/translations",
+            "path": "/de/node/1/translations",
             "routeName": "entity.node.content_translation_overview"
           }
         }

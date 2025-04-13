@@ -1,0 +1,3942 @@
+{
+  "data": {
+    "activeEnvironment": {
+      "name": "STARTERKIT LOCAL",
+      "bgColor": "#3a7cdc",
+      "fgColor": null
+    },
+    "menu": {
+      "id": "admin",
+      "links": [
+        {
+          "link": {
+            "label": "Verwaltung",
+            "url": {
+              "path": "/de/admin",
+              "routeName": "system.admin"
+            }
+          },
+          "subtree": [
+            {
+              "link": {
+                "label": "Werkzeuge",
+                "url": {
+                  "path": "/de",
+                  "routeName": "<front>"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Index",
+                    "url": {
+                      "path": "/de/admin/index",
+                      "routeName": "system.admin_index"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Alle Zwischenspeicher leeren",
+                    "url": {
+                      "path": "/de/admin/flush?token=-vYUsTab-SGnsqTR353M8epHdMSic5GWMCO-DZHoFRI",
+                      "routeName": "admin_toolbar_tools.flush"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Ansichten-Cache leeren",
+                        "url": {
+                          "path": "/de/admin/flush/views?token=vR5SYQubui_OwuG_70LyvJm6NBBPW3lNnk8Piqx2_-Q",
+                          "routeName": "admin_toolbar_tools.flush_views"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "CSS und JavaScript leeren",
+                        "url": {
+                          "path": "/de/admin/flush/cssjs?token=nPvdA_FFdCv-w3ZQqKl2tcvX2y1PgqDqKTydiKspxfU",
+                          "routeName": "admin_toolbar_tools.cssjs"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Plugin-Cache leeren",
+                        "url": {
+                          "path": "/de/admin/flush/plugin?token=ZMUWTyhHrQqo8ank40GXMmvsa9hBdL595FoCuw1XItw",
+                          "routeName": "admin_toolbar_tools.plugin"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Render-Cache leeren",
+                        "url": {
+                          "path": "/de/admin/flush/rendercache?token=tBx0twEB7umsWF5UeV8f9SjrNSFM3B5pUQiDdJJWso0",
+                          "routeName": "admin_toolbar_tools.flush_rendercache"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Routing- und Links-Cache leeren",
+                        "url": {
+                          "path": "/de/admin/flush/menu?token=XibUkmnp-KFjAi7YwGsceDaZ9p04P3_w2cW1Wl5lfLk",
+                          "routeName": "admin_toolbar_tools.flush_menu"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Statischen Cache leeren",
+                        "url": {
+                          "path": "/de/admin/flush/static-caches?token=Uf2GbVIgggA8Xcxz88OKHX9Wqs7Qz7C8sPUDUu5nPiE",
+                          "routeName": "admin_toolbar_tools.flush_static"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Theme-Registry neu aufbauen",
+                        "url": {
+                          "path": "/de/admin/flush/theme_rebuild?token=_eUcfb2XnYlV7mGHww0pIKZ2Ccvdkbcypig0oPmBphw",
+                          "routeName": "admin_toolbar_tools.theme_rebuild"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Twig-Cache leeren",
+                        "url": {
+                          "path": "/de/admin/flush/twig?token=IjtasaT-ywBYQcsryGU7KlgOuZDDjmc0_-kf6kzitNM",
+                          "routeName": "admin_toolbar_tools.flush_twig"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Cron ausführen",
+                    "url": {
+                      "path": "/de/run-cron?token=QrX7FQVJWZ11dOHZOqSrfi4uD-AxXoUw52uRW1wVTV4",
+                      "routeName": "admin_toolbar.run.cron"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Aktualisierungen durchführen",
+                    "url": {
+                      "path": "/update.php",
+                      "routeName": "system.db_update"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Abmelden",
+                    "url": {
+                      "path": "/de/user/logout?token=fzL0Ox4jS6qafdt6gzGzjWGb_hsR6kJ8L8E0D4hC5Mo",
+                      "routeName": "user.logout"
+                    }
+                  },
+                  "subtree": []
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Inhalt",
+                "url": {
+                  "path": "/de/admin/content",
+                  "routeName": "system.admin_content"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Vom Zeitplaner gesteuerte Inhalte",
+                    "url": {
+                      "path": "/de/admin/content/scheduled",
+                      "routeName": "view.scheduler_scheduled_content.overview"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Blöcke",
+                    "url": {
+                      "path": "/de/admin/content/block",
+                      "routeName": "entity.block_content.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Inhaltsblock hinzufügen",
+                        "url": {
+                          "path": "/de/block/add",
+                          "routeName": "block_content.add_page"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Normaler Block",
+                            "url": {
+                              "path": "/de/block/add/basic",
+                              "routeName": "block_content.add_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Dateien",
+                    "url": {
+                      "path": "/de/admin/content/files",
+                      "routeName": "view.files.page_1"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Inhalt hinzufügen",
+                    "url": {
+                      "path": "/de/node/add",
+                      "routeName": "node.add_page"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Inhaltsseite",
+                        "url": {
+                          "path": "/de/node/add/page",
+                          "routeName": "node.add"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Kontakt",
+                        "url": {
+                          "path": "/de/node/add/contact",
+                          "routeName": "node.add"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Medienmitteilung / News",
+                        "url": {
+                          "path": "/de/node/add/press_release",
+                          "routeName": "node.add"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Kommentare",
+                    "url": {
+                      "path": "/de/admin/content/comment",
+                      "routeName": "comment.admin"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Medien",
+                    "url": {
+                      "path": "/de/admin/content/media",
+                      "routeName": "entity.media.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Medien hinzufügen",
+                        "url": {
+                          "path": "/de/media/add",
+                          "routeName": "entity.media.add_page"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Audio",
+                            "url": {
+                              "path": "/de/media/add/audio",
+                              "routeName": "entity.media.add_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Dokument",
+                            "url": {
+                              "path": "/de/media/add/document",
+                              "routeName": "entity.media.add_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Extern gehostetes Video",
+                            "url": {
+                              "path": "/de/media/add/remote_video",
+                              "routeName": "entity.media.add_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Icon",
+                            "url": {
+                              "path": "/de/media/add/icon",
+                              "routeName": "entity.media.add_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Image",
+                            "url": {
+                              "path": "/de/media/add/image",
+                              "routeName": "entity.media.add_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Video",
+                            "url": {
+                              "path": "/de/media/add/video",
+                              "routeName": "entity.media.add_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Medienbibliothek",
+                        "url": {
+                          "path": "/de/admin/content/media-grid",
+                          "routeName": "view.media_library.page"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Paragraphs Blokkli Edit States",
+                    "url": {
+                      "path": "/de/admin/content/paragraphs-blokkli-edit-state",
+                      "routeName": "entity.paragraphs_blokkli_edit_state.collection"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Scheduled Media",
+                    "url": {
+                      "path": "/de/admin/content/media/scheduled",
+                      "routeName": "view.scheduler_scheduled_media.overview"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Seitenabschnitte",
+                    "url": {
+                      "path": "/de/admin/content/paragraphs",
+                      "routeName": "entity.paragraphs_library_item.collection"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Texte",
+                    "url": {
+                      "path": "/de/admin/content/texts",
+                      "routeName": "entity.texts.collection"
+                    }
+                  },
+                  "subtree": []
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Struktur",
+                "url": {
+                  "path": "/de/admin/structure",
+                  "routeName": "system.admin_structure"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Ansichten",
+                    "url": {
+                      "path": "/de/admin/structure/views",
+                      "routeName": "entity.view.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Ansicht hinzufügen",
+                        "url": {
+                          "path": "/de/admin/structure/views/add",
+                          "routeName": "views_ui.add"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Auftragsübersicht",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/tmgmt_job_overview",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Benutzer",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/user_admin_people",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Bibliothek benutzerdefinierter Blöcke",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/block_content",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Dateien",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/files",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Inhalt",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/content",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Kommentare",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/comment",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Medien",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/media",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Medienbibliothek",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/media_library",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Neue Benutzer",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/who_s_new",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Neueste Kommentare",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/comments_recent",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Neuester Inhalt",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/content_recent",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Scheduled Media",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/scheduler_scheduled_media",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Scheduled Taxonomy Terms",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/scheduler_scheduled_taxonomy_term",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Seitenabschnittsbibliothek",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/paragraphs_library",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Seitenabschnittsbibliothek-Browser",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/paragraphs_library_browser",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Systemprotokoll",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/watchdog",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Taxonomie-Begriff",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/taxonomy_term",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Translation All Job Items",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/tmgmt_translation_all_job_items",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Translation Job Items",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/tmgmt_job_items",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Translation Job messages",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/tmgmt_job_messages",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Umleiten",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/redirect",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Vom Zeitplaner gesteuerte Inhalte",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/scheduler_scheduled_content",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "„Wer ist online“-Block",
+                        "url": {
+                          "path": "/de/admin/structure/views/view/who_s_online",
+                          "routeName": "entity.view.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Anzeigemodi",
+                    "url": {
+                      "path": "/de/admin/structure/display-modes",
+                      "routeName": "field_ui.display_mode"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Formulardarstellungen",
+                        "url": {
+                          "path": "/de/admin/structure/display-modes/form",
+                          "routeName": "entity.entity_form_mode.collection"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Formulardarstellung hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/display-modes/form/add",
+                              "routeName": "field_ui.entity_form_mode_add"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Inhaltsdarstellungen",
+                        "url": {
+                          "path": "/de/admin/structure/display-modes/view",
+                          "routeName": "entity.entity_view_mode.collection"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Inhaltsdarstellung hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/display-modes/view/add",
+                              "routeName": "field_ui.entity_view_mode_add"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Blocklayout",
+                    "url": {
+                      "path": "/de/admin/structure/block",
+                      "routeName": "block.admin_display"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Blocktypen",
+                    "url": {
+                      "path": "/de/admin/structure/block-content",
+                      "routeName": "entity.block_content_type.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Normaler Block",
+                        "url": {
+                          "path": "/de/admin/structure/block-content/manage/basic",
+                          "routeName": "entity.block_content_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/block-content/manage/basic/fields",
+                              "routeName": "entity.block_content.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/block-content/manage/basic/form-display",
+                              "routeName": "entity.entity_form_display.block_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/block-content/manage/basic/display",
+                              "routeName": "entity.entity_view_display.block_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/block-content/manage/basic/permissions",
+                              "routeName": "entity.block_content_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/block-content/manage/basic/delete",
+                              "routeName": "entity.block_content_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Inhaltstypen",
+                    "url": {
+                      "path": "/de/admin/structure/types",
+                      "routeName": "entity.node_type.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Inhaltstyp hinzufügen",
+                        "url": {
+                          "path": "/de/admin/structure/types/add",
+                          "routeName": "node.type_add"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Inhaltsseite",
+                        "url": {
+                          "path": "/de/admin/structure/types/manage/page",
+                          "routeName": "entity.node_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/page/fields",
+                              "routeName": "entity.node.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/page/form-display",
+                              "routeName": "entity.entity_form_display.node.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/page/display",
+                              "routeName": "entity.entity_view_display.node.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/page/permissions",
+                              "routeName": "entity.node_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/page/delete",
+                              "routeName": "entity.node_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Kontakt",
+                        "url": {
+                          "path": "/de/admin/structure/types/manage/contact",
+                          "routeName": "entity.node_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/contact/fields",
+                              "routeName": "entity.node.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/contact/form-display",
+                              "routeName": "entity.entity_form_display.node.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/contact/display",
+                              "routeName": "entity.entity_view_display.node.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/contact/permissions",
+                              "routeName": "entity.node_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/contact/delete",
+                              "routeName": "entity.node_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Medienmitteilung / News",
+                        "url": {
+                          "path": "/de/admin/structure/types/manage/press_release",
+                          "routeName": "entity.node_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/press_release/fields",
+                              "routeName": "entity.node.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/press_release/form-display",
+                              "routeName": "entity.entity_form_display.node.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/press_release/display",
+                              "routeName": "entity.entity_view_display.node.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/press_release/permissions",
+                              "routeName": "entity.node_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/types/manage/press_release/delete",
+                              "routeName": "entity.node_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Kommentartypen",
+                    "url": {
+                      "path": "/de/admin/structure/comment",
+                      "routeName": "entity.comment_type.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Blokkli Node",
+                        "url": {
+                          "path": "/de/admin/structure/comment/manage/blokkli_node",
+                          "routeName": "entity.comment_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/comment/manage/blokkli_node/fields",
+                              "routeName": "entity.comment.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/comment/manage/blokkli_node/form-display",
+                              "routeName": "entity.entity_form_display.comment.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/comment/manage/blokkli_node/display",
+                              "routeName": "entity.entity_view_display.comment.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/comment/manage/blokkli_node/permissions",
+                              "routeName": "entity.comment_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/comment/manage/blokkli_node/delete",
+                              "routeName": "entity.comment_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Medientypen",
+                    "url": {
+                      "path": "/de/admin/structure/media",
+                      "routeName": "entity.media_type.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Medientyp hinzufügen",
+                        "url": {
+                          "path": "/de/admin/structure/media/add",
+                          "routeName": "entity.media_type.add_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Audio",
+                        "url": {
+                          "path": "/de/admin/structure/media/manage/audio",
+                          "routeName": "entity.media_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/audio/fields",
+                              "routeName": "entity.media.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/audio/form-display",
+                              "routeName": "entity.entity_form_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/audio/display",
+                              "routeName": "entity.entity_view_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/audio/permissions",
+                              "routeName": "entity.media_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/audio/delete",
+                              "routeName": "entity.media_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Dokument",
+                        "url": {
+                          "path": "/de/admin/structure/media/manage/document",
+                          "routeName": "entity.media_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/document/fields",
+                              "routeName": "entity.media.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/document/form-display",
+                              "routeName": "entity.entity_form_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/document/display",
+                              "routeName": "entity.entity_view_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/document/permissions",
+                              "routeName": "entity.media_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/document/delete",
+                              "routeName": "entity.media_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Extern gehostetes Video",
+                        "url": {
+                          "path": "/de/admin/structure/media/manage/remote_video",
+                          "routeName": "entity.media_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/remote_video/fields",
+                              "routeName": "entity.media.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/remote_video/form-display",
+                              "routeName": "entity.entity_form_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/remote_video/display",
+                              "routeName": "entity.entity_view_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/remote_video/permissions",
+                              "routeName": "entity.media_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/remote_video/delete",
+                              "routeName": "entity.media_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Icon",
+                        "url": {
+                          "path": "/de/admin/structure/media/manage/icon",
+                          "routeName": "entity.media_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/icon/fields",
+                              "routeName": "entity.media.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/icon/form-display",
+                              "routeName": "entity.entity_form_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/icon/display",
+                              "routeName": "entity.entity_view_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/icon/permissions",
+                              "routeName": "entity.media_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/icon/delete",
+                              "routeName": "entity.media_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Image",
+                        "url": {
+                          "path": "/de/admin/structure/media/manage/image",
+                          "routeName": "entity.media_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/image/fields",
+                              "routeName": "entity.media.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/image/form-display",
+                              "routeName": "entity.entity_form_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/image/display",
+                              "routeName": "entity.entity_view_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/image/permissions",
+                              "routeName": "entity.media_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/image/delete",
+                              "routeName": "entity.media_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Video",
+                        "url": {
+                          "path": "/de/admin/structure/media/manage/video",
+                          "routeName": "entity.media_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/video/fields",
+                              "routeName": "entity.media.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/video/form-display",
+                              "routeName": "entity.entity_form_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/video/display",
+                              "routeName": "entity.entity_view_display.media.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/video/permissions",
+                              "routeName": "entity.media_type.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/media/manage/video/delete",
+                              "routeName": "entity.media_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Menüpositionsregeln",
+                    "url": {
+                      "path": "/de/admin/structure/menu-position",
+                      "routeName": "entity.menu_position_rule.order_form"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Einstellungen",
+                        "url": {
+                          "path": "/de/admin/structure/menu-position/settings",
+                          "routeName": "menu_position.settings"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Menüs",
+                    "url": {
+                      "path": "/de/admin/structure/menu",
+                      "routeName": "entity.menu.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Menü hinzufügen",
+                        "url": {
+                          "path": "/de/admin/structure/menu/add",
+                          "routeName": "entity.menu.add_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Benutzermenü",
+                        "url": {
+                          "path": "/de/admin/structure/menu/manage/account",
+                          "routeName": "entity.menu.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Link hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/account/add",
+                              "routeName": "entity.menu.add_link_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/account/fields",
+                              "routeName": "entity.menu_link_content.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/account/form-display",
+                              "routeName": "entity.entity_form_display.menu_link_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/account/display",
+                              "routeName": "entity.entity_view_display.menu_link_content.default"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Fußzeile",
+                        "url": {
+                          "path": "/de/admin/structure/menu/manage/footer",
+                          "routeName": "entity.menu.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Link hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/footer/add",
+                              "routeName": "entity.menu.add_link_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/footer/fields",
+                              "routeName": "entity.menu_link_content.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/footer/form-display",
+                              "routeName": "entity.entity_form_display.menu_link_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/footer/display",
+                              "routeName": "entity.entity_view_display.menu_link_content.default"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Hauptnavigation",
+                        "url": {
+                          "path": "/de/admin/structure/menu/manage/main",
+                          "routeName": "entity.menu.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Link hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/main/add",
+                              "routeName": "entity.menu.add_link_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/main/fields",
+                              "routeName": "entity.menu_link_content.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/main/form-display",
+                              "routeName": "entity.entity_form_display.menu_link_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/main/display",
+                              "routeName": "entity.entity_view_display.menu_link_content.default"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Verwaltung",
+                        "url": {
+                          "path": "/de/admin/structure/menu/manage/admin",
+                          "routeName": "entity.menu.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Link hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/admin/add",
+                              "routeName": "entity.menu.add_link_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/admin/fields",
+                              "routeName": "entity.menu_link_content.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/admin/form-display",
+                              "routeName": "entity.entity_form_display.menu_link_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/admin/display",
+                              "routeName": "entity.entity_view_display.menu_link_content.default"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Werkzeuge",
+                        "url": {
+                          "path": "/de/admin/structure/menu/manage/tools",
+                          "routeName": "entity.menu.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Link hinzufügen",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/tools/add",
+                              "routeName": "entity.menu.add_link_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/tools/fields",
+                              "routeName": "entity.menu_link_content.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/tools/form-display",
+                              "routeName": "entity.entity_form_display.menu_link_content.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/menu/manage/tools/display",
+                              "routeName": "entity.entity_view_display.menu_link_content.default"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Paragraphs Blokkli Edit State",
+                    "url": {
+                      "path": "/de/admin/structure/paragraphs-blokkli-edit-state",
+                      "routeName": "entity.paragraphs_blokkli_edit_state.settings"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Seitenabschnittstypen",
+                    "url": {
+                      "path": "/de/admin/structure/paragraphs_type",
+                      "routeName": "entity.paragraphs_type.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Akkordeon",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/accordeon",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/accordeon/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/accordeon/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/accordeon/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/accordeon/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Aus der Bibliothek",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/from_library",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/from_library/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/from_library/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/from_library/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/from_library/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Bild",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/image",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/image/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/image/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/image/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/image/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Button",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/button",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/button/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/button/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/button/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/button/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Icon Textelement",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/icon_text_item",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_item/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_item/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_item/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_item/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Icon Textliste",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/icon_text_list",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_list/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_list/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_list/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/icon_text_list/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Karussell",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/carousel",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/carousel/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/carousel/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/carousel/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/carousel/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Seitenabschnittstyp hinzufügen",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/add",
+                          "routeName": "paragraphs.type_add"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Teaser",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/teaser",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Teaserliste",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/teaser_list",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser_list/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser_list/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser_list/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/teaser_list/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Text / Bild",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/text_image",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text_image/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text_image/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text_image/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text_image/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Text",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/text",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/text/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Video",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/video",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/video/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/video/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/video/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/video/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Zitat",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/quote",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/quote/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/quote/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/quote/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/quote/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "blökkli Fragment",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/blokkli_fragment",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/blokkli_fragment/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/blokkli_fragment/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/blokkli_fragment/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/blokkli_fragment/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "iFrame",
+                        "url": {
+                          "path": "/de/admin/structure/paragraphs_type/iframe",
+                          "routeName": "entity.paragraphs_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/iframe/fields",
+                              "routeName": "entity.paragraph.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/iframe/form-display",
+                              "routeName": "entity.entity_form_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/iframe/display",
+                              "routeName": "entity.entity_view_display.paragraph.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/paragraphs_type/iframe/delete",
+                              "routeName": "entity.paragraphs_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Taxonomie",
+                    "url": {
+                      "path": "/de/admin/structure/taxonomy",
+                      "routeName": "entity.taxonomy_vocabulary.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Vokabular hinzufügen",
+                        "url": {
+                          "path": "/de/admin/structure/taxonomy/add",
+                          "routeName": "entity.taxonomy_vocabulary.add_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Scheduled Taxonomy Terms",
+                        "url": {
+                          "path": "/de/admin/structure/taxonomy/scheduled",
+                          "routeName": "view.scheduler_scheduled_taxonomy_term.overview"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Tags",
+                        "url": {
+                          "path": "/de/admin/structure/taxonomy/manage/tags/overview",
+                          "routeName": "entity.taxonomy_vocabulary.overview_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Bearbeiten",
+                            "url": {
+                              "path": "/de/admin/structure/taxonomy/manage/tags",
+                              "routeName": "entity.taxonomy_vocabulary.edit_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/taxonomy/manage/tags/overview/fields",
+                              "routeName": "entity.taxonomy_term.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/taxonomy/manage/tags/overview/form-display",
+                              "routeName": "entity.entity_form_display.taxonomy_term.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/taxonomy/manage/tags/overview/display",
+                              "routeName": "entity.entity_view_display.taxonomy_term.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Berechtigungen verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/taxonomy/manage/tags/overview/permissions",
+                              "routeName": "entity.taxonomy_vocabulary.entity_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/taxonomy/manage/tags/delete",
+                              "routeName": "entity.taxonomy_vocabulary.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Translatable config pages types",
+                    "url": {
+                      "path": "/de/admin/structure/translatable_config_pages_types",
+                      "routeName": "entity.translatable_config_pages_type.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Globale Konfiguration",
+                        "url": {
+                          "path": "/de/admin/structure/translatable_config_pages_types/manage/global",
+                          "routeName": "entity.translatable_config_pages_type.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/translatable_config_pages_types/manage/global/fields",
+                              "routeName": "entity.translatable_config_pages.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/translatable_config_pages_types/manage/global/form-display",
+                              "routeName": "entity.entity_form_display.translatable_config_pages.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/structure/translatable_config_pages_types/manage/global/display",
+                              "routeName": "entity.entity_view_display.translatable_config_pages.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/structure/translatable_config_pages_types/manage/global/delete",
+                              "routeName": "entity.translatable_config_pages_type.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Config Pages",
+                    "url": {
+                      "path": "/de/admin/config/system/translatable-config-pages",
+                      "routeName": "entity.translatable_config_pages.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Globale Konfiguration",
+                        "url": {
+                          "path": "/de/admin/config/translatable-config-pages/1/edit",
+                          "routeName": "entity.translatable_config_pages.edit_form"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Design",
+                "url": {
+                  "path": "/de/admin/appearance",
+                  "routeName": "system.themes_page"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Einstellungen",
+                    "url": {
+                      "path": "/de/admin/appearance/settings",
+                      "routeName": "system.theme_settings"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Claro",
+                        "url": {
+                          "path": "/de/admin/appearance/settings/claro",
+                          "routeName": "system.theme_settings_theme"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Gin",
+                        "url": {
+                          "path": "/de/admin/appearance/settings/gin",
+                          "routeName": "system.theme_settings_theme"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Olivero",
+                        "url": {
+                          "path": "/de/admin/appearance/settings/olivero",
+                          "routeName": "system.theme_settings_theme"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Erweitern",
+                "url": {
+                  "path": "/de/admin/modules",
+                  "routeName": "system.modules_list"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Modul deinstallieren",
+                    "url": {
+                      "path": "/de/admin/modules/uninstall",
+                      "routeName": "system.modules_uninstall"
+                    }
+                  },
+                  "subtree": []
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Konfiguration",
+                "url": {
+                  "path": "/de/admin/config",
+                  "routeName": "system.admin_config"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Benutzer",
+                    "url": {
+                      "path": "/de/admin/config/people",
+                      "routeName": "user.admin_index"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Kontoeinstellungen",
+                        "url": {
+                          "path": "/de/admin/config/people/accounts",
+                          "routeName": "entity.user.admin_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Felder verwalten",
+                            "url": {
+                              "path": "/de/admin/config/people/accounts/fields",
+                              "routeName": "entity.user.field_ui_fields"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Formularanzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/config/people/accounts/form-display",
+                              "routeName": "entity.entity_form_display.user.default"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Anzeige verwalten",
+                            "url": {
+                              "path": "/de/admin/config/people/accounts/display",
+                              "routeName": "entity.entity_view_display.user.default"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Missbrauchschutz für Formulare",
+                        "url": {
+                          "path": "/de/admin/config/people/flood-control",
+                          "routeName": "flood_control.settings"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "System",
+                    "url": {
+                      "path": "/de/admin/config/system",
+                      "routeName": "system.admin_config_system"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Grundeinstellungen der Website",
+                        "url": {
+                          "path": "/de/admin/config/system/site-information",
+                          "routeName": "system.site_information_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Mail System",
+                        "url": {
+                          "path": "/de/admin/config/system/mailsystem",
+                          "routeName": "mailsystem.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Drupal Symfony Mailer Lite",
+                        "url": {
+                          "path": "/de/admin/config/system/symfony-mailer-lite/transport",
+                          "routeName": "entity.symfony_mailer_lite_transport.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Memcache",
+                        "url": {
+                          "path": "/de/admin/config/system/memcache",
+                          "routeName": "memcache_admin.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Queue manager",
+                        "url": {
+                          "path": "/de/admin/config/system/queue-ui",
+                          "routeName": "queue_ui.overview_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Redirect 403 to User Login",
+                        "url": {
+                          "path": "/de/admin/config/system/r4032login/settings",
+                          "routeName": "r4032login.settings.form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Translatable config pages",
+                        "url": {
+                          "path": "/de/admin/config/system/translatable-config-pages",
+                          "routeName": "entity.translatable_config_pages.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Cron",
+                        "url": {
+                          "path": "/de/admin/config/system/cron",
+                          "routeName": "system.cron_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Verwaiste zusammengesetzte Entitäten löschen",
+                        "url": {
+                          "path": "/de/admin/config/system/delete-orphans",
+                          "routeName": "entity_reference_revisions.delete_orphans"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Benutzeroberfläche",
+                    "url": {
+                      "path": "/de/admin/config/user-interface",
+                      "routeName": "system.admin_config_ui"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Admin Toolbar Tools",
+                        "url": {
+                          "path": "/de/admin/config/user-interface/admin-toolbar-tools",
+                          "routeName": "admin_toolbar_tools.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Admin Toolbar",
+                        "url": {
+                          "path": "/de/admin/config/user-interface/admin-toolbar",
+                          "routeName": "admin_toolbar.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Admin-Toolbar-Suche",
+                        "url": {
+                          "path": "/de/admin/config/user-interface/admin-toolbar-search-settings",
+                          "routeName": "admin_toolbar_search.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Chosen",
+                        "url": {
+                          "path": "/de/admin/config/user-interface/chosen",
+                          "routeName": "chosen.admin"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Menu Breadcrumb",
+                        "url": {
+                          "path": "/de/admin/config/user-interface/menu-breadcrumb",
+                          "routeName": "menu_breadcrumb.settings"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Inhaltserstellung",
+                    "url": {
+                      "path": "/de/admin/config/content",
+                      "routeName": "system.admin_config_content"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Diff",
+                        "url": {
+                          "path": "/de/admin/config/content/diff/general",
+                          "routeName": "diff.general_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Entity-Browser",
+                        "url": {
+                          "path": "/de/admin/config/content/entity_browser",
+                          "routeName": "entity.entity_browser.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Entitäts-Verwendungsprotokoll-Einstellungen",
+                        "url": {
+                          "path": "/de/admin/config/entity-usage/settings",
+                          "routeName": "entity_usage.settings.form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Linkit",
+                        "url": {
+                          "path": "/de/admin/config/content/linkit",
+                          "routeName": "entity.linkit_profile.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Pathologic-Konfiguration",
+                        "url": {
+                          "path": "/de/admin/config/content/pathologic",
+                          "routeName": "pathologic.config_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Seitenabschnittbibliotheks-Eintrageinstellungen",
+                        "url": {
+                          "path": "/de/admin/config/content/paragraphs_library_item",
+                          "routeName": "paragraphs_library_item.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Seitenabschnitts-Einstellungen",
+                        "url": {
+                          "path": "/de/admin/config/content/paragraphs",
+                          "routeName": "paragraphs.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Tablefield-Einstellungen",
+                        "url": {
+                          "path": "/de/admin/config/content/tablefield",
+                          "routeName": "tablefield.admin"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Textformate und Editoren",
+                        "url": {
+                          "path": "/de/admin/config/content/formats",
+                          "routeName": "filter.admin_overview"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Zeitplaner",
+                        "url": {
+                          "path": "/de/admin/config/content/scheduler",
+                          "routeName": "scheduler.admin_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "blökkli",
+                        "url": {
+                          "path": "/de/admin/config/content/blokkli",
+                          "routeName": "paragraphs_blokkli.settings"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Blokkli Search Providers",
+                            "url": {
+                              "path": "/de/admin/config/content/blokkli/search",
+                              "routeName": "entity.blokkli_search_provider.collection"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Entity Mapping",
+                            "url": {
+                              "path": "/de/admin/config/content/blokkli/entity-mapping",
+                              "routeName": "entity.pb_entity_mapping.collection"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Library",
+                            "url": {
+                              "path": "/de/admin/config/content/blokkli/library",
+                              "routeName": "paragraphs_blokkli_library.form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Paragraph Fields",
+                            "url": {
+                              "path": "/de/admin/config/content/blokkli/allowed-paragraphs",
+                              "routeName": "paragraphs_blokkli.allowed_paragraphs_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Entwicklung",
+                    "url": {
+                      "path": "/de/admin/config/development",
+                      "routeName": "system.admin_config_development"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Leistung",
+                        "url": {
+                          "path": "/de/admin/config/development/performance",
+                          "routeName": "system.performance_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Entwicklungseinstellungen",
+                        "url": {
+                          "path": "/de/admin/config/development/settings",
+                          "routeName": "system.development_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Protokollierung und Fehler",
+                        "url": {
+                          "path": "/de/admin/config/development/logging",
+                          "routeName": "system.logging_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Wartungsmodus",
+                        "url": {
+                          "path": "/de/admin/config/development/maintenance",
+                          "routeName": "system.site_maintenance_mode"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Environment Indicator Settings",
+                        "url": {
+                          "path": "/de/admin/config/development/environment-indicator",
+                          "routeName": "environment_indicator.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Konfigurationssynchronisierung",
+                        "url": {
+                          "path": "/de/admin/config/development/configuration",
+                          "routeName": "config.sync"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Importieren",
+                            "url": {
+                              "path": "/de/admin/config/development/configuration/full/import",
+                              "routeName": "config.import_full"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Exportieren",
+                            "url": {
+                              "path": "/de/admin/config/development/configuration/full/export",
+                              "routeName": "config.export_full"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Ignorieren",
+                            "url": {
+                              "path": "/de/admin/config/development/configuration/ignore",
+                              "routeName": "config_ignore.settings"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Medien",
+                    "url": {
+                      "path": "/de/admin/config/media",
+                      "routeName": "system.admin_config_media"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Bildstile",
+                        "url": {
+                          "path": "/de/admin/config/media/image-styles",
+                          "routeName": "entity.image_style.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Bildzuschnittvorlagen",
+                        "url": {
+                          "path": "/de/admin/config/media/crop",
+                          "routeName": "crop.overview_types"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Dateisystem",
+                        "url": {
+                          "path": "/de/admin/config/media/file-system",
+                          "routeName": "system.file_system_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Einstellungen für Medien",
+                        "url": {
+                          "path": "/de/admin/config/media/media-settings",
+                          "routeName": "media.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Medienbibliothekseinstellungen",
+                        "url": {
+                          "path": "/de/admin/config/media/media-library",
+                          "routeName": "media_library.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Rokka",
+                        "url": {
+                          "path": "/de/admin/config/media/rokka",
+                          "routeName": "rokka.admin_settings"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "PDF thumbnails",
+                            "url": {
+                              "path": "/de/admin/config/media/rokka/pdf",
+                              "routeName": "rokka.thumbnail.settings"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Media Icon Deliver",
+                        "url": {
+                          "path": "/de/admin/config/media/icon",
+                          "routeName": "media_icon_deliver.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Bild-Toolkit",
+                        "url": {
+                          "path": "/de/admin/config/media/image-toolkit",
+                          "routeName": "system.image_toolkit_settings"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Suche und Metadaten",
+                    "url": {
+                      "path": "/de/admin/config/search",
+                      "routeName": "system.admin_config_search"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "URL-Aliase",
+                        "url": {
+                          "path": "/de/admin/config/search/path",
+                          "routeName": "entity.path_alias.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Entity Reference Patterns",
+                        "url": {
+                          "path": "/de/admin/config/search/entity-reference-patterns",
+                          "routeName": "entity.entity_reference_pattern.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Metatag",
+                        "url": {
+                          "path": "/de/admin/config/search/metatag",
+                          "routeName": "entity.metatag_defaults.collection"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Einstellungen",
+                            "url": {
+                              "path": "/de/admin/config/search/metatag/settings",
+                              "routeName": "metatag.settings"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Search-API",
+                        "url": {
+                          "path": "/de/admin/config/search/search-api",
+                          "routeName": "search_api.overview"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Simple XML Sitemap",
+                        "url": {
+                          "path": "/de/admin/config/search/simplesitemap",
+                          "routeName": "entity.simple_sitemap.collection"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Sitemaps",
+                            "url": {
+                              "path": "/de/admin/config/search/simplesitemap",
+                              "routeName": "entity.simple_sitemap.collection"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Einschluß",
+                            "url": {
+                              "path": "/de/admin/config/search/simplesitemap/entities",
+                              "routeName": "simple_sitemap.entities"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "URL-Umleitungen",
+                        "url": {
+                          "path": "/de/admin/config/search/redirect",
+                          "routeName": "redirect.list"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Einstellungen",
+                            "url": {
+                              "path": "/de/admin/config/search/redirect/settings",
+                              "routeName": "redirect.settings"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Umleitung hinzufügen",
+                            "url": {
+                              "path": "/de/admin/config/search/redirect/add",
+                              "routeName": "redirect.add"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Länderspezifisches und Sprache",
+                    "url": {
+                      "path": "/de/admin/config/regional",
+                      "routeName": "system.admin_config_regional"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Regionale Einstellungen",
+                        "url": {
+                          "path": "/de/admin/config/regional/settings",
+                          "routeName": "system.regional_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Datums- und Zeitformate",
+                        "url": {
+                          "path": "/de/admin/config/regional/date-time",
+                          "routeName": "entity.date_format.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Sprachen",
+                        "url": {
+                          "path": "/de/admin/config/regional/language",
+                          "routeName": "entity.configurable_language.collection"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Erkennung und Auswahl",
+                            "url": {
+                              "path": "/de/admin/config/regional/language/detection",
+                              "routeName": "language.negotiation"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Sprache hinzufügen",
+                            "url": {
+                              "path": "/de/admin/config/regional/language/add",
+                              "routeName": "language.add"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Inhaltssprache und Übersetzung",
+                        "url": {
+                          "path": "/de/admin/config/regional/content-language",
+                          "routeName": "language.content_settings_page"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Texts Settings",
+                        "url": {
+                          "path": "/de/admin/config/regional/texts",
+                          "routeName": "texts.settings_form"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Benutzeroberfläche übersetzen",
+                        "url": {
+                          "path": "/de/admin/config/regional/translate",
+                          "routeName": "locale.translate_page"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Config import settings",
+                            "url": {
+                              "path": "/de/admin/config/regional/translate/config-import-settings",
+                              "routeName": "config_import_locale.settings"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Konfigurationsübersetzung",
+                        "url": {
+                          "path": "/de/admin/config/regional/config-translation",
+                          "routeName": "config_translation.mapper_list"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Web-Dienste",
+                    "url": {
+                      "path": "/de/admin/config/services",
+                      "routeName": "system.admin_config_services"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Nuxt Multi Cache",
+                        "url": {
+                          "path": "/de/admin/config/services/nuxt-multi-cache/settings",
+                          "routeName": "nuxt_multi_cache.settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "GraphQL",
+                        "url": {
+                          "path": "/de/admin/config/graphql",
+                          "routeName": "entity.graphql_server.collection"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "RSS-Feeds",
+                        "url": {
+                          "path": "/de/admin/config/services/rss-publishing",
+                          "routeName": "system.rss_feeds_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Einstellungen für Verknüpfungsgruppen",
+                        "url": {
+                          "path": "/de/admin/config/services/linkset",
+                          "routeName": "system.linkset_settings"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Frontend Routes",
+                        "url": {
+                          "path": "/de/admin/config/services/frontend-routing",
+                          "routeName": "frontend_routing.settings"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Übersetzung",
+                "url": {
+                  "path": "/de/admin/tmgmt",
+                  "routeName": "tmgmt.admin_tmgmt"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Auftragselemente",
+                    "url": {
+                      "path": "/de/admin/tmgmt/job_items",
+                      "routeName": "view.tmgmt_translation_all_job_items.page_1"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Aufträge",
+                    "url": {
+                      "path": "/de/admin/tmgmt/jobs",
+                      "routeName": "view.tmgmt_job_overview.page_1"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Quellen",
+                    "url": {
+                      "path": "/de/admin/tmgmt/sources",
+                      "routeName": "tmgmt.source_overview_default"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Warenkorb",
+                    "url": {
+                      "path": "/de/admin/tmgmt/cart",
+                      "routeName": "tmgmt.cart"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Anbieter",
+                    "url": {
+                      "path": "/de/admin/tmgmt/translators",
+                      "routeName": "entity.tmgmt_translator.collection"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Einstellungen",
+                    "url": {
+                      "path": "/de/admin/tmgmt/settings",
+                      "routeName": "tmgmt.settings"
+                    }
+                  },
+                  "subtree": []
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Benutzer",
+                "url": {
+                  "path": "/de/admin/people",
+                  "routeName": "entity.user.collection"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Benutzer hinzufügen",
+                    "url": {
+                      "path": "/de/admin/people/create",
+                      "routeName": "user.admin_create"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Berechtigungen",
+                    "url": {
+                      "path": "/de/admin/people/permissions",
+                      "routeName": "user.admin_permissions"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Rollen",
+                    "url": {
+                      "path": "/de/admin/people/roles",
+                      "routeName": "entity.user_role.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "Rolle hinzufügen",
+                        "url": {
+                          "path": "/de/admin/people/roles/add",
+                          "routeName": "user.role_add"
+                        }
+                      },
+                      "subtree": []
+                    },
+                    {
+                      "link": {
+                        "label": "Anonymous user",
+                        "url": {
+                          "path": "/de/admin/people/roles/manage/anonymous",
+                          "routeName": "entity.user_role.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Berechtigungen bearbeiten",
+                            "url": {
+                              "path": "/de/admin/people/permissions/anonymous",
+                              "routeName": "entity.user_role.edit_permissions_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Authenticated user",
+                        "url": {
+                          "path": "/de/admin/people/roles/manage/authenticated",
+                          "routeName": "entity.user_role.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Berechtigungen bearbeiten",
+                            "url": {
+                              "path": "/de/admin/people/permissions/authenticated",
+                              "routeName": "entity.user_role.edit_permissions_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Content editor",
+                        "url": {
+                          "path": "/de/admin/people/roles/manage/content_editor",
+                          "routeName": "entity.user_role.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Berechtigungen bearbeiten",
+                            "url": {
+                              "path": "/de/admin/people/permissions/content_editor",
+                              "routeName": "entity.user_role.edit_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/people/roles/manage/content_editor/delete",
+                              "routeName": "entity.user_role.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Administrator (Client)",
+                        "url": {
+                          "path": "/de/admin/people/roles/manage/administrator_client",
+                          "routeName": "entity.user_role.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Berechtigungen bearbeiten",
+                            "url": {
+                              "path": "/de/admin/people/permissions/administrator_client",
+                              "routeName": "entity.user_role.edit_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/people/roles/manage/administrator_client/delete",
+                              "routeName": "entity.user_role.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "link": {
+                        "label": "Administrator",
+                        "url": {
+                          "path": "/de/admin/people/roles/manage/administrator",
+                          "routeName": "entity.user_role.edit_form"
+                        }
+                      },
+                      "subtree": [
+                        {
+                          "link": {
+                            "label": "Berechtigungen bearbeiten",
+                            "url": {
+                              "path": "/de/admin/people/permissions/administrator",
+                              "routeName": "entity.user_role.edit_permissions_form"
+                            }
+                          }
+                        },
+                        {
+                          "link": {
+                            "label": "Löschen",
+                            "url": {
+                              "path": "/de/admin/people/roles/manage/administrator/delete",
+                              "routeName": "entity.user_role.delete_form"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Zugangssperren aufheben",
+                    "url": {
+                      "path": "/de/admin/people/flood-unblock",
+                      "routeName": "flood_control.unblock_form"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Rollen zuweisen",
+                    "url": {
+                      "path": "/de/admin/people/roleassign",
+                      "routeName": "roleassign.settings"
+                    }
+                  },
+                  "subtree": []
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Berichte",
+                "url": {
+                  "path": "/de/admin/reports",
+                  "routeName": "system.admin_reports"
+                }
+              },
+              "subtree": [
+                {
+                  "link": {
+                    "label": "Statusbericht",
+                    "url": {
+                      "path": "/de/admin/reports/status",
+                      "routeName": "system.status"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Aktuelle Protokollnachrichten",
+                    "url": {
+                      "path": "/de/admin/reports/dblog",
+                      "routeName": "dblog.overview"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Erweiterungen für Ansichten",
+                    "url": {
+                      "path": "/de/admin/reports/views-plugins",
+                      "routeName": "views_ui.reports_plugins"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Feldliste",
+                    "url": {
+                      "path": "/de/admin/reports/fields",
+                      "routeName": "entity.field_storage_config.collection"
+                    }
+                  },
+                  "subtree": [
+                    {
+                      "link": {
+                        "label": "In Ansichten verwendete Felder",
+                        "url": {
+                          "path": "/de/admin/reports/fields/views-fields",
+                          "routeName": "views_ui.reports_fields"
+                        }
+                      },
+                      "subtree": []
+                    }
+                  ]
+                },
+                {
+                  "link": {
+                    "label": "Häufigste ‚Nicht gefunden‘-Fehler",
+                    "url": {
+                      "path": "/de/admin/reports/page-not-found",
+                      "routeName": "dblog.page_not_found"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Häufigste ‚Zugriff verboten‘-Fehler",
+                    "url": {
+                      "path": "/de/admin/reports/access-denied",
+                      "routeName": "dblog.access_denied"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Memcache-Statistiken",
+                    "url": {
+                      "path": "/de/admin/reports/memcache",
+                      "routeName": "memcache_admin.reports"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Metatag-Plugins",
+                    "url": {
+                      "path": "/de/admin/reports/metatag-plugins",
+                      "routeName": "metatag.reports_plugins"
+                    }
+                  },
+                  "subtree": []
+                },
+                {
+                  "link": {
+                    "label": "Verfügbare Aktualisierungen für Übersetzungen",
+                    "url": {
+                      "path": "/de/admin/reports/translations",
+                      "routeName": "locale.translate_status"
+                    }
+                  },
+                  "subtree": []
+                }
+              ]
+            },
+            {
+              "link": {
+                "label": "Hilfe",
+                "url": {
+                  "path": "/de/admin/help",
+                  "routeName": "help.main"
+                }
+              },
+              "subtree": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
