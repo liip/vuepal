@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { useRoute, computed, useLazyAsyncData } from '#imports'
 import { createAdapter } from '#vuepal-build/adapter'
-import type { LocalTask } from '#vuepal/types'
+import type { LocalTask } from './../../types'
 import { nonNullable } from '../../helpers/type'
 
 const adapter = createAdapter()

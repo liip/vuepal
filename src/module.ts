@@ -42,6 +42,10 @@ export default defineNuxtModule<ModuleOptions>({
     // manually install them. Note that this code is never executed on actual
     // installations of this module.
     if (isModuleBuild) {
+      nuxt.options.typescript.strict = true
+      nuxt.options.typescript.tsConfig.compilerOptions ||= {}
+      nuxt.options.typescript.tsConfig.compilerOptions.noUncheckedIndexedAccess =
+        true
       await installModule('nuxt-graphql-middleware', {
         downloadSchema: false,
         graphqlEndpoint: 'http://starterkit.ddev.site/de/graphql',
@@ -89,11 +93,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     helper.inlineNitroExternals(
       fileURLToPath(new URL('./runtime', import.meta.url)),
-    )
-
-    helper.addAlias(
-      '#vuepal/types',
-      helper.resolvers.module.resolve('runtime/types'),
     )
 
     helper.addAlias('#vuepal-build', helper.paths.moduleBuildDir)

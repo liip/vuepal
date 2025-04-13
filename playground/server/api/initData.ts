@@ -1,5 +1,5 @@
 import { defineEventHandler, getQuery } from 'h3'
-import type { InitData, MenuLink } from '~/types'
+import type { InitData, MenuLink } from '~~/types'
 
 const menuLinks = (language: string): MenuLink[] =>
   [

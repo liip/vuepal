@@ -48,9 +48,8 @@ export function getUrlExtension(url: string): string | undefined {
   }
   try {
     const parts = url.split(/[#?]/)
-    return parts[0].split('.').pop()?.trim().toLowerCase() || ''
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (_e) {
+    return parts[0]?.split('.').pop()?.trim().toLowerCase() || ''
+  } catch {
     // Noop.
   }
 }

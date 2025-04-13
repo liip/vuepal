@@ -1,5 +1,5 @@
 import { computed, useState, type ComputedRef } from '#imports'
-import type { InitData, MenuLink } from '~/types'
+import type { InitData, MenuLink } from '~~/types'
 
 type UseInitData = {
   menuLinks: ComputedRef<MenuLink[]>

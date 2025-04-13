@@ -75,7 +75,7 @@ export function buildDrupalMetatags(
 
     if (tags && Array.isArray(tags)) {
       for (let i = 0; i < tags.length; i++) {
-        const tag = tags[i]
+        const tag = tags[i]!
         const tagTitle = getTitle(tag)
         if (tagTitle) {
           title = tagTitle

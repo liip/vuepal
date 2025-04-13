@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { AdminMenuLinkFragment } from '#vuepal/types'
+import type { AdminMenuLinkFragment } from './../../../types'
 import Highlight from './Highlight.vue'
 import { computed, onMounted, ref, watch, nextTick } from '#imports'
 import { Fzf } from 'fzf'

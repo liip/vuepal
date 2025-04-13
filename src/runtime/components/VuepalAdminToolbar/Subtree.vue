@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { ref, watch, computed } from '#imports'
 import { adminToolbarIcons } from '#vuepal-build/admin-config'
-import type { AdminMenuLinkFragment } from '#vuepal/types'
+import type { AdminMenuLinkFragment } from './../../types'
 
 defineOptions({
   name: 'AdminToolbarSubtree',
