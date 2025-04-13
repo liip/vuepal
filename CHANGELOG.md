@@ -1,13 +1,13 @@
 # Changelog
 
-
 ## v2.5.5
 
 [compare changes](https://github.com/liip/vuepal/compare/v2.5.4...v2.5.5)
 
 ### 🩹 Fixes
 
-- Typescript issue resolved. ([7ad769b](https://github.com/liip/vuepal/commit/7ad769b))
+- Typescript issue resolved.
+  ([7ad769b](https://github.com/liip/vuepal/commit/7ad769b))
 
 ### ❤️ Contributors
 
@@ -19,7 +19,8 @@
 
 ### 🩹 Fixes
 
-- Remove unwanted styles ([cf99c13](https://github.com/liip/vuepal/commit/cf99c13))
+- Remove unwanted styles
+  ([cf99c13](https://github.com/liip/vuepal/commit/cf99c13))
 
 ### ❤️ Contributors
 
@@ -42,4 +43,3 @@
 - Ayalon <info@ayalon.ch>
 
 ## v2.5.1
-

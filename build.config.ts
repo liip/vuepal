@@ -1,6 +1,7 @@
 import { defineBuildConfig } from 'unbuild'
 
 export default defineBuildConfig({
+  entries: ['./src/adapter.ts'],
   externals: [
     '#imports',
     'defu',

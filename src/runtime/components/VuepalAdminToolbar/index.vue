@@ -37,27 +37,32 @@ import {
   onMounted,
   onBeforeUnmount,
 } from '#imports'
-import adapter from '#vuepal/adapter'
-import '#vuepal/styles'
+import { createAdapter } from '#vuepal-build/adapter'
+import './../../css/output.css'
 import Palette from './Palette/index.vue'
 
+const adapter = createAdapter()
 const language = adapter.getCurrentLanguage()
 
 const active = ref(-1)
 const showPalette = ref(false)
 const renderPalette = ref(false)
 
-let timeout: any = null
+let timeout: number | null = null
 
 const onMouseLeave = () => {
-  clearTimeout(timeout)
+  if (timeout) {
+    clearTimeout(timeout)
+  }
   timeout = window.setTimeout(() => {
     active.value = -1
   }, 600)
 }
 
 const onMouseEnter = () => {
-  clearTimeout(timeout)
+  if (timeout) {
+    clearTimeout(timeout)
+  }
 }
 
 if (!adapter.getAdminMenu) {

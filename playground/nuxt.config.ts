@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['../src/module', 'nuxt-language-negotiation'],
+  modules: ['../src/module', 'nuxt-language-negotiation', '@nuxt/eslint'],
 
   imports: {
     autoImport: false,

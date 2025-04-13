@@ -1,7 +1,7 @@
 # VuePal
 
-VuePal provides a bridge between Drupal and Vue. It comes with a set of components and
-composables to make your life easier when working with Drupal.
+VuePal provides a bridge between Drupal and Vue. It comes with a set of
+components and composables to make your life easier when working with Drupal.
 
 ## Frontend Routing
 
@@ -17,10 +17,13 @@ export default defineNuxtConfig({
 })
 ```
 
-With this feature enabled, you can create a static frontend page in Nuxt and still use all the routing features of
-Drupal in your frontend application. You can define your aliases in the frontend page using `definePageMeta`. The module
-will automatically create a Drupal configuration file that can be imported and processed by the
-[Drupal frontend_routing](https://www.drupal.org/project/frontend_routing) module.
+With this feature enabled, you can create a static frontend page in Nuxt and
+still use all the routing features of Drupal in your frontend application. You
+can define your aliases in the frontend page using `definePageMeta`. The module
+will automatically create a Drupal configuration file that can be imported and
+processed by the
+[Drupal frontend_routing](https://www.drupal.org/project/frontend_routing)
+module.
 
 ```ts [pages/static-page/example.vue]
 definePageMeta({
@@ -46,8 +49,9 @@ export default defineNuxtConfig({
 })
 ```
 
-This option enables the `useDrupalRoute()` composable.
-This composable provides the necessary GraphQL fragment and query to fetch the route data and metatags of a Drupal page.
+This option enables the `useDrupalRoute()` composable. This composable provides
+the necessary GraphQL fragment and query to fetch the route data and metatags of
+a Drupal page.
 
 ## Admin Toolbar
 
@@ -61,13 +65,13 @@ export default defineNuxtConfig({
 })
 ```
 
-The admin toolbar component fetches the Drupal administration menu and displays it in your frontend application.
+The admin toolbar component fetches the Drupal administration menu and displays
+it in your frontend application.
 ![toolbar.png](https://github.com/liip/vuepal/blob/main/screenshots/toolbar.png)
 
 ### Usage
 
 ```vue
-
 <template>
   <ClientOnly>
     <div v-if="drupalUser.accessToolbar && !isEditing">
@@ -76,16 +80,15 @@ The admin toolbar component fetches the Drupal administration menu and displays 
   </ClientOnly>
 </template>
 
-
 <script setup lang="ts">
-  const route = useRoute()
-  const drupalUser = useDrupalUser()
-  const language = useCurrentLanguage()
-  const isEditing = computed(
-    () =>
-      !!(route.query.blokkliEditing || route.query.blokkliPreview) &&
-      drupalUser.value.accessToolbar,
-  )
+const route = useRoute()
+const drupalUser = useDrupalUser()
+const language = useCurrentLanguage()
+const isEditing = computed(
+  () =>
+    !!(route.query.blokkliEditing || route.query.blokkliPreview) &&
+    drupalUser.value.accessToolbar,
+)
 </script>
 ```
 
@@ -101,11 +104,11 @@ export default defineNuxtConfig({
 })
 ```
 
-The local tasks component fetches the local tasks of a Drupal page and displays them in your frontend application.
+The local tasks component fetches the local tasks of a Drupal page and displays
+them in your frontend application.
 ![localtasks.png](https://github.com/liip/vuepal/blob/main/screenshots/localtasks.png)
 
 ```vue
-
 <template>
   <ClientOnly>
     <div class="flex">

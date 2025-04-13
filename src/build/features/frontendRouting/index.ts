@@ -1,29 +1,9 @@
 import fs from 'node:fs'
-import { addTemplate, addTypeTemplate } from '@nuxt/kit'
+import { addTemplate } from '@nuxt/kit'
 import { stringify } from 'yaml'
-import { relative, join } from 'pathe'
 import type { NuxtPage } from '@nuxt/schema'
-import type { VuepalModuleContext } from './types'
-import { nonNullable } from './runtime/helpers/type'
-
-export type VuepalFrontendRoutingOptions = {
-  /**
-   * Whether to enable the frontend_routing feature.
-   */
-  enabled: boolean
-
-  /**
-   * The supported language codes.
-   */
-  langcodes: string[]
-
-  /**
-   * The output path of the generated YML file.
-   *
-   * @example './../drupal/config/default/frontend_routing.settings.yml'
-   */
-  outputPath: string
-}
+import { nonNullable } from './../../../runtime/helpers/type'
+import { defineVuepalFeature } from '../defineFeature'
 
 /**
  * Extracts the language mapping.
@@ -42,7 +22,7 @@ const extractLanguageMapping = (
 
   try {
     const jsonString = `{${match.trim().replace(/'/g, '"')}}`
-     
+
     const mapping = eval(`(${jsonString})`)
     if (typeof mapping !== 'object') {
       return
@@ -62,8 +42,8 @@ const extractLanguageMapping = (
 
     return mapping
   } catch (e) {
-    console.log('Error in Vuepal:')  
-    console.log(e)  
+    console.log('Error in Vuepal:')
+    console.log(e)
   }
 }
 
@@ -133,38 +113,43 @@ const generateFrontendRoutesYaml = (
   })
 }
 
-export default function (
-  { srcResolver, nuxt }: VuepalModuleContext,
-  options: VuepalFrontendRoutingOptions,
-) {
-  const templatePath = srcResolver.resolve(options.outputPath)
-  addTemplate({
-    filename: templatePath,
-    write: true,
-    getContents: (ctx) => {
-      const pages: NuxtPage[] = ctx.app.pages || []
-      return generateFrontendRoutesYaml(pages, options.langcodes)
-    },
-    options: {
-      frontendRoutes: true,
-    },
-  })
+export default defineVuepalFeature<{
+  /**
+   * The supported language codes.
+   */
+  langcodes: string[]
 
-  const modulePath = srcResolver.resolve(
-    './node_modules/nuxt/dist/pages/runtime/composables',
-  )
+  /**
+   * The output path of the generated YML file.
+   *
+   * @example './../drupal/config/default/frontend_routing.settings.yml'
+   */
+  outputPath: string
+}>({
+  name: 'frontendRouting',
+  description: '',
+  setup(helper, options) {
+    if (!helper.isModuleBuild && options?.outputPath) {
+      let templateContents = ''
+      const templatePath = helper.resolvers.root.resolve(options.outputPath)
 
-  const composablesFile = relative(
-    join(nuxt.options.buildDir, 'types'),
-    modulePath,
-  )
+      addTemplate({
+        filename: templatePath,
+        write: true,
+        getContents: (ctx) => {
+          return ''
+        },
+      })
+    }
 
-  addTypeTemplate({
-    filename: 'types/vuepal-frontend-routing.d.ts',
-    write: true,
-    getContents() {
+    // function buildTemplateContents() {
+    //   const pages: NuxtPage[] = ctx.app.pages || []
+    //   return generateFrontendRoutesYaml(pages, options.langcodes)
+    // }
+
+    helper.addTemplate('page-meta', null, () => {
       return `
-declare module "${composablesFile}" {
+declare module "#app" {
   interface PageMeta {
     /**
       * If set to true, this route is considered a "Drupal Frontend Route".
@@ -180,6 +165,6 @@ declare module "${composablesFile}" {
 
 export {}
 `
-    },
-  })
-}
+    })
+  },
+})

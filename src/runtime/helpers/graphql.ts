@@ -95,8 +95,8 @@ export function removeTypename<T extends { __typename?: string }>(
  *
  * The returned type is narrowed using the given property.
  */
-export function narrowTypeByProperty<T extends {}, K extends keyof T>(
-  obj: T | {} | null | undefined,
+export function narrowTypeByProperty<T extends object, K extends keyof T>(
+  obj: T | object | null | undefined,
   propName: K,
 ): T | undefined {
   if (obj && propName in obj) {

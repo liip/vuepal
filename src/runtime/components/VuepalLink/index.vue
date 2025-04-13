@@ -46,8 +46,14 @@ const isActive = computed(() =>
   route.path && href.value ? route.path.startsWith(href.value) : false,
 )
 
+type ComponentProps = {
+  class: string[]
+  href?: string
+  target?: string
+}
+
 const componentProps = computed<Record<string, string | string[]>>(() => {
-  const componentProps: Record<string, any> = {
+  const componentProps: ComponentProps = {
     class: [],
   }
   if (href.value) {

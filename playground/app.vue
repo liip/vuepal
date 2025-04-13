@@ -11,8 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import VuepalAdminToolbar from './../src/runtime/components/AdminToolbar/index.vue'
-import { VuepalLocalTasks } from '#components'
+import { VuepalLocalTasks, VuepalAdminToolbar } from '#components'
 </script>
 
 <style lang="css">

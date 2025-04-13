@@ -1,4 +1,4 @@
-import type { Head, Link } from '@unhead/schema'
+import type { SerializableHead, Link } from '@unhead/vue'
 import type { HookResult } from '@nuxt/schema'
 import type { UseDrupalRouteQuery } from './graphqlTypeMock'
 import { buildDrupalMetatags } from './../buildDrupalMetatags'
@@ -74,7 +74,7 @@ type UseDrupalRoute<T> = {
   /**
    * The mapped meta tags.
    */
-  metatags: ComputedRef<Head>
+  metatags: ComputedRef<SerializableHead>
 }
 
 type UseDrupalRouteQueryInput =
@@ -90,7 +90,7 @@ type UseDrupalRouteQueryInput =
 // Overload signature to make the return type nullable when setting noError to
 // true, because it allows the composable to return if no route entity is
 // available.
-export function useDrupalRoute<T = {}>(
+export function useDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
   options: { noError: true },
 ): Promise<UseDrupalRoute<T | undefined>>
@@ -98,7 +98,7 @@ export function useDrupalRoute<T = {}>(
 // Overload signature to make the return type non nullable without options or
 // when the option noError is false, because the code ensures that the return
 // type is always going to be the passed in generic type.
-export function useDrupalRoute<T = {}>(
+export function useDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
   options?: { noError?: false },
 ): Promise<UseDrupalRoute<T>>
@@ -110,7 +110,7 @@ export function useDrupalRoute<T = {}>(
  * The composable must be called directly in the top level of the <script
  * setup> code.
  */
-export async function useDrupalRoute<T = {}>(
+export async function useDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
   options?: Options,
 ): Promise<UseDrupalRoute<T | undefined>> {

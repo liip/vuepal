@@ -8,7 +8,7 @@ export type ArrayGroup<T> = {
  *
  * If an item can't be grouped it is discarded.
  */
-export function groupByProperty<T extends {}>(
+export function groupByProperty<T extends object>(
   items: T[],
   property: keyof T,
 ): ArrayGroup<T>[] {

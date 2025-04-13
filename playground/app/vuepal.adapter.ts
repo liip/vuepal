@@ -1,4 +1,4 @@
-import { defineVuepalAdapter } from '#vuepal/types'
+import { defineVuepalAdapter } from './../../src/adapter'
 import { useCurrentLanguage } from '#imports'
 
 export default defineVuepalAdapter(() => {

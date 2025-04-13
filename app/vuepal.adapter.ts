@@ -1,13 +1,3 @@
-import { defineVuepalAdapter } from '#vuepal/types'
-import { computed } from '#imports'
+import adapter from './../playground/app/vuepal.adapter'
 
-export default defineVuepalAdapter(() => {
-  return {
-    getAdminMenu() {
-      return Promise.resolve(undefined)
-    },
-    getCurrentLanguage() {
-      return computed(() => 'de')
-    },
-  }
-})
+export default adapter

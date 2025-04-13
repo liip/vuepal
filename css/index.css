@@ -1,4 +1,4 @@
-@import './../src/runtime/components/AdminToolbar/Palette/index.css';
+@import './../src/runtime/components/VuepalAdminToolbar/Palette/index.css';
 
 @tailwind base;
 @tailwind components;

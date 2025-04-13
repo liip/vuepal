@@ -92,8 +92,8 @@ export function buildDrupalMetatags(
 
     return { link, meta, title, schema }
   } catch (e) {
-    console.log('Error in Vuepal:')  
-    console.log(e)  
+    console.log('Error in Vuepal:')
+    console.log(e)
   }
 
   return { link: [], meta: [], title: '', schema: '' }

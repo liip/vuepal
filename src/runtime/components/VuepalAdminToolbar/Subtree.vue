@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { ref, watch, computed } from '#imports'
-import { adminToolbarIcons } from '#vuepal/admin-config'
+import { adminToolbarIcons } from '#vuepal-build/admin-config'
 import type { AdminMenuLinkFragment } from '#vuepal/types'
 
 defineOptions({
@@ -51,7 +51,7 @@ const props = withDefaults(
     level?: number
     link?: AdminMenuLinkFragment['link']
     subtree?: AdminMenuLinkFragment['subtree']
-    active: boolean
+    active?: boolean
   }>(),
   {
     level: 0,
@@ -81,17 +81,21 @@ const emit = defineEmits(['hover'])
 
 const localActive = ref(-1)
 
-let timeout: any = null
+let timeout: number | null = null
 
 function onMouseOver() {
-  clearTimeout(timeout)
-  timeout = setTimeout(() => {
+  if (timeout) {
+    clearTimeout(timeout)
+  }
+  timeout = window.setTimeout(() => {
     emit('hover')
   }, 300)
 }
 
 function onMouseLeave() {
-  clearTimeout(timeout)
+  if (timeout) {
+    window.clearTimeout(timeout)
+  }
 }
 
 watch(

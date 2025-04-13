@@ -4,7 +4,7 @@
 export function extractVimeoId(url: string): string | undefined {
   const regex =
     // For some reason it thinks that the last \/ is unnecessary, but the entire regex becomes illegal if that's removed.
-     
+
     /^(?:https?:\/\/)?(?:www\.)?(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)[^\s/]*$/g
   const matches = Array.from(url.matchAll(regex))[0]
 

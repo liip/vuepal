@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import { useLogger } from '@nuxt/kit'
 
 export const fileExists = (
   path?: string,
@@ -17,3 +18,5 @@ export const fileExists = (
 
   return extension ? `${path}.${extension}` : null
 }
+
+export const logger = useLogger('vuepal')
