@@ -11,6 +11,7 @@ export default defineVuepalFeature({
     )
 
     helper.addComposable('useBreadcrumb')
+    helper.addComponent('VuepalBreadcrumb')
     helper.addPlugin('breadcrumb')
     helper.addGraphqlFile('fragment.breadcrumb.graphql')
   },

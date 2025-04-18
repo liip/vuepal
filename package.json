@@ -48,6 +48,7 @@
     "access": "public"
   },
   "dependencies": {
+    "change-case": "^5.4.4",
     "fzf": "^0.5.2",
     "yaml": "^2.4.1"
   },

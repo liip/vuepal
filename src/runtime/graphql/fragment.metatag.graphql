@@ -1,0 +1,8 @@
+fragment metatag on Metatag {
+  id
+  tag
+  attributes {
+    key
+    value
+  }
+}

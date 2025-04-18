@@ -1,9 +1,16 @@
 import { defineVuepalFeature } from '../defineFeature'
+import { pascalCase, camelCase } from 'change-case'
 
-export default defineVuepalFeature({
+type DrupalRouteDefinition = {
+  fragments: string[]
+}
+
+export default defineVuepalFeature<{
+  routeQueries?: Record<string, DrupalRouteDefinition>
+}>({
   name: 'drupalRoute',
   description: 'Adds routing related GraphQL queries and composables.',
-  setup(helper) {
+  setup(helper, options) {
     helper
       .assertGraphqlObjectField({ extension: 'routing' }, 'Query', 'route')
       .assertGraphqlObjectField(
@@ -18,10 +25,15 @@ export default defineVuepalFeature({
 
     helper.addComposable('useDrupalRoute')
     helper.addComposable('buildDrupalMetatags')
+
+    helper.addGraphqlFile('fragment.metatag.graphql')
+
+    // Conditionally add the breadcrumb on the route fragment.
     const breadcrumbSpread = helper.hasFeatureEnabled('breadcrumb')
       ? 'breadcrumb { ...breadcrumb }'
       : ''
 
+    // Conditionally add the languageSwitchLinks on the route fragment.
     const languageSwitchLinksSpread = helper.hasFeatureEnabled(
       'languageSwitchLinks',
     )
@@ -72,16 +84,101 @@ fragment useDrupalRoute on Query {
     }
   }
 }
-
-fragment metatag on Metatag {
-  id
-  tag
-  attributes {
-    key
-    value
-  }
-}
 `,
     )
+
+    const routeQueries = Object.entries(options?.routeQueries || {})
+
+    if (helper.isModuleBuild) {
+      routeQueries.push([
+        'nodeCanonical',
+        {
+          fragments: ['nodePage'],
+        },
+      ])
+    }
+
+    if (!routeQueries.length) {
+      return
+    }
+
+    helper.addComposable('useDrupalRouteQuery')
+
+    helper.addTemplate(
+      'route-queries',
+      () => {
+        const mapping = routeQueries.reduce<Record<string, string>>(
+          (acc, [name]) => {
+            acc[name] = camelCase('route_' + name)
+            return acc
+          },
+          {},
+        )
+        return `
+export const mapping = ${JSON.stringify(mapping, null, 2)}
+`
+      },
+      () => {
+        const imports = [
+          ...new Set(routeQueries.flatMap((v) => v[1].fragments)).values(),
+        ]
+          .map((fragmentName) => {
+            return pascalCase(fragmentName + 'Fragment')
+          })
+          .join(',\n  ')
+        const importStatement = `import type {\n  ${imports}\n} from '#graphql-operations'`
+        const queries = routeQueries
+          .map(([name, definition]) => {
+            const fragments = definition.fragments
+              .map((v) => pascalCase(v + 'Fragment'))
+              .join(' | ')
+            return `"${name}": ${fragments}`
+          })
+          .join(',\n  ')
+
+        const possibleQueryNames = routeQueries
+          .map(([name]) => {
+            return `'${camelCase('route_' + name)}'`
+          })
+          .join(' | ')
+
+        return `
+${importStatement}
+import type { Query } from '#nuxt-graphql-middleware/operation-types'
+
+declare module '#vuepal-build/route-queries' {
+  export type DrupalRouteQueries = {
+    ${queries}
+  }
+  type PossibleQueryNames = ${possibleQueryNames}
+  export const mapping: Record<keyof DrupalRouteQueries, keyof Pick<Query, PossibleQueryNames>>;
+}
+`
+      },
+    )
+
+    // Generate GraphQL queries.
+    routeQueries.forEach(([name, definition]) => {
+      const queryName = camelCase('route_' + name)
+
+      const spreads = definition.fragments
+        .map((v) => '...' + v)
+        .join('\n        ')
+      helper.graphql.addDocument(
+        'vuepal-route-query:' + name,
+        `
+query ${queryName}($path: String!) {
+  ...useDrupalRoute
+  route(path: $path) {
+    ... on EntityUrl {
+      entity {
+        __typename
+        ${spreads}
+      }
+    }
+  }
+}`,
+      )
+    })
   },
 })

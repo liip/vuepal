@@ -1,4 +1,4 @@
-import type { SerializableHead, Link } from '@unhead/vue'
+import type { Link } from '@unhead/vue'
 import type { HookResult } from '@nuxt/schema'
 import type { RouteLocationRaw } from 'vue-router'
 import type { UseDrupalRouteFragment } from '#graphql-operations'
@@ -14,6 +14,7 @@ import {
   type ComputedRef,
   type Ref,
 } from '#imports'
+import type { DrupalRoute, UseDrupalRoute } from './../../helpers/drupalRoute'
 
 type DrupalRouteMetatags = {
   title: string
@@ -30,33 +31,6 @@ type Options = {
   noError?: boolean
 }
 
-type DrupalRoute = {
-  /**
-   * The name of the route, e.g. "entity.node.canonical".
-   */
-  name?: string
-
-  /**
-   * The bundle of the entity, e.g. "page".
-   */
-  entityBundle?: string
-
-  /**
-   * The entity type, e.g. "node".
-   */
-  entityType?: string
-
-  /**
-   * The ID of the entity.
-   */
-  entityId?: string
-
-  /**
-   * The UUID of the entity.
-   */
-  entityUuid?: string
-}
-
 type DrupalRouteHookPayload = {
   /**
    * The Nuxt route path for which the useDrupalRoute composable was called.
@@ -65,23 +39,6 @@ type DrupalRouteHookPayload = {
   drupalRoute?: DrupalRoute
   routeQuery?: UseDrupalRouteFragment | null
   metatags: DrupalRouteMetatags
-}
-
-type UseDrupalRoute<T> = {
-  /**
-   * The user-specific fields for the entity, according to their fragment.
-   */
-  entity: ComputedRef<T>
-
-  /**
-   * The Drupal route information.
-   */
-  drupalRoute: ComputedRef<DrupalRoute>
-
-  /**
-   * The mapped meta tags.
-   */
-  metatags: ComputedRef<SerializableHead>
 }
 
 type UseDrupalRouteQueryInput =

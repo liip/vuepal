@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from '#imports'
+import { useDrupalRouteQuery, useRoute } from '#imports'
 
 const route = useRoute()
+
+const { entity } = await useDrupalRouteQuery('routeNodeCanonical')
 </script>

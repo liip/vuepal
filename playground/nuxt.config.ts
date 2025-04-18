@@ -1,5 +1,8 @@
 export default defineNuxtConfig({
   ssr: false,
+  devtools: {
+    enabled: true,
+  },
   modules: [
     'nuxt-graphql-middleware',
     '../src/module',
@@ -71,6 +74,11 @@ export default defineNuxtConfig({
     },
     drupalRoute: {
       enabled: true,
+      routeQueries: {
+        nodeCanonical: {
+          fragments: ['nodePage'],
+        },
+      },
     },
     languageSwitchLinks: {
       enabled: true,
