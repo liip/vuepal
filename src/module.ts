@@ -3,12 +3,7 @@ import { extname } from 'pathe'
 import { name, version } from '../package.json'
 import { defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import { ModuleHelper } from './build/classes/ModuleHelper'
-import adminToolbar from './build/features/adminToolbar'
-import devMode from './build/features/devMode'
-import drupalRoute from './build/features/drupalRoute'
-import frontendRouting from './build/features/frontendRouting'
-import localTasks from './build/features/localTasks'
-import trustedOrigins from './build/features/trustedOrigins'
+import { FEATURE_KEYS, FEATURES } from './build/features'
 import { logger } from './build/helpers'
 import {
   COMPONENTS,
@@ -57,7 +52,7 @@ export default defineNuxtModule<ModuleOptions>({
       })
     }
 
-    const helper = new ModuleHelper(nuxt, import.meta.url, {
+    const helper = new ModuleHelper(nuxt, options, import.meta.url, {
       debug: true,
       isModuleBuild,
     })
@@ -65,29 +60,13 @@ export default defineNuxtModule<ModuleOptions>({
     // Each feature can throw an error, for example when types or fields are
     // missing from the GraphQL schema.
     try {
-      if (options.adminToolbar?.enabled || helper.isModuleBuild) {
-        adminToolbar.setup(helper, options.adminToolbar)
-      }
-
-      if (options.devMode?.enabled || helper.isModuleBuild) {
-        devMode.setup(helper, options.devMode)
-      }
-
-      if (options.drupalRoute?.enabled || helper.isModuleBuild) {
-        drupalRoute.setup(helper, options.drupalRoute)
-      }
-
-      if (options.frontendRouting?.enabled || helper.isModuleBuild) {
-        frontendRouting.setup(helper, options.frontendRouting)
-      }
-
-      if (options.localTasks?.enabled || helper.isModuleBuild) {
-        localTasks.setup(helper, options.localTasks)
-      }
-
-      if (options.trustedOrigins?.enabled || helper.isModuleBuild) {
-        trustedOrigins.setup(helper, options.trustedOrigins)
-      }
+      FEATURE_KEYS.forEach((key) => {
+        const featureOptions = options[key]
+        if (featureOptions?.enabled || helper.isModuleBuild) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          FEATURES[key].setup(helper, featureOptions as any)
+        }
+      })
     } catch (e) {
       if (e instanceof Error) {
         logger.box(e.message)

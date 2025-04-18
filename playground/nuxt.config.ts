@@ -72,6 +72,12 @@ export default defineNuxtConfig({
     drupalRoute: {
       enabled: true,
     },
+    languageSwitchLinks: {
+      enabled: true,
+    },
+    breadcrumb: {
+      enabled: true,
+    },
     trustedOrigins: {
       enabled: true,
       origins: [

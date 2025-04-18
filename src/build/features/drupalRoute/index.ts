@@ -18,6 +18,70 @@ export default defineVuepalFeature({
 
     helper.addComposable('useDrupalRoute')
     helper.addComposable('buildDrupalMetatags')
-    helper.addGraphqlFile('fragment.drupalRoute.graphql')
+    const breadcrumbSpread = helper.hasFeatureEnabled('breadcrumb')
+      ? 'breadcrumb { ...breadcrumb }'
+      : ''
+
+    const languageSwitchLinksSpread = helper.hasFeatureEnabled(
+      'languageSwitchLinks',
+    )
+      ? 'languageSwitchLinks { ...languageSwitchLink }'
+      : ''
+
+    helper.graphql.addDocument(
+      'fragment.drupalRoute.graphql',
+      `
+fragment useDrupalRoute on Query {
+  route(path: $path) {
+    __typename
+    path
+
+    ... on InternalUrl {
+      ${breadcrumbSpread}
+      ${languageSwitchLinksSpread}
+
+      metatags {
+        ...metatag
+      }
+
+      routeName
+    }
+
+    ... on EntityUrl {
+      ${breadcrumbSpread}
+      ${languageSwitchLinksSpread}
+
+      metatags {
+        ...metatag
+      }
+
+      drupalRouteEntity: entity {
+        uuid
+        entityBundle
+        entityTypeId
+        id
+      }
+
+      routeName
+    }
+
+    ... on RedirectUrl {
+      redirect {
+        statusCode
+      }
+    }
+  }
+}
+
+fragment metatag on Metatag {
+  id
+  tag
+  attributes {
+    key
+    value
+  }
+}
+`,
+    )
   },
 })

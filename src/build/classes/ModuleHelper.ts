@@ -14,6 +14,8 @@ import type { Nuxt, NuxtPlugin, ResolvedNuxtTemplate } from 'nuxt/schema'
 import { fileExists, logger } from '../helpers'
 import { useGraphqlModuleContext } from 'nuxt-graphql-middleware/utils'
 import { FileCache } from './FileCache'
+import type { ModuleOptions } from '../types/options'
+import { FEATURE_KEYS, type ValidFeature } from '../features'
 
 type GraphqlModuleContext = NonNullable<
   ReturnType<typeof useGraphqlModuleContext>
@@ -75,8 +77,11 @@ export class ModuleHelper {
 
   public readonly caches: FileCache<unknown>[] = []
 
+  private enabledFeatures = new Set<ValidFeature>()
+
   constructor(
     public nuxt: Nuxt,
+    moduleOptions: ModuleOptions,
     moduleUrl: string,
     options: { debug?: boolean; isModuleBuild: boolean },
   ) {
@@ -84,6 +89,12 @@ export class ModuleHelper {
     this.isDebug = !!options.debug
 
     this.graphql = useGraphqlModuleContext()
+
+    FEATURE_KEYS.forEach((key) => {
+      if (moduleOptions[key]?.enabled || this.isModuleBuild) {
+        this.enabledFeatures.add(key)
+      }
+    })
 
     // Gather all aliases for each layer.
     const layerAliases = nuxt.options._layers.map((layer) => {
@@ -370,5 +381,9 @@ export class ModuleHelper {
 
   public clearFilePathCaches(filePath: string) {
     this.caches.forEach((cache) => cache.clear(filePath))
+  }
+
+  public hasFeatureEnabled(key: ValidFeature): boolean {
+    return this.enabledFeatures.has(key)
   }
 }

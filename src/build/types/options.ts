@@ -1,10 +1,5 @@
 import type { VuepalFeature } from './../features/defineFeature'
-import type adminToolbar from './../features/adminToolbar'
-import type devMode from './../features/devMode'
-import type drupalRoute from './../features/drupalRoute'
-import type frontendRouting from './../features/frontendRouting'
-import type localTasks from './../features/localTasks'
-import type trustedOrigins from './../features/trustedOrigins'
+import type { FEATURES } from '../features'
 
 export const COMPOSABLES = [
   'useClickTriggerProxy',
@@ -23,43 +18,11 @@ type FeatureOptions<T> =
     ? O & { enabled: boolean }
     : { enabled: boolean }
 
-export type ModuleOptions = {
-  /**
-   * Provides a <VuepalAdminToolbar> component to render the Drupal toolbar.
-   */
-  adminToolbar?: FeatureOptions<typeof adminToolbar>
+export type ModuleOptionsFeatures = {
+  [K in keyof typeof FEATURES]?: FeatureOptions<(typeof FEATURES)[K]>
+}
 
-  /**
-   * Provides features for local development.
-   */
-  devMode?: FeatureOptions<typeof devMode>
-
-  /**
-   * Provides the useDrupalRoute() composable to automatically handle
-   * redirects and metatags.
-   */
-  drupalRoute?: FeatureOptions<typeof drupalRoute>
-
-  /**
-   * Provides a feature to have Nuxt pages be connected to a Node in Drupal.
-   *
-   * Enabling the feature requires setting the outputPath option.
-   * The module will then generate the settings YML file for Drupal that
-   * contains the aggregated routes where the frontend "dictates" the aliases
-   * for all languages.
-   */
-  frontendRouting?: FeatureOptions<typeof frontendRouting>
-
-  /**
-   * Provides a component to render Drupal local tasks.
-   */
-  localTasks?: FeatureOptions<typeof localTasks>
-
-  /**
-   * Provides a client plugin to validate the origin.
-   */
-  trustedOrigins?: FeatureOptions<typeof trustedOrigins>
-
+export type ModuleOptions = ModuleOptionsFeatures & {
   /**
    * Disable composables. By default all composables are included.
    */

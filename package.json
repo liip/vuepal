@@ -66,7 +66,7 @@
     "happy-dom": "^13.3.8",
     "nuxt": "^3.16.2",
     "nuxt-graphql-middleware": "^5.0.0-alpha.17",
-    "nuxt-language-negotiation": "^1.0.1",
+    "nuxt-language-negotiation": "^1.0.2",
     "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.0.1",

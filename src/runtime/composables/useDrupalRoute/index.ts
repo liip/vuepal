@@ -58,7 +58,12 @@ type DrupalRoute = {
 }
 
 type DrupalRouteHookPayload = {
+  /**
+   * The Nuxt route path for which the useDrupalRoute composable was called.
+   */
+  path: string
   drupalRoute?: DrupalRoute
+  routeQuery?: UseDrupalRouteFragment | null
   metatags: DrupalRouteMetatags
 }
 
@@ -167,12 +172,14 @@ export async function useDrupalRoute<T extends object = object>(
     return {}
   })
 
+  const nuxtRoute = useRoute()
+
   const hookPayload = computed<DrupalRouteHookPayload>(() => ({
+    path: nuxtRoute.path,
     drupalRoute: drupalRoute.value,
     metatags: metatags.value,
+    routeQuery: query.value,
   }))
-
-  const nuxtRoute = useRoute()
 
   const handleRoute = async () => {
     // Handle redirects first.
@@ -212,7 +219,7 @@ export async function useDrupalRoute<T extends object = object>(
     // At this point we have an entity and the route can be rendered.
     // Implementors might still throw an error afterwards, e.g. when the route
     // belongs to an entity that is not supported in the frontend.
-    await app.callHook('drupal-route', hookPayload.value)
+    await app.callHook('vuepal:drupal-route', hookPayload.value)
   }
 
   // Add a watcher, but only on client side.
@@ -231,6 +238,9 @@ export async function useDrupalRoute<T extends object = object>(
 
 declare module '#app' {
   interface RuntimeNuxtHooks {
-    'drupal-route': (data: DrupalRouteHookPayload) => HookResult
+    /**
+     * Called inside useDrupalRoute if a valid Drupal route was found.
+     */
+    'vuepal:drupal-route': (data: DrupalRouteHookPayload) => HookResult
   }
 }
