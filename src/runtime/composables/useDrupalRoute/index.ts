@@ -1,5 +1,6 @@
 import type { SerializableHead, Link } from '@unhead/vue'
 import type { HookResult } from '@nuxt/schema'
+import type { RouteLocationRaw } from 'vue-router'
 import type { UseDrupalRouteFragment } from '#graphql-operations'
 import { buildDrupalMetatags } from './../buildDrupalMetatags'
 import {
@@ -9,6 +10,7 @@ import {
   navigateTo,
   createError,
   watch,
+  useRoute,
   type ComputedRef,
   type Ref,
 } from '#imports'
@@ -170,14 +172,30 @@ export async function useDrupalRoute<T extends object = object>(
     metatags: metatags.value,
   }))
 
+  const nuxtRoute = useRoute()
+
   const handleRoute = async () => {
     // Handle redirects first.
     if (query.value?.route && 'redirect' in query.value.route) {
-      await navigateTo(query.value.route.path, {
-        redirectCode: query.value.route.redirect?.statusCode ?? 301,
-        replace: true,
-        external: true,
-      })
+      const redirectTarget = query.value.route.path
+      if (redirectTarget) {
+        // If the redirect already includes query parameters don't add the
+        // current query params. Otherwise redirect to the path including the
+        // current query parameters.
+        const target: RouteLocationRaw = redirectTarget.includes('?')
+          ? redirectTarget
+          : {
+              path: redirectTarget,
+              query: nuxtRoute.query,
+            }
+
+        await navigateTo(target, {
+          redirectCode: query.value.route.redirect?.statusCode ?? 301,
+          replace: true,
+          external: true,
+        })
+      }
+
       return
     }
 
