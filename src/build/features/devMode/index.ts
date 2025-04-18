@@ -25,8 +25,10 @@ export default defineVuepalFeature<{
       helper.addPlugin('forceHttps')
     }
 
-    if (options?.url) {
-      logger.box(`Visit ${options.url} and start developing!`)
-    }
+    helper.nuxt.hooks.hookOnce('modules:done', () => {
+      if (options?.url) {
+        logger.box(`Visit ${options.url} and start developing!`)
+      }
+    })
   },
 })

@@ -72,6 +72,16 @@ export default defineNuxtConfig({
     drupalRoute: {
       enabled: true,
     },
+    trustedOrigins: {
+      enabled: true,
+      origins: [
+        'http://localhost:3001',
+        'http://localhost:3004',
+        'http://localhost:3000',
+        'https://localhost:3000',
+      ],
+      redirectUrl: 'https://localhost:3000',
+    },
   },
 
   compatibilityDate: '2024-09-10',

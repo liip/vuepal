@@ -34,6 +34,7 @@
     "styles:watch": "postcss ./css/index.css -o ./src/runtime/css/output.css --watch",
     "dev:build": "nuxi build playground",
     "dev:prepare": "PLAYGROUND_MODULE_BUILD=true nuxt-module-build build --stub && PLAYGROUND_MODULE_BUILD=true nuxt-module-build prepare && nuxi prepare playground",
+    "dev:start": "node playground/.output/server/index.mjs",
     "release": "npm run lint && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",

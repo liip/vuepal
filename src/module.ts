@@ -8,6 +8,7 @@ import devMode from './build/features/devMode'
 import drupalRoute from './build/features/drupalRoute'
 import frontendRouting from './build/features/frontendRouting'
 import localTasks from './build/features/localTasks'
+import trustedOrigins from './build/features/trustedOrigins'
 import { logger } from './build/helpers'
 import {
   COMPONENTS,
@@ -82,6 +83,10 @@ export default defineNuxtModule<ModuleOptions>({
 
       if (options.localTasks?.enabled || helper.isModuleBuild) {
         localTasks.setup(helper, options.localTasks)
+      }
+
+      if (options.trustedOrigins?.enabled || helper.isModuleBuild) {
+        trustedOrigins.setup(helper, options.trustedOrigins)
       }
     } catch (e) {
       if (e instanceof Error) {

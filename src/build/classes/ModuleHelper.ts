@@ -10,7 +10,7 @@ import {
 } from '@nuxt/kit'
 import { isObjectType, isInterfaceType } from 'graphql'
 import { relative } from 'pathe'
-import type { Nuxt, ResolvedNuxtTemplate } from 'nuxt/schema'
+import type { Nuxt, NuxtPlugin, ResolvedNuxtTemplate } from 'nuxt/schema'
 import { fileExists, logger } from '../helpers'
 import { useGraphqlModuleContext } from 'nuxt-graphql-middleware/utils'
 import { FileCache } from './FileCache'
@@ -263,10 +263,13 @@ export class ModuleHelper {
     }
   }
 
-  public addPlugin(name: string) {
-    addPlugin(this.resolvers.module.resolve('./runtime/plugins/' + name), {
-      append: false,
-    })
+  public addPlugin(name: string, mode: NuxtPlugin['mode'] = 'all') {
+    addPlugin(
+      { src: this.resolvers.module.resolve('./runtime/plugins/' + name), mode },
+      {
+        append: false,
+      },
+    )
   }
 
   public addComposable(name: string) {

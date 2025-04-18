@@ -4,6 +4,7 @@ import type devMode from './../features/devMode'
 import type drupalRoute from './../features/drupalRoute'
 import type frontendRouting from './../features/frontendRouting'
 import type localTasks from './../features/localTasks'
+import type trustedOrigins from './../features/trustedOrigins'
 
 export const COMPOSABLES = [
   'useClickTriggerProxy',
@@ -53,6 +54,11 @@ export type ModuleOptions = {
    * Provides a component to render Drupal local tasks.
    */
   localTasks?: FeatureOptions<typeof localTasks>
+
+  /**
+   * Provides a client plugin to validate the origin.
+   */
+  trustedOrigins?: FeatureOptions<typeof trustedOrigins>
 
   /**
    * Disable composables. By default all composables are included.
