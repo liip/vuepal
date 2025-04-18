@@ -172,6 +172,12 @@ export async function useDrupalRoute<T extends object = object>(
     return {}
   })
 
+  const ctx: UseDrupalRoute<T | undefined> = {
+    entity,
+    drupalRoute,
+    metatags,
+  }
+
   const nuxtRoute = useRoute()
 
   const hookPayload = computed<DrupalRouteHookPayload>(() => ({
@@ -181,31 +187,32 @@ export async function useDrupalRoute<T extends object = object>(
     routeQuery: query.value,
   }))
 
-  const handleRoute = async () => {
-    // Handle redirects first.
-    if (query.value?.route && 'redirect' in query.value.route) {
-      const redirectTarget = query.value.route.path
-      if (redirectTarget) {
-        // If the redirect already includes query parameters don't add the
-        // current query params. Otherwise redirect to the path including the
-        // current query parameters.
-        const target: RouteLocationRaw = redirectTarget.includes('?')
-          ? redirectTarget
-          : {
-              path: redirectTarget,
-              query: nuxtRoute.query,
-            }
+  // Redirects are only handled once.
+  if (query.value?.route && 'redirect' in query.value.route) {
+    const redirectTarget = query.value.route.path
+    if (redirectTarget) {
+      // If the redirect already includes query parameters don't add the
+      // current query params. Otherwise redirect to the path including the
+      // current query parameters.
+      const target: RouteLocationRaw = redirectTarget.includes('?')
+        ? redirectTarget
+        : {
+            path: redirectTarget,
+            query: nuxtRoute.query,
+          }
 
-        await navigateTo(target, {
-          redirectCode: query.value.route.redirect?.statusCode ?? 301,
-          replace: true,
-          external: true,
-        })
-      }
-
-      return
+      await navigateTo(target, {
+        redirectCode: query.value.route.redirect?.statusCode ?? 301,
+        replace: true,
+        external: true,
+      })
     }
 
+    // Return the context immediately.
+    return ctx
+  }
+
+  const handleRoute = async () => {
     // Check if Drupal returned a route and/or entity.
     // If it's missing, throw an error, unless the user requested not to throw.
     if ((!query.value?.route || !entity.value) && !options?.noError) {
@@ -229,11 +236,7 @@ export async function useDrupalRoute<T extends object = object>(
 
   await handleRoute()
 
-  return {
-    entity,
-    drupalRoute,
-    metatags,
-  }
+  return ctx
 }
 
 declare module '#app' {
