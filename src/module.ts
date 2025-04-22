@@ -45,10 +45,12 @@ export default defineNuxtModule<ModuleOptions>({
       await installModule('nuxt-graphql-middleware', {
         downloadSchema: false,
         graphqlEndpoint: 'http://starterkit.ddev.site/de/graphql',
-        schemaPath: './playground/schema.graphql',
+        schemaPath: './schema.graphql',
+        autoImportPatterns: ['./playground/app/**/*.graphql'],
       })
       await installModule('nuxt-language-negotiation', {
-        availableLanguages: ['de', 'en'],
+        languages: ['de', 'en'],
+        negotiators: [],
       })
     }
 

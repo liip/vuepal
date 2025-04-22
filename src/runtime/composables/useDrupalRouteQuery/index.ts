@@ -42,7 +42,7 @@ export async function useDrupalRouteQuery<
         return data.data
       },
       graphqlCaching: {
-        client: options?.clientCache ?? false,
+        client: options?.clientCache ?? true,
       },
     },
   )

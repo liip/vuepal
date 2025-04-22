@@ -1,3 +1,8 @@
+import {
+  acceptLanguage,
+  pathPrefix,
+} from 'nuxt-language-negotiation/negotiators'
+
 export default defineNuxtConfig({
   ssr: false,
   devtools: {
@@ -11,6 +16,7 @@ export default defineNuxtConfig({
   ],
 
   graphqlMiddleware: {
+    autoImportPatterns: ['./app/**/*.graphql'],
     // For local development:
     // Set this to true to update the schema.
     // Make sure the starterkit app is running.
@@ -32,11 +38,8 @@ export default defineNuxtConfig({
   },
 
   languageNegotiation: {
-    // Define the available languages.
-    availableLanguages: ['de', 'en'],
-    defaultLanguageNoPrefix: false,
-
-    negotiators: ['pathPrefix', 'acceptLanguage'],
+    languages: ['de', 'en'],
+    negotiators: [acceptLanguage(), pathPrefix()],
   },
 
   app: {

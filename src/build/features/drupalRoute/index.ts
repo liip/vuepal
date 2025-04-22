@@ -2,10 +2,23 @@ import { defineVuepalFeature } from '../defineFeature'
 import { pascalCase, camelCase } from 'change-case'
 
 type DrupalRouteDefinition = {
+  /**
+   * Which fragments to include for the route query.
+   *
+   * The fragments must exist in the project and they must target a type
+   * that implements "Entity".
+   */
   fragments: string[]
 }
 
 export default defineVuepalFeature<{
+  /**
+   * Define which route GraphQL queries to generate.
+   *
+   * Each property generates a query. The value defines which fragments to use.
+   *
+   * You can then use the route query using the useDrupalRouteQuery() composable.
+   */
   routeQueries?: Record<string, DrupalRouteDefinition>
 }>({
   name: 'drupalRoute',

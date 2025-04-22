@@ -33,8 +33,8 @@
     "styles:build": "postcss ./css/index.css -o ./src/runtime/css/output.css",
     "styles:watch": "postcss ./css/index.css -o ./src/runtime/css/output.css --watch",
     "dev:build": "nuxi build playground",
-    "dev:prepare": "PLAYGROUND_MODULE_BUILD=true nuxt-module-build build --stub && PLAYGROUND_MODULE_BUILD=true nuxt-module-build prepare && nuxi prepare playground",
     "dev:start": "node playground/.output/server/index.mjs",
+    "dev:prepare": "PLAYGROUND_MODULE_BUILD=true nuxt-module-build build --stub && PLAYGROUND_MODULE_BUILD=true nuxt-module-build prepare && nuxi prepare playground",
     "release": "npm run lint && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
@@ -50,6 +50,8 @@
   "dependencies": {
     "change-case": "^5.4.4",
     "fzf": "^0.5.2",
+    "nuxt-graphql-middleware": "^5.0.0-alpha.19",
+    "nuxt-language-negotiation": "^2.0.0-alpha.1",
     "yaml": "^2.4.1"
   },
   "devDependencies": {
@@ -66,8 +68,6 @@
     "eslint-plugin-prettier": "^5.2.6",
     "happy-dom": "^13.3.8",
     "nuxt": "^3.16.2",
-    "nuxt-graphql-middleware": "^5.0.0-alpha.17",
-    "nuxt-language-negotiation": "^1.0.2",
     "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
     "postcss-import": "^16.0.1",
