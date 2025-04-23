@@ -79,7 +79,7 @@ export default defineNuxtConfig({
       enabled: true,
       routeQueries: {
         nodeCanonical: {
-          fragments: ['nodePage'],
+          fragments: ['nodePage'] as never[],
         },
       },
     },

@@ -15,6 +15,11 @@ const props = defineProps<{
   activeClass?: string
 }>()
 
+defineSlots<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default(props: { isExternal: boolean }): any
+}>()
+
 const EXTERNAL_URL_EXTENSIONS = ['jpg', 'png', 'svg', 'pdf']
 
 const router = useRouter()

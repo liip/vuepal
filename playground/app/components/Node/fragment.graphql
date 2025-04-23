@@ -1,0 +1,20 @@
+fragment nodeContact on NodeContact {
+  __typename
+  title
+  uuid
+}
+
+fragment nodePressRelease on NodePressRelease {
+  __typename
+  title
+  uuid
+  date: fieldDate {
+    formatted(drupalDateFormat: OLIVERO_MEDIUM)
+  }
+  lead: fieldLead
+  contact: fieldContact {
+    name: label
+    jobTitle: fieldJobTitle
+    mail: fieldEmail
+  }
+}

@@ -1,5 +1,7 @@
 import { defineVuepalFeature } from '../defineFeature'
 import { pascalCase, camelCase } from 'change-case'
+import { RouteQueryBuilder } from './RouteQueryBuilder'
+import type { EntityFragment } from '#vuepal-build/graphql'
 
 type DrupalRouteDefinition = {
   /**
@@ -8,7 +10,7 @@ type DrupalRouteDefinition = {
    * The fragments must exist in the project and they must target a type
    * that implements "Entity".
    */
-  fragments: string[]
+  fragments: Array<keyof EntityFragment>
 }
 
 export default defineVuepalFeature<{
@@ -100,7 +102,10 @@ fragment useDrupalRoute on Query {
 `,
     )
 
-    const routeQueries = Object.entries(options?.routeQueries || {})
+    const routeQueries = Object.entries(options?.routeQueries || {}) as [
+      string,
+      DrupalRouteDefinition,
+    ][]
 
     if (helper.isModuleBuild) {
       routeQueries.push([
@@ -169,6 +174,28 @@ declare module '#vuepal-build/route-queries' {
 `
       },
     )
+
+    const routeQueryBuilder = new RouteQueryBuilder(helper.graphql)
+
+    const state = {
+      template: '',
+    }
+
+    helper.addTemplate(
+      'graphql',
+      () => {
+        return 'export {}'
+      },
+      () => {
+        return () => state.template
+      },
+    )
+
+    helper.nuxt.hook('nuxt-graphql-middleware:build', (ctx) => {
+      const fragments = ctx.output.getFragments().map((v) => v.node)
+      routeQueryBuilder.handleFragments(fragments)
+      state.template = routeQueryBuilder.buildGraphqlTypesTemplate()
+    })
 
     // Generate GraphQL queries.
     routeQueries.forEach(([name, definition]) => {

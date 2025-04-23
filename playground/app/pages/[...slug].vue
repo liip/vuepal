@@ -9,5 +9,5 @@ import { useDrupalRouteQuery, useRoute } from '#imports'
 
 const route = useRoute()
 
-const { entity } = await useDrupalRouteQuery('routeNodeCanonical')
+const { entity } = await useDrupalRouteQuery('nodeCanonical')
 </script>

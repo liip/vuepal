@@ -24,8 +24,6 @@ import { nonNullable } from '../../helpers/type'
 
 const adapter = createAdapter()
 
-console.log(adapter)
-
 const route = useRoute()
 const language = adapter.getCurrentLanguage()
 

@@ -10,11 +10,9 @@ import { definePageMeta } from '#imports'
 definePageMeta({
   name: 'contact-page',
   drupalFrontendRoute: true,
+  path: '/kontakt',
   languageMapping: {
-    de: '/de/kontakt',
-    fr: '/fr/contactez-nous',
-    en: '/en/contact-us',
-    it: '/it/conatactio',
+    en: '/contact-us',
   },
 })
 </script>

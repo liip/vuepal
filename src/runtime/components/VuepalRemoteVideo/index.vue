@@ -24,6 +24,15 @@ const props = withDefaults(
   },
 )
 
+defineSlots<{
+  default(props: {
+    videoId: string
+    embedUrl: string
+    thumbnailUrl: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }): any
+}>()
+
 enum VideoSourcePlatform {
   YOUTUBE = 'youtube',
   VIMEO = 'vimeo',

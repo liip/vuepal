@@ -8,10 +8,9 @@ import { definePageMeta } from '#imports'
 definePageMeta({
   name: 'search',
   drupalFrontendRoute: true,
+  path: '/suche',
   languageMapping: {
-    de: '/de/suche',
-    fr: '/fr/chercher',
-    en: '/en/search',
+    en: '/search',
   },
 })
 </script>

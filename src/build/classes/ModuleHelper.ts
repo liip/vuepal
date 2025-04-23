@@ -96,20 +96,6 @@ export class ModuleHelper {
       }
     })
 
-    // Gather all aliases for each layer.
-    const layerAliases = nuxt.options._layers.map((layer) => {
-      // @see https://nuxt.com/docs/api/nuxt-config#alias
-      return {
-        '~~': layer.config.rootDir,
-        '@@': layer.config.rootDir,
-        '~': layer.config.srcDir,
-        '@': layer.config.srcDir,
-        // Merge any additional aliases defined by the layer.
-        // Must be last so that the layer may override the "default" aliases.
-        ...(layer.config.alias || {}),
-      }
-    })
-
     // Resolver for the root directory.
     const srcResolver = createResolver(nuxt.options.srcDir)
     const rootResolver = createResolver(nuxt.options.rootDir)
@@ -240,7 +226,7 @@ export class ModuleHelper {
   public addTemplate(
     path: string,
     build?: (() => string) | null,
-    buildTypes?: (() => string) | null,
+    buildTypes?: (() => string | (() => string)) | null,
   ) {
     if (build) {
       const content = build().trim()
@@ -258,13 +244,14 @@ export class ModuleHelper {
       if (path.startsWith('/')) {
         throw new Error('buildTypes is not available for absolute paths.')
       }
-      const content = buildTypes().trim()
+      const result = buildTypes()
+      const getContents = typeof result === 'string' ? () => result : result
       const filename = 'vuepal-build/' + path + '.d.ts'
       addTypeTemplate(
         {
           filename: filename as `${string}.d.ts`,
           write: true,
-          getContents: () => content,
+          getContents,
         },
         {
           nuxt: true,
