@@ -1,52 +1,11 @@
-import fs from 'node:fs'
-import { addTemplate } from '@nuxt/kit'
+import { addTemplate, extendPages } from '@nuxt/kit'
 import { relative } from 'pathe'
 import type { NuxtPage } from '@nuxt/schema'
 import { defineVuepalFeature } from '../defineFeature'
-import type { FileCache } from '../../classes/FileCache'
-import type { ModuleHelper } from '../../classes/ModuleHelper'
 import { logger } from '../../helpers'
 
 function nonNullable<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined
-}
-
-/**
- * Extracts the language mapping.
- */
-const extractLanguageMapping = (
-  code: string,
-): Record<string, string> | undefined => {
-  const RGX = /languageMapping:\s*\{([^}]+)\}/
-  const matches = code.match(RGX)
-
-  const match = matches?.[1]
-
-  if (!match) {
-    return
-  }
-
-  const jsonString = `{${match.trim().replace(/'/g, '"')}}`
-
-  const fn = new Function(`return ${jsonString}`)
-  const mapping = fn()
-  if (typeof mapping !== 'object') {
-    return
-  }
-
-  for (const key in mapping) {
-    if (typeof key !== 'string') {
-      return
-    }
-
-    const value = mapping[key]
-
-    if (typeof value !== 'string') {
-      return
-    }
-  }
-
-  return mapping
 }
 
 type ExtractedPage = {
@@ -56,53 +15,35 @@ type ExtractedPage = {
 }
 
 class PageCollector {
-  private cache: FileCache<ExtractedPage>
   private templateContents = ''
 
-  constructor(
-    helper: ModuleHelper,
-    private langcodes: string[],
-  ) {
-    this.cache = helper.createFileCache()
-  }
+  constructor(private defaultLanguage: string) {}
 
-  private async handlePage(page: NuxtPage): Promise<ExtractedPage | undefined> {
+  private handlePage(page: NuxtPage): ExtractedPage | undefined {
+    const name = page.name
+
     if (!page.file) {
       return
     }
-
-    if (!page.name) {
-      return
-    }
-
-    const name = page.name
-
-    const cached = this.cache.get(page.file)
-    if (cached) {
-      return cached
-    }
-
-    const contents = await fs.promises
-      .readFile(page.file)
-      .then((v) => v.toString())
 
     const extracted: ExtractedPage = {
       filePath: page.file,
       isDrupalFrontendRoute: false,
     }
 
-    if (contents.includes('drupalFrontendRoute')) {
+    if (page.meta?.drupalFrontendRoute) {
       extracted.isDrupalFrontendRoute = true
       try {
-        const languageMapping = extractLanguageMapping(contents)
-        if (languageMapping) {
-          const mapping = Object.entries(languageMapping)
-            .map(([langcode, path]) => {
-              return `      ${langcode}: '${path}'`
-            })
-            .join('\n')
-          extracted.yml = `  ${name}:\n    aliases:\n${mapping}`
-        }
+        const mapping = Object.entries({
+          ...(page.meta.languageMapping || {}),
+          [this.defaultLanguage]: page.path,
+        })
+          .map(([langcode, path]) => {
+            return `      ${langcode}: '${path}'`
+          })
+          .sort()
+          .join('\n')
+        extracted.yml = `  ${name}:\n    aliases:\n${mapping}`
       } catch (e) {
         logger.warn(
           `Failed to extract language mapping in page "${page.file}"`,
@@ -111,19 +52,15 @@ class PageCollector {
       }
     }
 
-    this.cache.set(page.file, extracted)
     return extracted
   }
 
-  public async handlePages(pages: NuxtPage[]) {
-    const mapped = await Promise.all(
-      pages.map((page) => this.handlePage(page)),
-    ).then((result) =>
-      result
-        .map((v) => v?.yml)
-        .filter(nonNullable)
-        .sort(),
-    )
+  public handlePages(pages: NuxtPage[]) {
+    const mapped = pages
+      .map((page) => this.handlePage(page))
+      .map((v) => v?.yml)
+      .filter(nonNullable)
+      .sort()
 
     this.templateContents = `keys:\n${mapped.join('\n')}`
   }
@@ -135,9 +72,9 @@ class PageCollector {
 
 export default defineVuepalFeature<{
   /**
-   * The supported language codes.
+   * The default language.
    */
-  langcodes: string[]
+  defaultLanguage: string
 
   /**
    * The output path of the generated YML file.
@@ -180,16 +117,37 @@ export {}
     }
 
     const outputPath = options?.outputPath
-    const langcodes = options?.langcodes
     if (!outputPath) {
       throw new Error(`Missing required option "frontendRouting.outputPath".`)
     }
 
-    if (!langcodes?.length) {
-      throw new Error(`Missing required option "frontendRouting.langcodes".`)
+    if (!options.defaultLanguage) {
+      throw new Error(
+        `Missing required option "frontendRouting.defaultLanguage".`,
+      )
     }
 
-    const collector = new PageCollector(helper, langcodes)
+    const languageNegotiationModuleIndex =
+      helper.nuxt.options.modules.findIndex(
+        (v) => v === 'nuxt-language-negotiation',
+      )
+
+    // Module is installed.
+    if (languageNegotiationModuleIndex !== -1) {
+      const vuepalIndex = helper.nuxt.options.modules.findIndex(
+        (v) => v === 'vuepal',
+      )
+
+      // Make sure that nuxt-language-negotiation runs after vuepal, or else
+      // the routes have already been translated.
+      if (languageNegotiationModuleIndex < vuepalIndex) {
+        throw new Error(
+          'The "nuxt-language-negotiation" module must be put after "vuepal" in nuxt.config.ts',
+        )
+      }
+    }
+
+    const collector = new PageCollector(options.defaultLanguage)
 
     addTemplate({
       filename: helper.resolvers.root.resolve(options.outputPath),
@@ -197,13 +155,15 @@ export {}
       getContents: () => collector.getTemplateContents(),
     })
 
-    // This hook is called by Nuxt when any page changes.
-    // During development, the hook is called *after* the builder:watch
-    // event.
-    helper.nuxt.hooks.hook('pages:resolved', async (pages) => {
-      helper.logDebug('frontendRouting: pages:resolved start')
-      await collector.handlePages(pages)
-      helper.logDebug('frontendRouting: pages:resolved done')
+    helper.nuxt.options.experimental.scanPageMeta = true
+    helper.nuxt.options.experimental.extraPageMetaExtractionKeys ||= []
+    helper.nuxt.options.experimental.extraPageMetaExtractionKeys.push(
+      'languageMapping',
+      'drupalFrontendRoute',
+    )
+
+    extendPages((pages) => {
+      collector.handlePages(pages)
     })
   },
 })

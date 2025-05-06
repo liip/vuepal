@@ -13,7 +13,6 @@ import { relative } from 'pathe'
 import type { Nuxt, NuxtPlugin, ResolvedNuxtTemplate } from 'nuxt/schema'
 import { fileExists, logger } from '../helpers'
 import { useGraphqlModuleContext } from 'nuxt-graphql-middleware/utils'
-import { FileCache } from './FileCache'
 import type { ModuleOptions } from '../types/options'
 import { FEATURE_KEYS, type ValidFeature } from '../features'
 
@@ -74,8 +73,6 @@ export class ModuleHelper {
   private tsPaths: Record<string, string> = {}
 
   public readonly graphql: GraphqlModuleContext
-
-  public readonly caches: FileCache<unknown>[] = []
 
   private enabledFeatures = new Set<ValidFeature>()
 
@@ -358,16 +355,6 @@ export class ModuleHelper {
       './runtime/graphql/' + fileName,
     )
     this.graphql.addImportFile(resolved)
-  }
-
-  public createFileCache<T>(): FileCache<T> {
-    const cache = new FileCache<T>()
-    this.caches.push(cache)
-    return cache
-  }
-
-  public clearFilePathCaches(filePath: string) {
-    this.caches.forEach((cache) => cache.clear(filePath))
   }
 
   public hasFeatureEnabled(key: ValidFeature): boolean {

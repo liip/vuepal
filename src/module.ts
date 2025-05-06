@@ -1,5 +1,4 @@
 import { fileURLToPath } from 'node:url'
-import { extname } from 'pathe'
 import { name, version } from '../package.json'
 import { defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import { ModuleHelper } from './build/classes/ModuleHelper'
@@ -127,26 +126,5 @@ declare module '#vuepal-build/adapter' {
     })
 
     helper.applyBuildConfig()
-
-    if (helper.isDev) {
-      const POSSIBLE_EXTENSIONS = ['.js', '.ts', '.vue', '.mjs']
-      nuxt.hook('builder:watch', (_event, providedFilePath) => {
-        const fileExtension = extname(providedFilePath).toLowerCase()
-        if (!POSSIBLE_EXTENSIONS.includes(fileExtension)) {
-          return
-        }
-
-        // Hack: This is supposed to be absolute. But it's not. Sometimes.
-        // Let's make sure it's really absolute. We have to assume that the path
-        // is actually relative to the source directory. If not, HMR will be
-        // broken.
-        const pathAbsolute = providedFilePath.startsWith('/')
-          ? providedFilePath
-          : helper.resolvers.src.resolve(providedFilePath)
-
-        helper.logDebug('builder:watch clear file caches')
-        helper.clearFilePathCaches(pathAbsolute)
-      })
-    }
   },
 })

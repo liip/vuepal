@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     },
     frontendRouting: {
       enabled: true,
-      langcodes: ['de', 'en'],
+      defaultLanguage: 'de',
       outputPath: './../drupal/frontend_routing.settings.yml',
     },
     drupalRoute: {
