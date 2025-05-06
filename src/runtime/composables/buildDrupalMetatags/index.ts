@@ -1,32 +1,21 @@
-import type { Link, Meta } from '@unhead/vue'
-
-type GraphqlDrupalMetatagAttribute = {
-  key: string
-  value: string
-}
-
-type GraphqlDrupalMetatag = {
-  id?: string
-  tag?: string
-  attributes: GraphqlDrupalMetatagAttribute[]
-}
+import type {
+  MetatagFragment,
+  UseDrupalRouteFragment,
+} from '#graphql-operations'
+import type { Link, Meta, Script } from '@unhead/vue'
+import type { DrupalRouteMetatags } from '../../types/metatags'
 
 type GraphqlDrupalMetatags = {
-  metatags: GraphqlDrupalMetatag[]
-  schema: string
-}
-
-type DrupalRouteMetatags = {
-  title: string
-  link: Link[]
-  meta: Link[]
-  schema: string
+  metatags?: MetatagFragment[]
+  schemaOrgMetatags?: {
+    json?: string
+  }
 }
 
 /**
  * Get the page title from the Drupal metatags.
  */
-function getTitle(tag: GraphqlDrupalMetatag): string | undefined {
+function getTitle(tag: MetatagFragment): string | undefined {
   if (tag.id !== 'title') {
     return
   }
@@ -49,9 +38,7 @@ function getTitle(tag: GraphqlDrupalMetatag): string | undefined {
  * single object:
  * { one: 'foo', two: 'bar' }
  */
-function getTagObject(
-  attributes: GraphqlDrupalMetatagAttribute[],
-): Link | Meta {
+function getTagObject(attributes: MetatagFragment['attributes']): Link | Meta {
   return attributes.reduce<Record<string, string>>((acc, v) => {
     acc[v.key] = v.value
     return acc
@@ -59,42 +46,49 @@ function getTagObject(
 }
 
 export function buildDrupalMetatags(
-  data:
-    | GraphqlDrupalMetatags
-    | GraphqlDrupalMetatags['metatags']
-    | undefined
-    | null,
+  data: GraphqlDrupalMetatags | UseDrupalRouteFragment | undefined | null,
 ): DrupalRouteMetatags {
   try {
-    const link: Link[] = []
-    const meta: Meta[] = []
-    let title: string = ''
-    const schema = data && 'schema' in data ? data.schema : ''
+    if (data && 'route' in data && data.route && 'metatags' in data.route) {
+      const route = data.route
+      const schemaOrg = route.schemaOrgMetatags?.json || ''
+      const tags = route.metatags
 
-    const tags = data && 'metatags' in data ? data.metatags : data
+      const link: Link[] = []
+      const meta: Meta[] = []
+      const script: Script[] = []
 
-    if (tags && Array.isArray(tags)) {
-      for (let i = 0; i < tags.length; i++) {
-        const tag = tags[i]!
-        const tagTitle = getTitle(tag)
-        if (tagTitle) {
-          title = tagTitle
-        } else {
-          const item = getTagObject(tag.attributes)
-          if (tag.tag === 'link') {
-            link.push(item)
-          } else if (tag.tag === 'meta') {
-            meta.push(item)
+      if (schemaOrg) {
+        script.push({
+          type: 'application/ld+json',
+          innerHTML: schemaOrg,
+        })
+      }
+
+      let title: string = ''
+      if (tags && Array.isArray(tags)) {
+        for (let i = 0; i < tags.length; i++) {
+          const tag = tags[i]!
+          const tagTitle = getTitle(tag)
+          if (tagTitle) {
+            title = tagTitle
+          } else {
+            const item = getTagObject(tag.attributes)
+            if (tag.tag === 'link') {
+              link.push(item)
+            } else if (tag.tag === 'meta') {
+              meta.push(item)
+            }
           }
         }
       }
-    }
 
-    return { link, meta, title, schema }
+      return { link, meta, title, script, schemaOrg }
+    }
   } catch (e) {
     console.log('Error in Vuepal:')
     console.log(e)
   }
 
-  return { link: [], meta: [], title: '', schema: '' }
+  return { link: [], meta: [], script: [], title: '', schemaOrg: '' }
 }

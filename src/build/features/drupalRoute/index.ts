@@ -43,17 +43,22 @@ export default defineVuepalFeature<{
 
     helper.addGraphqlFile('fragment.metatag.graphql')
 
-    // Conditionally add the breadcrumb on the route fragment.
-    const breadcrumbSpread = helper.hasFeatureEnabled('breadcrumb')
-      ? 'breadcrumb { ...breadcrumb }'
-      : ''
+    const routeSpreadParts: string[] = ['metatags { ...metatag }']
 
-    // Conditionally add the languageSwitchLinks on the route fragment.
-    const languageSwitchLinksSpread = helper.hasFeatureEnabled(
-      'languageSwitchLinks',
-    )
-      ? 'languageSwitchLinks { ...languageSwitchLink }'
-      : ''
+    if (helper.graphql.schemaHasType('SchemaMetatag')) {
+      helper.addGraphqlFile('fragment.schemaMetatag.graphql')
+      routeSpreadParts.push('schemaOrgMetatags { ...schemaMetatag }')
+    }
+
+    if (helper.hasFeatureEnabled('breadcrumb')) {
+      routeSpreadParts.push('breadcrumb { ...breadcrumb }')
+    }
+
+    if (helper.hasFeatureEnabled('languageSwitchLinks')) {
+      routeSpreadParts.push('languageSwitchLinks { ...languageSwitchLink }')
+    }
+
+    const routeSpreads = routeSpreadParts.join('\n      ')
 
     helper.graphql.addDocument(
       'fragment.drupalRoute.graphql',
@@ -64,32 +69,19 @@ fragment useDrupalRoute on Query {
     path
 
     ... on InternalUrl {
-      ${breadcrumbSpread}
-      ${languageSwitchLinksSpread}
-
-      metatags {
-        ...metatag
-      }
-
       routeName
+      ${routeSpreads}
     }
 
     ... on EntityUrl {
-      ${breadcrumbSpread}
-      ${languageSwitchLinksSpread}
-
-      metatags {
-        ...metatag
-      }
-
+      routeName
       drupalRouteEntity: entity {
         uuid
         entityBundle
         entityTypeId
         id
       }
-
-      routeName
+      ${routeSpreads}
     }
 
     ... on RedirectUrl {

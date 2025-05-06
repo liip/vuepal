@@ -1,0 +1,3 @@
+fragment schemaMetatag on SchemaMetatag {
+  json
+}

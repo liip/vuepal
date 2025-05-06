@@ -1,4 +1,3 @@
-import type { Link } from '@unhead/vue'
 import type { HookResult } from '@nuxt/schema'
 import type { RouteLocationRaw } from 'vue-router'
 import type { UseDrupalRouteFragment } from '#graphql-operations'
@@ -15,12 +14,7 @@ import {
   type Ref,
 } from '#imports'
 import type { DrupalRoute, UseDrupalRoute } from './../../helpers/drupalRoute'
-
-type DrupalRouteMetatags = {
-  title: string
-  link: Link[]
-  meta: Link[]
-}
+import type { DrupalRouteMetatags } from '../../types/metatags'
 
 type Options = {
   /**
@@ -91,13 +85,9 @@ export async function useDrupalRoute<T extends object = object>(
     }
   })
 
-  const metatags = computed<DrupalRouteMetatags>(() => {
-    const route = query.value?.route
-    if (route && 'metatags' in route) {
-      return buildDrupalMetatags(route.metatags)
-    }
-    return { link: [], meta: [], title: '', schema: '' }
-  })
+  const metatags = computed<DrupalRouteMetatags>(() =>
+    buildDrupalMetatags(query.value),
+  )
 
   useHead(metatags)
 
