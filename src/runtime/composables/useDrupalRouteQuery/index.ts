@@ -44,10 +44,13 @@ export async function useDrupalRouteQuery<
       graphqlCaching: {
         client: options?.clientCache ?? true,
       },
+      deep: false,
     },
   )
 
-  const ctx = await useDrupalRoute<E>(data)
+  // Don't pass the reactive object, because it will cause a 404 being thrown
+  // by the watcher in useDrupalRoute().
+  const ctx = await useDrupalRoute<E>(data.value, null, route)
 
   // We only support EntityCanonicalUrl in this query.
   if (

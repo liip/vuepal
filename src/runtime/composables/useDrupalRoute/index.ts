@@ -1,5 +1,8 @@
 import type { HookResult } from '@nuxt/schema'
-import type { RouteLocationRaw } from 'vue-router'
+import type {
+  RouteLocationRaw,
+  RouteLocationNormalizedLoaded,
+} from 'vue-router'
 import type { UseDrupalRouteFragment } from '#graphql-operations'
 import { buildDrupalMetatags } from './../buildDrupalMetatags'
 import {
@@ -12,6 +15,7 @@ import {
   useRoute,
   type ComputedRef,
   type Ref,
+  isRef,
 } from '#imports'
 import type { DrupalRoute, UseDrupalRoute } from './../../helpers/drupalRoute'
 import type { DrupalRouteMetatags } from '../../types/metatags'
@@ -48,6 +52,7 @@ type UseDrupalRouteQueryInput =
 export function useDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
   options: { noError: true },
+  providedRoute?: RouteLocationNormalizedLoaded,
 ): Promise<UseDrupalRoute<T | undefined>>
 
 // Overload signature to make the return type non nullable without options or
@@ -55,7 +60,8 @@ export function useDrupalRoute<T extends object = object>(
 // type is always going to be the passed in generic type.
 export function useDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
-  options?: { noError?: false },
+  options?: { noError?: false } | null,
+  providedRoute?: RouteLocationNormalizedLoaded,
 ): Promise<UseDrupalRoute<T>>
 
 /**
@@ -67,9 +73,11 @@ export function useDrupalRoute<T extends object = object>(
  */
 export async function useDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
-  options?: Options,
+  options?: Options | null,
+  providedRoute?: RouteLocationNormalizedLoaded,
 ): Promise<UseDrupalRoute<T | undefined>> {
   const app = useNuxtApp()
+  const inputIsRef = isRef(queryInput)
 
   const query = computed<UseDrupalRouteFragment | undefined | null>(() => {
     if (!queryInput) {
@@ -125,7 +133,7 @@ export async function useDrupalRoute<T extends object = object>(
     metatags,
   }
 
-  const nuxtRoute = useRoute()
+  const nuxtRoute = providedRoute ?? useRoute()
 
   const hookPayload = computed<DrupalRouteHookPayload>(() => ({
     path: nuxtRoute.path,
@@ -177,7 +185,7 @@ export async function useDrupalRoute<T extends object = object>(
   }
 
   // Add a watcher, but only on client side.
-  if (import.meta.client) {
+  if (import.meta.client && inputIsRef) {
     watch(query, handleRoute)
   }
 
