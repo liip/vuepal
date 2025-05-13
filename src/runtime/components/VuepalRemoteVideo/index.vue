@@ -18,9 +18,17 @@ import {
 const props = withDefaults(
   defineProps<{
     url?: string
+    autoplay?: boolean
+    muted?: boolean
+    controls?: boolean
+    loop?: boolean
   }>(),
   {
     url: '',
+    autoplay: false,
+    muted: false,
+    controls: true,
+    loop: false,
   },
 )
 
@@ -60,10 +68,23 @@ const videoId = computed(() => {
 })
 
 const embedUrl = computed(() => {
-  if (kind.value === VideoSourcePlatform.YOUTUBE) {
-    return `https://www.youtube.com/embed/${videoId.value}?modestbranding=1&rel=0&autoplay=1`
-  } else if (kind.value === VideoSourcePlatform.VIMEO) {
-    return `https://player.vimeo.com/video/${videoId.value}?autoplay=1`
+  if (kind.value === VideoSourcePlatform.YOUTUBE && videoId.value) {
+    const params = new URLSearchParams({
+      rel: '0',
+      autoplay: props.autoplay ? '1' : '0',
+      mute: props.muted ? '1' : '0',
+      controls: props.controls ? '1' : '0',
+      loop: props.loop ? '1' : '0',
+    })
+    return `https://www.youtube.com/embed/${videoId.value}?${params.toString()}`
+  } else if (kind.value === VideoSourcePlatform.VIMEO && videoId.value) {
+    const params = new URLSearchParams({
+      autoplay: props.autoplay ? '1' : '0',
+      muted: props.muted ? '1' : '0',
+      controls: props.controls ? '1' : '0',
+      loop: props.loop ? '1' : '0',
+    })
+    return `https://player.vimeo.com/video/${videoId.value}?${params.toString()}`
   }
   return ''
 })
