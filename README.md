@@ -53,6 +53,37 @@ This option enables the `useDrupalRoute()` composable. This composable provides
 the necessary GraphQL fragment and query to fetch the route data and metatags of
 a Drupal page.
 
+### useDrupalRouteQuery()
+
+You can optionally also let Vuepal generate GraphQL route queries for you:
+
+```ts
+export default defineNuxtConfig({
+  vuepal: {
+    drupalRoute: {
+      enabled: true,
+      // The route queries that will be generated for useDrupalRouteQuery().
+      routeQueries: {
+        slug: { fragments: ['nodePage'] },
+        nodePage: { fragments: ['nodePage'] },
+        nodeCanonical: {
+          fragments: ['nodeContact', 'nodePage', 'nodePressRelease'],
+        },
+      },
+    },
+  },
+})
+```
+
+This will generate three route queries. They can be used with
+`useDrupalRouteQuery`:
+
+```ts
+const { entity } = await useDrupalRouteQuery('slug')
+```
+
+Behind the scenes, this will call `useGraphqlQuery` and `useDrupalRoute`.
+
 ## Admin Toolbar
 
 ```ts [nuxt.config.ts]

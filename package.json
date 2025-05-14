@@ -1,6 +1,6 @@
 {
   "name": "vuepal",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0",
   "description": "Nuxt+Vue Drupal Integration",
   "license": "MIT",
   "homepage": "https://github.com/liip/vuepal",
@@ -51,7 +51,7 @@
     "change-case": "^5.4.4",
     "fzf": "^0.5.2",
     "nuxt-graphql-middleware": "^5.1.0",
-    "nuxt-language-negotiation": "^2.0.0-alpha.2",
+    "nuxt-language-negotiation": "^2.0.0",
     "yaml": "^2.4.1"
   },
   "devDependencies": {
