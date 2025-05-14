@@ -4,25 +4,27 @@ Vuepal 3.0 comes with a lot of new features and improvements. This document
 outlines the changes and how to upgrade your existing Vuepal setup to the latest
 version.
 
-Vuepal 3.0 is meant to be used with Nuxt > 3.17 and with the following modules:
+Version 3.0 is meant to be used with Nuxt > 3.17 and with the latest versions of
+these modules:
 
-- [Nuxt GraphQL Middleware](https://nuxt.com/modules/nuxt-graphql-middleware) >
-  5.0.0
-- [Nuxt Language Negotiation](https://github.com/dulnan/nuxt-language-negotiation) >
-  2.0.0
-- [Nuxt Easy Texts](https://github.com/dulnan/nuxt-easy-texts) > 2.0.0
-- [Nuxt SVG Icon Sprite](https://github.com/dulnan/nuxt-svg-icon-sprite) > 2.0.0
-- [NUxt Page Dependency](https://github.com/dulnan/nuxt-page-dependencies) >
-  1.0.0
+| Module                    | Version | Upgrade Guide                                                                    |
+| ------------------------- | ------- | -------------------------------------------------------------------------------- |
+| nuxt-graphql-middleware   | 5.1.0   | https://github.com/dulnan/nuxt-graphql-middleware/releases/tag/release%2F5.0.0   |
+| nuxt-language-negotiation | 2.0.0   | https://github.com/dulnan/nuxt-language-negotiation/releases/tag/release%2F2.0.0 |
+
+When using the "blökkli Starterkit", you may also update
+[nuxt-easy-texts](https://github.com/dulnan/nuxt-easy-texts) and
+[nuxt-svg-icon-sprite](https://github.com/dulnan/nuxt-svg-icon-sprite), though
+they don't have any dependency with Vuepal.
 
 ## Nuxt 4 compatibility
 
 The Vuepal module is compatible with Nuxt 4. The module will automatically
 detect the Nuxt version and work with the new file structure. We recommend
-already switching to the
+already switching to this
 [new folder structure](https://nuxt.com/docs/getting-started/upgrade#new-directory-structure).
 
-## Automatic Registering of fragments
+## Automatic Registration of Fragments
 
 A new feature in nuxt-graphql-middleware allows other modules to automatically
 register GraphQL documents. Vuepal also uses this for its fragments and queries.
@@ -68,14 +70,14 @@ exist. Based on that, it will dynamically add or remove certain features.
 For example, if you enable the `graphql_metatag_schema_org_schema` Drupal module
 and the `metatags_schema_org` GraphQL extension, Vuepal will automatically query
 the `schemaOrgMetatags` field in route queries and set the schema.org metatags
-automatically.
+automatically. This also applies for `breadcrumb`, `languageSwitchLinks` and
+`metatags`.
 
 ## New `useDrupalRouteQuery` composable
 
 This is the most important change in Vuepal 3.0. Instead of creating a GraphQL
-query for each route, you can now use the `useDrupalRouteQuery()` composable to
-automatically generate route queries. You can define the queries to generate and
-the related fragments in the Vuepal configuration in the `nuxt.config.ts` file.
+query for each route, you can now let Vuepal create them for your. You can
+define the route queries in the configuration in your `nuxt.config.ts`.
 
 This new feature is optional; the "old way" still works.
 
@@ -123,8 +125,7 @@ await renderPageDependencies()
 ### After
 
 Define the route queries in the `nuxt.config.ts` file. Here you need to specify
-the fragments that this route query will use. The`useDrupalRouteQuery()`
-composable will automatically generate the GraphQL query and extract the entity.
+which entity fragments the query should contain:
 
 ```ts
 export default defineNuxtConfig({
@@ -143,6 +144,9 @@ export default defineNuxtConfig({
   },
 })
 ```
+
+Now you can use these three route queries using the new `useDrupalRouteQuery`
+composable:
 
 File: `pages/[...slug]/index.vue`
 
@@ -213,12 +217,11 @@ introduced in `nuxt-language-negotiation`.
 
 ```ts
 definePageMeta({
-  name: 'static-page-example',
+  name: 'contact',
   drupalFrontendRoute: true,
   languageMapping: {
-    de: '/de/statisch',
-    fr: '/fr/statique',
-    en: '/en/static',
+    de: '/de/kontakt',
+    en: '/en/contact',
   },
 })
 ```
@@ -234,42 +237,6 @@ definePageMeta({
     fr: '/statique',
     en: '/static',
   },
-})
-```
-
-## Removal of the `pluginOrder` module
-
-This module is no longer needed as Nuxt 3 now has a solution to properly order
-the plugins.
-
-Before:
-
-```ts [nuxt.config.ts]
-  pluginOrder: {
-  order: [
-    // Match plugins by their file path.
-    // Note that only a single plugin may match.
-    // The match is performed as "plugin.src.includes(v.pathMatch)".
-    { pathMatch: 'plugins/language.ts' },
-    { pathMatch: 'myother/plugin.ts' },
-  ],
-    logSortedPlugins
-:
-  false,
-}
-```
-
-After: Use the `dependsOn` feature of Nuxt 3 to define plugin order.
-
-```ts [app/plugins/initData.ts]
-export default defineNuxtPlugin({
-  name: 'starterkit:init-data',
-  dependsOn: [
-    'nuxt-graphql-middleware-provide-state',
-    'starterkit:graphql-plugin',
-    'nuxt:router',
-  ],
-  async setup() {},
 })
 ```
 
@@ -383,4 +350,71 @@ You can then access the breadcrumb links either using `useBreadcrumb()` or via
     </NuxtPageDependency>
   </div>
 </template>
+```
+
+## Hooking into `useDrupalRoute`
+
+If you want to alter some additional app state whenever `useDrupalRoute` or
+`useDrupalRouteQuery` is called, you can do so by hooking into the
+`vuepal:drupal-route` hook. This is in fact how the `breadcrumb` and
+`languageSwitchLinks` feature also work:
+
+```ts
+import type { BreadcrumbFragment } from '#graphql-operations'
+import { getBreadcrumbFromRouteQuery } from '#vuepal/helpers/breadcrumb'
+
+/**
+ * Manages the breadcrumb state.
+ */
+export default defineNuxtPlugin({
+  name: 'vuepal:breadcrumb',
+  setup(app) {
+    const state = useState<BreadcrumbFragment[]>('breadcrumbLinks', () => [])
+
+    // Called by useDrupalRoute.
+    app.hooks.hook('vuepal:drupal-route', (data) => {
+      state.value = getBreadcrumbFromRouteQuery(data.routeQuery)
+    })
+  },
+})
+```
+
+The hook is called after every non-error route query.
+
+## Optional (when using blökkli starterkit)
+
+### Removal of the `pluginOrder` module
+
+This module is no longer needed as Nuxt 3 now has a solution to properly order
+the plugins.
+
+Before:
+
+```ts [nuxt.config.ts]
+  pluginOrder: {
+  order: [
+    // Match plugins by their file path.
+    // Note that only a single plugin may match.
+    // The match is performed as "plugin.src.includes(v.pathMatch)".
+    { pathMatch: 'plugins/language.ts' },
+    { pathMatch: 'myother/plugin.ts' },
+  ],
+    logSortedPlugins
+:
+  false,
+}
+```
+
+After: Use the `dependsOn` feature of Nuxt 3 to define plugin order.
+
+```ts [app/plugins/initData.ts]
+export default defineNuxtPlugin({
+  name: 'starterkit:init-data',
+  dependsOn: [
+    'nuxt-graphql-middleware-provide-state',
+    'starterkit:graphql-plugin',
+    'nuxt:router',
+  ],
+  async setup() {},
+})
 ```
