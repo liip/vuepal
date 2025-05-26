@@ -1,5 +1,45 @@
 # Changelog
 
+## v3.0.1
+
+[compare changes](https://github.com/liip/vuepal/compare/v2.5.5...v3.0.1)
+
+### 🚀 Enhancements
+
+- Nuxt-graphql-middleware schema validation ([6993dce](https://github.com/liip/vuepal/commit/6993dce))
+- Improve performance when building frontend routing yml ([5ddcffe](https://github.com/liip/vuepal/commit/5ddcffe))
+- Nuxt 4 compatibility ([cf1b385](https://github.com/liip/vuepal/commit/cf1b385))
+- Trusted origins plugin ([64813e1](https://github.com/liip/vuepal/commit/64813e1))
+- Breadcrumb, languageSwitchLinks feature ([96bceb5](https://github.com/liip/vuepal/commit/96bceb5))
+- Dynamic useGraphqlRouteQuery ([7a99a1c](https://github.com/liip/vuepal/commit/7a99a1c))
+- Improve route queries, types ([004e17e](https://github.com/liip/vuepal/commit/004e17e))
+- Use "native" page meta extraction ([172b340](https://github.com/liip/vuepal/commit/172b340))
+- SchemaOrgMetatags support ([c1f4859](https://github.com/liip/vuepal/commit/c1f4859))
+
+### 🩹 Fixes
+
+- Strict typecheck ([2061fcf](https://github.com/liip/vuepal/commit/2061fcf))
+- PageMeta type augmentation ([50a4b3b](https://github.com/liip/vuepal/commit/50a4b3b))
+- Redirect query parameters ([592e679](https://github.com/liip/vuepal/commit/592e679))
+- Handle redirects only once in useDrupalRoute ([9b6e7ff](https://github.com/liip/vuepal/commit/9b6e7ff))
+- Adapt to new nuxt-language-negotiation version ([06f0b48](https://github.com/liip/vuepal/commit/06f0b48))
+- UseDrupalRouteQuery reactivity ([0aba3d2](https://github.com/liip/vuepal/commit/0aba3d2))
+
+### 💅 Refactors
+
+- Module structure, Nuxt 4 compatibility ([102e84f](https://github.com/liip/vuepal/commit/102e84f))
+
+### 🏡 Chore
+
+- **release:** V2.5.5 ([5b4bb8c](https://github.com/liip/vuepal/commit/5b4bb8c))
+- Upgrade guide ([a84e728](https://github.com/liip/vuepal/commit/a84e728))
+- Release v3.0.0 ([2b3baf1](https://github.com/liip/vuepal/commit/2b3baf1))
+
+### ❤️ Contributors
+
+- Jan Hug <me@dulnan.net>
+- Ayalon <info@ayalon.ch>
+
 ## v2.5.5
 
 [compare changes](https://github.com/liip/vuepal/compare/v2.5.4...v2.5.5)
