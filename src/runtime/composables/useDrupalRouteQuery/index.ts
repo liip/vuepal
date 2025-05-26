@@ -56,7 +56,9 @@ export async function useDrupalRouteQuery<
   if (
     data.value &&
     'route' in data.value &&
-     !["EntityCanonicalUrl", "DefaultEntityUrl"].includes(data.value.route?.__typename)
+    !['EntityCanonicalUrl', 'DefaultEntityUrl'].includes(
+      data.value.route?.__typename,
+    )
   ) {
     throw createError({
       statusCode: 404,
