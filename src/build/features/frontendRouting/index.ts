@@ -34,12 +34,13 @@ class PageCollector {
     if (page.meta?.drupalFrontendRoute) {
       extracted.isDrupalFrontendRoute = true
       try {
-        const mapping = Object.entries({
+        const mapping = Object.entries<string>({
           ...(page.meta.languageMapping || {}),
           [this.defaultLanguage]: page.path,
         })
           .map(([langcode, path]) => {
-            return `      ${langcode}: '${path}'`
+            const pathValue = path.includes(' ') ? `'${path}'` : path
+            return `      ${langcode}: ${pathValue}`
           })
           .sort()
           .join('\n')
