@@ -56,6 +56,7 @@ export async function useDrupalRouteQuery<
   if (
     data.value &&
     'route' in data.value &&
+    data.value.route &&
     !['EntityCanonicalUrl', 'DefaultEntityUrl'].includes(
       data.value.route?.__typename,
     )

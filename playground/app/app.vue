@@ -16,10 +16,32 @@
 <script setup lang="ts">
 import { VuepalLocalTasks, VuepalAdminToolbar } from '#components'
 import { useTrustedOrigin } from '#imports'
+import { narrowTypeByProperty } from '#vuepal/helpers/graphql'
 
 const originErrorMessage = useTrustedOrigin({
   redirect: true,
 })
+
+// small section which ensures narrowTypeByProperty works
+const a = { a: 5, aa: 7 }
+const b = { b: 6, bb: 4 }
+const c = Math.random() < 0.5 ? a : b
+const d = narrowTypeByProperty(c, 'a')
+
+d?.a
+d?.aa
+// @ts-expect-error
+d?.b
+// @ts-expect-error
+d?.bb
+
+const e: { a?: number, e: number } = { e: 4 }
+const f = Math.random() < 0.5 ? a : e
+const g = narrowTypeByProperty(f, 'a')
+
+g?.a
+// @ts-expect-error
+g?.e
 </script>
 
 <style lang="css">

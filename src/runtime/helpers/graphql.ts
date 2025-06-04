@@ -87,6 +87,13 @@ export function removeTypename<T extends { __typename?: string }>(
   return clone
 }
 
+type KeysOfUnion<T> = T extends T ? keyof T : never
+type HasKey<T, K extends PropertyKey> = T extends object
+  ? K extends keyof T
+    ? T
+    : never
+  : never
+
 /**
  * Narrow a GraphQL type by property.
  *
@@ -95,12 +102,12 @@ export function removeTypename<T extends { __typename?: string }>(
  *
  * The returned type is narrowed using the given property.
  */
-export function narrowTypeByProperty<T extends object, K extends keyof T>(
-  obj: T | object | null | undefined,
-  propName: K,
-): T | undefined {
+export function narrowTypeByProperty<
+  T extends object,
+  K extends KeysOfUnion<T>,
+>(obj: T | object | null | undefined, propName: K): HasKey<T, K> | undefined {
   if (obj && propName in obj) {
-    return obj as T
+    return obj as HasKey<T, K>
   }
   return undefined
 }
