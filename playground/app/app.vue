@@ -35,7 +35,7 @@ d?.b
 // @ts-expect-error
 d?.bb
 
-const e: { a?: number, e: number } = { e: 4 }
+const e: { a?: number; e: number } = { e: 4 }
 const f = Math.random() < 0.5 ? a : e
 const g = narrowTypeByProperty(f, 'a')
 
