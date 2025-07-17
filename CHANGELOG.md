@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.0.3
+
+[compare changes](https://github.com/liip/vuepal/compare/v3.0.2...v3.0.3)
+
+### 🩹 Fixes
+
+- Throw http 500 when route query fails ([582e730](https://github.com/liip/vuepal/commit/582e730))
+
+### 🏡 Chore
+
+- Nuxt 4.0.0 compatibility ([cac84fa](https://github.com/liip/vuepal/commit/cac84fa))
+
+### ❤️ Contributors
+
+- Jan Hug <me@dulnan.net>
+
 ## v3.0.1
 
 [compare changes](https://github.com/liip/vuepal/compare/v2.5.5...v3.0.1)
