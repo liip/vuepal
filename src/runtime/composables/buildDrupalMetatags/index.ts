@@ -49,42 +49,48 @@ export function buildDrupalMetatags(
   data: GraphqlDrupalMetatags | UseDrupalRouteFragment | undefined | null,
 ): DrupalRouteMetatags {
   try {
+    let schemaOrg = ''
+    let tags: MetatagFragment[] = []
+
     if (data && 'route' in data && data.route && 'metatags' in data.route) {
       const route = data.route
-      const schemaOrg = route.schemaOrgMetatags?.json || ''
-      const tags = route.metatags
+      schemaOrg = route.schemaOrgMetatags?.json || ''
+      tags = route.metatags
+    }
 
-      const link: Link[] = []
-      const meta: Meta[] = []
-      const script: Script[] = []
+    if (data && 'metatags' in data) {
+      schemaOrg = data.schemaOrgMetatags?.json || ''
+      tags = data.metatags || []
+    }
 
-      if (schemaOrg) {
-        script.push({
-          type: 'application/ld+json',
-          innerHTML: schemaOrg,
-        })
-      }
+    const link: Link[] = []
+    const meta: Meta[] = []
+    const script: Script[] = []
 
-      let title: string = ''
-      if (tags && Array.isArray(tags)) {
-        for (let i = 0; i < tags.length; i++) {
-          const tag = tags[i]!
-          const tagTitle = getTitle(tag)
-          if (tagTitle) {
-            title = tagTitle
-          } else {
-            const item = getTagObject(tag.attributes)
-            if (tag.tag === 'link') {
-              link.push(item)
-            } else if (tag.tag === 'meta') {
-              meta.push(item)
-            }
-          }
+    if (schemaOrg) {
+      script.push({
+        type: 'application/ld+json',
+        innerHTML: schemaOrg,
+      })
+    }
+
+    let title: string = ''
+    for (let i = 0; i < tags.length; i++) {
+      const tag = tags[i]!
+      const tagTitle = getTitle(tag)
+      if (tagTitle) {
+        title = tagTitle
+      } else {
+        const item = getTagObject(tag.attributes)
+        if (tag.tag === 'link') {
+          link.push(item)
+        } else if (tag.tag === 'meta') {
+          meta.push(item)
         }
       }
-
-      return { link, meta, title, script, schemaOrg }
     }
+
+    return { link, meta, title, script, schemaOrg }
   } catch (e) {
     console.log('Error in Vuepal:')
     console.log(e)
