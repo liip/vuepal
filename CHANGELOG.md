@@ -1,5 +1,19 @@
 # Changelog
 
+## v3.0.4
+
+[compare changes](https://github.com/liip/vuepal/compare/v3.0.3...v3.0.4)
+
+### 🩹 Fixes
+
+- add support for GraphqlDrupalMetatags back to buildDrupalMetatags ([597e8d4](https://github.com/liip/vuepal/commit/597e8d4))
+- Newline in frontend_routing.settings.yml ([af4a271](https://github.com/liip/vuepal/commit/af4a271))
+
+### ❤️ Contributors
+
+- Milan Bombsch <milan.bombsch@liip.ch>
+- Jan Hug <me@dulnan.net>
+
 ## v3.0.3
 
 [compare changes](https://github.com/liip/vuepal/compare/v3.0.2...v3.0.3)
