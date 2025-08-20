@@ -63,7 +63,7 @@ class PageCollector {
       .filter(nonNullable)
       .sort()
 
-    this.templateContents = `keys:\n${mapped.join('\n')}`
+    this.templateContents = `keys:\n${mapped.join('\n')}\n`
   }
 
   getTemplateContents(): string {
