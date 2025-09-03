@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.0.5
+
+[compare changes](https://github.com/liip/vuepal/compare/v3.0.4...v3.0.5)
+
+### 🚀 Enhancements
+
+- Add option to disable default fragments ([670b52e](https://github.com/liip/vuepal/commit/670b52e))
+
+### ❤️ Contributors
+
+- Jan Hug <me@dulnan.net>
+
 ## v3.0.4
 
 [compare changes](https://github.com/liip/vuepal/compare/v3.0.3...v3.0.4)

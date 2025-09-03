@@ -1,9 +1,18 @@
 import { defineVuepalFeature } from '../defineFeature'
 
-export default defineVuepalFeature({
+export default defineVuepalFeature<{
+  /**
+   * Add the default languageSwitchLink fragment.
+   *
+   * If false, you will have to define your own fragment in your project.
+   *
+   * @default true
+   */
+  addFragment?: boolean
+}>({
   name: 'languageSwitchLinks',
   description: 'Adds support for language links.',
-  setup(helper) {
+  setup(helper, options) {
     helper.assertGraphqlObjectField(
       { extension: 'language_switch_links' },
       'EntityUrl',
@@ -12,6 +21,9 @@ export default defineVuepalFeature({
 
     helper.addComposable('useLanguage')
     helper.addPlugin('languageSwitchLinks')
-    helper.addGraphqlFile('fragment.languageSwitchLink.graphql')
+
+    if (options?.addFragment !== false) {
+      helper.addGraphqlFile('fragment.languageSwitchLink.graphql')
+    }
   },
 })
