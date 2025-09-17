@@ -5,7 +5,12 @@ module.exports = {
     preflight: false,
     container: false,
   },
-  content: [], // This is important, else unwanted styles will leak.
+  important: '.vuepal-root',
+  content: [
+    './src/**/*.{vue,js,ts}',
+    './playground/**/*.{vue,js,ts}',
+    './app/**/*.{vue,js,ts}',
+  ],
   theme: {
     extend: {
       transitionTimingFunction: {

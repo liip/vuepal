@@ -1,21 +1,39 @@
 /* eslint-disable */
+function scopePreflight(container = '.vuepal-root') {
+  const creator = () => ({
+    postcssPlugin: 'scope-preflight',
+    Once(root) {
+      root.walkRules((rule) => {
+        if (!rule.selector) return
+        const s = rule.selector.replace(/\s+/g, ' ').trim()
+        const isRootOrHost =
+          /^:root(?:\s*,\s*:host)?$|^:host(?:\s*,\s*:root)?$/.test(s)
+        const isUniversal =
+          /^\*,\s*::?before,\s*::?after(?:,\s*::backdrop)?$/.test(s)
+        const isBackdrop = /^::backdrop$/.test(s)
+
+        if (isRootOrHost) {
+          rule.selector = container
+        } else if (isUniversal) {
+          rule.selector = `${container} *, ${container} ::before, ${container} ::after`
+        } else if (isBackdrop) {
+          rule.selector = `${container} ::backdrop`
+        }
+      })
+    },
+  })
+  creator.postcss = true
+  return creator
+}
+
 module.exports = {
-  plugins: {
-    'postcss-import': {},
-    'postcss-mixins': {},
-    'postcss-nested-import': {},
-    'tailwindcss/nesting': {},
-    'postcss-url': {},
-    tailwindcss: {},
-    cssnano: {
-      preset: 'default',
-    },
-    'postcss-replace': {
-      pattern: /(--tw|\*, ::before, ::after)/g,
-      data: {
-        '--tw': '--vuepal-tw',
-        '*, ::before, ::after': ':root',
-      },
-    },
-  },
+  plugins: [
+    require('postcss-import'),
+    require('postcss-mixins'),
+    require('postcss-nested-import'),
+    require('tailwindcss/nesting'),
+    require('postcss-url'),
+    require('tailwindcss'),
+    scopePreflight('.vuepal-root'),
+  ],
 }
