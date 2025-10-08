@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="playground-admin">
-      <VuepalProvider>
-        <VuepalAdminToolbar />
-        <VuepalLocalTasks />
-      </VuepalProvider>
+      <VuepalAdminToolbar />
+      <VuepalLocalTasks />
     </div>
     <div v-if="originErrorMessage" class="origin-error-message">
       {{ originErrorMessage }}

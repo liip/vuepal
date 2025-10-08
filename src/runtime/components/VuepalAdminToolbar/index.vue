@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="data"
-    class="vuepal-admin-toolbar"
+    class="vuepal-admin-toolbar vuepal-root"
     :style="style"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
