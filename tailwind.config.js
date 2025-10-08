@@ -6,11 +6,7 @@ module.exports = {
     container: false,
   },
   important: '.vuepal-root',
-  content: [
-    './src/**/*.{vue,js,ts}',
-    './playground/**/*.{vue,js,ts}',
-    './app/**/*.{vue,js,ts}',
-  ],
+  content: [],
   theme: {
     extend: {
       transitionTimingFunction: {
