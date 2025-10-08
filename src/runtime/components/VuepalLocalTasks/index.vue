@@ -1,5 +1,5 @@
 <template>
-  <div class="vuepal-local-tasks">
+  <div class="vuepal-local-tasks vuepal-root">
     <ul>
       <li
         v-for="task in tasks"
