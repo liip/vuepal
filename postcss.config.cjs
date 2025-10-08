@@ -1,4 +1,3 @@
-/* eslint-disable */
 function scopePreflight(container = '.vuepal-root') {
   const creator = () => ({
     postcssPlugin: 'scope-preflight',
@@ -34,6 +33,16 @@ module.exports = {
     require('tailwindcss/nesting'),
     require('postcss-url'),
     require('tailwindcss'),
+    require('cssnano')({
+      preset: 'default',
+    }),
+    require('postcss-replace')({
+      pattern: /(--tw|\*, ::before, ::after)/g,
+      data: {
+        '--tw': '--vuepal-tw',
+        '*, ::before, ::after': ':root',
+      },
+    }),
     scopePreflight('.vuepal-root'),
   ],
 }
