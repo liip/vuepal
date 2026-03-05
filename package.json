@@ -29,7 +29,8 @@
   "scripts": {
     "prepack": "npm run dev:prepare && npm run styles:build && nuxt-module-build build && find dist/ -type f -name '*.*' | grep '.spec.' | xargs rm -f",
     "dev": "nuxi dev playground --host",
-    "typecheck": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "typecheck": "scripts/npm_run_typecheck.sh",
+    "typecheck-all": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
     "styles:build": "postcss ./css/index.css -o ./src/runtime/css/output.css",
     "styles:watch": "postcss ./css/index.css -o ./src/runtime/css/output.css --watch",
     "dev:build": "nuxi build playground",
@@ -39,8 +40,7 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "prettier": "prettier --check .",
-    "prettier:fix": "prettier --write .",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "prettier:fix": "prettier --write ."
   },
   "publishConfig": {
     "access": "public"
