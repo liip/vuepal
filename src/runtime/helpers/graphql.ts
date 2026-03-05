@@ -48,10 +48,14 @@ type InferAllowedTypenames<T extends { __typename: string }> = {
  * Check if the object is of the given GraphQL type.
  */
 export function isTypeName<T extends { __typename: string }>(
-  item: T,
+  item: T | unknown,
   typename: T['__typename'],
 ): item is T {
-  return item && item.__typename === typename
+  if (!item || typeof item !== 'object' || !('__typename' in item)) {
+    return false
+  }
+
+  return item.__typename === typename
 }
 
 /**
@@ -66,14 +70,18 @@ export function filterByTypenames<
   T extends { __typename: string },
   K extends InferAllowedTypenames<T>,
 >(
-  items: Array<T> = [],
+  items: Array<T | unknown> | undefined | null,
   typenames: Array<K> | K,
 ): Array<Extract<T, { __typename: K }>> {
-  return items.filter((item) =>
+  if (!items) {
+    return []
+  }
+
+  return items.filter((item): item is Extract<T, { __typename: K }> =>
     typeof typenames === 'string'
       ? isTypeName(item, typenames)
       : typenames.some((typename) => isTypeName(item, typename)),
-  ) as Array<Extract<T, { __typename: K }>>
+  )
 }
 
 /**
