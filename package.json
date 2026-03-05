@@ -38,8 +38,6 @@
     "release": "npm run lint && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
