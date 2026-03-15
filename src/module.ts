@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import { name, version } from '../package.json'
-import { defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { defineNuxtModule, hasNuxtModule } from '@nuxt/kit'
 import { ModuleHelper } from './build/classes/ModuleHelper'
 import { FEATURE_KEYS, FEATURES } from './build/features'
 import { logger } from './build/helpers'
@@ -31,26 +31,15 @@ export default defineNuxtModule<ModuleOptions>({
       )
     }
 
-    // This block is only needed when building the types for the module itself
-    // during development. Nuxt does not use the playground's nuxt.config.ts to
-    // determine which modules should be installed. For this reason we need to
-    // manually install them. Note that this code is never executed on actual
-    // installations of this module.
+    // When building the module types during development, ensure strict
+    // TypeScript settings are applied. The required modules
+    // (nuxt-graphql-middleware, nuxt-language-negotiation) are now registered
+    // in the root nuxt.config.ts.
     if (isModuleBuild) {
       nuxt.options.typescript.strict = true
       nuxt.options.typescript.tsConfig.compilerOptions ||= {}
       nuxt.options.typescript.tsConfig.compilerOptions.noUncheckedIndexedAccess =
         true
-      await installModule('nuxt-graphql-middleware', {
-        downloadSchema: false,
-        graphqlEndpoint: 'http://starterkit.ddev.site/de/graphql',
-        schemaPath: './schema.graphql',
-        autoImportPatterns: ['./playground/app/**/*.graphql'],
-      })
-      await installModule('nuxt-language-negotiation', {
-        languages: ['de', 'en'],
-        negotiators: [],
-      })
     }
 
     const helper = new ModuleHelper(nuxt, options, import.meta.url, {

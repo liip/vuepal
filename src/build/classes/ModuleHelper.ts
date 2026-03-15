@@ -252,7 +252,7 @@ export class ModuleHelper {
         },
         {
           nuxt: true,
-          nitro: true,
+          nitro: false,
         },
       )
     }
