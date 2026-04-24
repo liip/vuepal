@@ -1,6 +1,7 @@
 {
   "name": "vuepal",
   "version": "3.0.5",
+  "packageManager": "npm@11.12.1",
   "description": "Nuxt+Vue Drupal Integration",
   "license": "MIT",
   "homepage": "https://github.com/liip/vuepal",
