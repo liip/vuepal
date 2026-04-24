@@ -15,6 +15,7 @@ jobs:
       - run: corepack enable npm
       - run: npm clean-install
       - run: npm run styles:build
+      - run: npm run dev:prepare
       - run: npm run dev:build
       - run: npm run lint
       - run: npm run prettier
