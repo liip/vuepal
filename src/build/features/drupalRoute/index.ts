@@ -1,7 +1,6 @@
 import { defineVuepalFeature } from '../defineFeature'
 import { pascalCase, camelCase } from 'change-case'
 import { RouteQueryBuilder } from './RouteQueryBuilder'
-import type { EntityFragment } from '#vuepal-build/graphql'
 
 type DrupalRouteDefinition = {
   /**
@@ -10,7 +9,7 @@ type DrupalRouteDefinition = {
    * The fragments must exist in the project and they must target a type
    * that implements "Entity".
    */
-  fragments: Array<keyof EntityFragment>
+  fragments: string[]
 }
 
 export default defineVuepalFeature<{

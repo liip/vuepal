@@ -1,0 +1,35 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - run: corepack enable npm
+      - run: npm clean-install
+      - run: npm run styles:build
+      - run: npm run dev:prepare
+      - run: npm run dev:build
+      - run: npm run lint
+      - run: npm run prettier
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - run: corepack enable npm
+      - run: npm clean-install
+      - run: npm run dev:prepare
+      - run: npm run typecheck
