@@ -12,6 +12,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+      - run: npm install -g npm@11
       - run: npm clean-install
       - run: npm run styles:build
       - run: npm run dev:build
@@ -27,6 +28,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
+      - run: npm install -g npm@11
       - run: npm clean-install
       - run: npm run dev:prepare
       - run: npm run typecheck
