@@ -19,7 +19,6 @@ export default defineVuepalFeature<{
       'languageSwitchLinks',
     )
 
-    helper.addComposable('useLanguage')
     helper.addPlugin('languageSwitchLinks')
 
     if (options?.addFragment !== false) {
