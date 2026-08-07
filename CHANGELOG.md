@@ -1,5 +1,17 @@
 # Changelog
 
+## v3.0.6
+
+[compare changes](https://github.com/liip/vuepal/compare/v3.0.5...v3.0.6)
+
+### 🩹 Fixes
+
+- Remove unresolvable useLanguage auto-import ([95361b0](https://github.com/liip/vuepal/commit/95361b0))
+
+### ❤️ Contributors
+
+- Jon Minder <jonathan.minder@liip.ch>
+
 ## v3.0.5
 
 [compare changes](https://github.com/liip/vuepal/compare/v3.0.4...v3.0.5)
