@@ -1,0 +1,89 @@
+# All fragments + __typename via inline on Node.
+# items type: (NodePageFragment & { __typename } | NodeContactFragment | NodePressReleaseFragment | object) | null
+query entityQueryAllFragments($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      ... on Node {
+        __typename
+      }
+      ...nodePage
+      ...nodePressRelease
+      ...nodeContact
+    }
+  }
+}
+
+# Single fragment without __typename.
+# nodePage does not include __typename, so the generated type won't have it
+# unless we add it separately.
+# items type: (NodePageFragment | object) | null
+query entityQuerySingleFragmentNoTypename($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      ...nodePage
+    }
+  }
+}
+
+# Single fragment that includes __typename.
+# nodeContact has __typename in the fragment.
+# items type: (NodeContactFragment | object) | null
+query entityQuerySingleFragmentWithTypename($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      ...nodeContact
+    }
+  }
+}
+
+# __typename directly in items, no fragments at all.
+# items type: ({ __typename } | null)
+query entityQueryTypenameOnly($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      __typename
+    }
+  }
+}
+
+# Only inline fragments, no named fragments.
+# items type: ({ __typename, title } | { __typename, uuid } | object) | null
+query entityQueryInlineOnly($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      ... on NodePage {
+        __typename
+        title
+      }
+      ... on NodeContact {
+        __typename
+        uuid
+      }
+    }
+  }
+}
+
+# Mix: fragment without __typename (nodePage) combined with fragment
+# that has __typename (nodePressRelease). No inline __typename.
+# items type: (NodePageFragment | NodePressReleaseFragment | object) | null
+query entityQueryMixedTypename($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      ...nodePage
+      ...nodePressRelease
+    }
+  }
+}
+
+# __typename added inline + fragment without __typename.
+# items type: (NodePageFragment & { __typename } | object) | null
+query entityQueryTypenameInlineWithFragment($limit: Int) {
+  entityQuery(entityType: NODE, limit: $limit) {
+    items {
+      ... on Node {
+        __typename
+      }
+      ...nodePage
+    }
+  }
+}

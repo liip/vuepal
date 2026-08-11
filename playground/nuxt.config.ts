@@ -33,6 +33,10 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
+  typescript: {
+    includeWorkspace: false,
+  },
+
   experimental: {
     scanPageMeta: 'after-resolve',
   },
@@ -101,7 +105,7 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2024-09-10',
+  compatibilityDate: '2026-03-15',
 
   future: {
     compatibilityVersion: 4,
