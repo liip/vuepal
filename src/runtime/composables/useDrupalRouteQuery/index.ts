@@ -1,11 +1,10 @@
 import { type DrupalRouteQueries, mapping } from '#vuepal-build/route-queries'
-import {
-  useAsyncGraphqlQuery,
-  useRoute,
-  useDrupalRoute,
-  createError,
-} from '#imports'
+import { useAsyncGraphqlQuery, useRoute, createError } from '#imports'
 import type { UseDrupalRoute } from './../../helpers/drupalRoute'
+import {
+  setupDrupalRoute,
+  handleDrupalRoute,
+} from './../useDrupalRoute/internal'
 
 type ValidRouteQueryName = keyof DrupalRouteQueries
 
@@ -44,7 +43,11 @@ export async function useDrupalRouteQuery<
 
   const queryName = mapping[name]
 
-  const { data, error } = await useAsyncGraphqlQuery(
+  // All composables are called before the first await: an await inside a
+  // composable loses the component instance. Then the metatags would not be
+  // removed when the page unmounts, and on the server the Nuxt app would only
+  // be available with experimental.asyncContext.
+  const asyncData = useAsyncGraphqlQuery(
     queryName,
     {
       path: route.path,
@@ -60,6 +63,10 @@ export async function useDrupalRouteQuery<
     },
   )
 
+  const setup = setupDrupalRoute<E>(asyncData.data, route)
+
+  const { data, error } = await asyncData
+
   // Throw an error when there was an error with the query, so that we
   // dont' serve a 404 for a page that would exist, but can not be loaded.
   if (error.value && !noError) {
@@ -70,16 +77,8 @@ export async function useDrupalRouteQuery<
     })
   }
 
-  // Don't pass the reactive object, because it will cause a 404 being thrown
-  // by the watcher in useDrupalRoute().
-  const ctx = await useDrupalRoute<E>(
-    data.value,
-    {
-      // @ts-expect-error issue with overload, boolean is correct.
-      noError,
-    },
-    route,
-  )
+  // No watcher: it would throw a 404 while the data of the next route loads.
+  const ctx = await handleDrupalRoute(setup, { noError, watch: false })
 
   // useDrupalRoute() has already started the redirect. On the client the
   // browser follows it asynchronously, so do not throw a 404 that would be

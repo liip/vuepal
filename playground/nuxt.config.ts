@@ -42,9 +42,6 @@ export default defineNuxtConfig({
 
   experimental: {
     scanPageMeta: 'after-resolve',
-    // Like the starterkit. useDrupalRouteQuery() calls useDrupalRoute() after
-    // an await, which needs the async context during SSR.
-    asyncContext: true,
   },
 
   languageNegotiation: {
