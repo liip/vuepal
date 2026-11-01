@@ -1,8 +1,6 @@
 import type { HookResult } from '@nuxt/schema'
-import type {
-  RouteLocationRaw,
-  RouteLocationNormalizedLoaded,
-} from 'vue-router'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import { withQuery } from 'ufo'
 import type { UseDrupalRouteFragment } from '#graphql-operations'
 import { buildDrupalMetatags } from './../buildDrupalMetatags'
 import {
@@ -127,13 +125,28 @@ export async function useDrupalRoute<T extends object = object>(
     return {}
   })
 
+  const nuxtRoute = providedRoute ?? useRoute()
+
+  const redirect = computed<string | undefined>(() => {
+    const route = query.value?.route
+    if (!route || !('redirect' in route) || !route.path) {
+      return
+    }
+
+    // If the redirect already includes query parameters don't add the
+    // current query params. Otherwise redirect to the path including the
+    // current query parameters.
+    return route.path.includes('?')
+      ? route.path
+      : withQuery(route.path, nuxtRoute.query)
+  })
+
   const ctx: UseDrupalRoute<T | undefined> = {
     entity,
     drupalRoute,
     metatags,
+    redirect,
   }
-
-  const nuxtRoute = providedRoute ?? useRoute()
 
   const hookPayload = computed<DrupalRouteHookPayload>(() => ({
     path: nuxtRoute.path,
@@ -144,19 +157,8 @@ export async function useDrupalRoute<T extends object = object>(
 
   // Redirects are only handled once.
   if (query.value?.route && 'redirect' in query.value.route) {
-    const redirectTarget = query.value.route.path
-    if (redirectTarget) {
-      // If the redirect already includes query parameters don't add the
-      // current query params. Otherwise redirect to the path including the
-      // current query parameters.
-      const target: RouteLocationRaw = redirectTarget.includes('?')
-        ? redirectTarget
-        : {
-            path: redirectTarget,
-            query: nuxtRoute.query,
-          }
-
-      await navigateTo(target, {
+    if (redirect.value) {
+      await navigateTo(redirect.value, {
         redirectCode: query.value.route.redirect?.statusCode ?? 301,
         replace: true,
         external: true,

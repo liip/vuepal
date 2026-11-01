@@ -84,6 +84,30 @@ const { entity } = await useDrupalRouteQuery('slug')
 
 Behind the scenes, this will call `useGraphqlQuery` and `useDrupalRoute`.
 
+#### Redirects
+
+If Drupal returns a redirect for the path, the composable redirects to the
+target and returns without throwing a 404, also when `noError` is not set. In
+this case `entity` is `undefined`, so the page must not assume that it is set.
+
+On the server the redirect is sent as an HTTP redirect. On the client the
+browser follows it asynchronously, and the page is rendered in the meantime. If
+the target is a file that the browser downloads, the browser stays on the page.
+Use `redirect` to render a message with a link to the target:
+
+```vue
+<template>
+  <div v-if="redirect">
+    <p>You are being redirected.</p>
+    <a :href="redirect">Continue</a>
+  </div>
+</template>
+
+<script setup lang="ts">
+const { entity, redirect } = await useDrupalRouteQuery('nodePage')
+</script>
+```
+
 ## Admin Toolbar
 
 ```ts [nuxt.config.ts]

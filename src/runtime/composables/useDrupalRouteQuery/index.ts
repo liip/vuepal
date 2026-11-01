@@ -81,6 +81,13 @@ export async function useDrupalRouteQuery<
     route,
   )
 
+  // useDrupalRoute() has already started the redirect. On the client the
+  // browser follows it asynchronously, so do not throw a 404 that would be
+  // rendered in the meantime.
+  if (ctx.redirect.value) {
+    return ctx
+  }
+
   // We only support EntityCanonicalUrl in this query.
   if (
     !noError &&
