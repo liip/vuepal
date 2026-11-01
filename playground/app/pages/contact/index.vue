@@ -12,7 +12,6 @@ import {
   useDrupalRoute,
   useRoute,
 } from '#imports'
-import { NodePage, PageHeader } from '#components'
 import type { NodePageFragment } from '#graphql-operations'
 
 // The frontendRouting feature writes this route to frontend_routing.settings,

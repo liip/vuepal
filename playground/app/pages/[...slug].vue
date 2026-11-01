@@ -23,7 +23,6 @@
 
 <script lang="ts" setup>
 import { useDrupalRouteQuery } from '#imports'
-import { NodeArticle, NodePage, PageHeader } from '#components'
 
 const { entity, redirect, drupalRoute } =
   await useDrupalRouteQuery('nodeCanonical')

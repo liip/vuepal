@@ -7,7 +7,6 @@
 
 <script lang="ts" setup>
 import { definePageMeta, useDrupalRouteQuery } from '#imports'
-import { PageHeader } from '#components'
 
 definePageMeta({
   name: 'search',
