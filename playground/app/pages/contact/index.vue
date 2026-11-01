@@ -6,8 +6,14 @@
 </template>
 
 <script setup lang="ts">
-import { definePageMeta, useDrupalRouteQuery } from '#imports'
+import {
+  definePageMeta,
+  useAsyncGraphqlQuery,
+  useDrupalRoute,
+  useRoute,
+} from '#imports'
 import { NodePage, PageHeader } from '#components'
+import type { NodePageFragment } from '#graphql-operations'
 
 // The frontendRouting feature writes this route to frontend_routing.settings,
 // Drupal assigns a node and its aliases to it.
@@ -20,5 +26,12 @@ definePageMeta({
   },
 })
 
-const { entity } = await useDrupalRouteQuery('nodeCanonical')
+// Uses its own query and useDrupalRoute() directly, with a ref as input.
+const route = useRoute()
+const { data } = await useAsyncGraphqlQuery(
+  'route',
+  { path: route.path },
+  { transform: (v) => v.data },
+)
+const { entity } = await useDrupalRoute<NodePageFragment>(data)
 </script>

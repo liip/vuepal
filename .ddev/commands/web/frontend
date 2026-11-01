@@ -1,9 +1,16 @@
 #!/bin/bash
 
-## Description: Start the playground's Nuxt dev server in the web container
-## Usage: frontend
-## Example: ddev frontend
+## Description: Start the playground in the web container (dev server, or a production build with --build)
+## Usage: frontend [--build]
+## Example: ddev frontend\nddev frontend --build
 ## ExecRaw: true
 
+set -euo pipefail
 cd /var/www/html
+
+if [ "${1:-}" = "--build" ]; then
+  npm run dev:build
+  exec node playground/.output/server/index.mjs
+fi
+
 npm run dev

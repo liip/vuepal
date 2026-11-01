@@ -1,9 +1,13 @@
 <template>
-  <div>The search page.</div>
+  <div>
+    <PageHeader />
+    <h1 class="search-page">The search page.</h1>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { definePageMeta } from '#imports'
+import { definePageMeta, useDrupalRouteQuery } from '#imports'
+import { PageHeader } from '#components'
 
 definePageMeta({
   name: 'search',
@@ -13,4 +17,7 @@ definePageMeta({
     en: '/search',
   },
 })
+
+// No node is assigned to this route in Drupal, so there is no entity.
+await useDrupalRouteQuery('nodeCanonical', { noError: true })
 </script>

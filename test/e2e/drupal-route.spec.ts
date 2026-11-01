@@ -15,8 +15,30 @@ test.describe('useDrupalRouteQuery()', () => {
     )
   })
 
+  test('exposes the Drupal route', async ({ page }) => {
+    await goto(page, '/en/articles/first-article')
+    const route = page.locator('.drupal-route')
+    await expect(route).toHaveAttribute(
+      'data-route-name',
+      'entity.node.canonical',
+    )
+    await expect(route).toHaveAttribute('data-entity-type', 'node')
+    await expect(route).toHaveAttribute('data-entity-bundle', 'article')
+    await expect(route).toHaveAttribute('data-entity-id', '3')
+  })
+
   test('shows a 404 page for an unknown path', async ({ page }, testInfo) => {
     const response = await page.goto('/de/gibt-es-nicht')
+    if (!isSpa(testInfo)) {
+      expect(response?.status()).toBe(404)
+    }
+    await expect(page.getByText('Page not found').first()).toBeVisible()
+  })
+
+  test('shows a 404 page for a Drupal route without an entity', async ({
+    page,
+  }, testInfo) => {
+    const response = await page.goto('/de/filter/tips')
     if (!isSpa(testInfo)) {
       expect(response?.status()).toBe(404)
     }
@@ -30,6 +52,16 @@ test.describe('useDrupalRouteQuery()', () => {
       .getByRole('link', { name: 'Not found' })
       .click()
     await expect(page.getByText('Page not found').first()).toBeVisible()
+  })
+
+  test('does not throw with noError for a path unknown to Drupal', async ({
+    page,
+  }, testInfo) => {
+    const response = await goto(page, '/de/suche')
+    if (!isSpa(testInfo)) {
+      expect(response?.status()).toBe(200)
+    }
+    await expect(page.locator('.search-page')).toHaveText('The search page.')
   })
 })
 
@@ -63,5 +95,40 @@ test.describe('metatags', () => {
     await page.locator('.navbar').getByRole('link', { name: 'Artikel' }).click()
     await expect(page.locator('.node-article h1')).toHaveText('Erster Artikel')
     await expect(page).toHaveTitle('Erster Artikel | vuepal')
+  })
+
+  // "Über uns" has a description, "Team" has none.
+  test('removes the tags of the previous page after client-side navigation', async ({
+    page,
+  }) => {
+    await goto(page, '/de/ueber-uns')
+    await expect(page.locator('meta[name="description"]')).toHaveCount(1)
+
+    await page.locator('.navbar').getByRole('link', { name: 'Team' }).click()
+    await expect(page.locator('.node-page h1')).toHaveText('Team')
+    await expect(page).toHaveTitle('Team | vuepal')
+    await expect(page.locator('meta[name="description"]')).toHaveCount(0)
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(1)
+    await expect(
+      page.locator('script[type="application/ld+json"]'),
+    ).toHaveCount(1)
+
+    await page.goBack()
+    await expect(page.locator('.node-page h1')).toHaveText('Über uns')
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Wer hinter vuepal steht.',
+    )
+  })
+
+  test('updates after switching the language', async ({ page }) => {
+    await goto(page, '/de/artikel/erster-artikel')
+    await page.locator('.language-switch [hreflang="en"]').click()
+    await expect(page.locator('.node-article h1')).toHaveText('First article')
+    await expect(page).toHaveTitle('First article | vuepal')
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://vuepal.ddev.site/en/articles/first-article',
+    )
   })
 })

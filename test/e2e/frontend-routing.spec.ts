@@ -3,11 +3,13 @@ import { goto } from './helpers'
 
 // The contact page is a Nuxt page. The frontendRouting feature writes its
 // paths to frontend_routing.settings.yml, which the test site imports, and
-// Drupal assigns a node to them.
+// Drupal assigns a node to them. The page calls useDrupalRoute() directly.
 test.describe('frontendRouting', () => {
   test('the Nuxt page loads the node assigned in Drupal', async ({ page }) => {
     await goto(page, '/de/kontakt')
     await expect(page.locator('.node-page h1')).toHaveText('Kontakt')
+    await expect(page).toHaveTitle('Kontakt | vuepal')
+    await expect(page.locator('.breadcrumb a')).toHaveText(['Home'])
   })
 
   test('uses the path of each language', async ({ page }) => {

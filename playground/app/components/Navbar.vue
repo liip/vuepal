@@ -8,6 +8,9 @@
       <li>
         <NuxtLink :to="{ name: 'contact-page' }">Contact</NuxtLink>
       </li>
+      <li>
+        <NuxtLink :to="{ name: 'search' }">Search</NuxtLink>
+      </li>
     </ul>
   </nav>
 </template>

@@ -251,11 +251,13 @@ ddev frontend                     # In a separate terminal.
 npm run test:e2e
 ```
 
-CI tests a production build of the playground instead of the dev server. To do
-the same locally:
+A production build can behave differently from the dev server, and CI tests the
+build. Before pushing changes to runtime code, run the tests against both:
 
 ```bash
-ddev npm run dev:build
-ddev exec node playground/.output/server/index.mjs   # In a separate terminal.
+ddev frontend --build                # Builds and serves the playground.
 VUEPAL_E2E_BUILD=1 npm run test:e2e
 ```
+
+`VUEPAL_E2E_BUILD=1` has to match the server: some tests only apply to the build
+or the dev server, and the tests fail early when the flag is wrong.

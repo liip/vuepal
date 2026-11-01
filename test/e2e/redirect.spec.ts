@@ -11,6 +11,12 @@ test.describe('redirects', () => {
     })
     expect(response.status()).toBe(301)
     expect(response.headers().location).toBe('/de/ueber-uns?utm_source=test')
+
+    // This redirect is a 302 in Drupal.
+    const temporary = await request.get('/de/alte-seite-mit-query', {
+      maxRedirects: 0,
+    })
+    expect(temporary.status()).toBe(302)
   })
 
   test('keeps the current query parameters', async ({ page }) => {
