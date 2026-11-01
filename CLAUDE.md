@@ -42,7 +42,7 @@ ddev web container, so run Node commands there (`ddev npm run …`,
 `ddev exec …`). Playwright runs on the host.
 
 ```bash
-ddev setup                 # Reinstalls Drupal from scratch, installs node modules, runs dev:prepare
+ddev setup                 # Reinstalls Drupal from scratch, installs node modules, runs styles:build and dev:prepare
 ddev frontend              # Dev server (keep it running)
 ddev frontend --build      # Production build, then serves it
 npm run test:e2e           # Against the dev server

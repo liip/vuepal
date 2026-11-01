@@ -16,4 +16,6 @@ drush cache:rebuild
 cd /var/www/html
 # The npm version from packageManager in package.json, like in CI.
 COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack npm ci
+# The admin toolbar imports this CSS file, it is not committed.
+npm run styles:build
 npm run dev:prepare
