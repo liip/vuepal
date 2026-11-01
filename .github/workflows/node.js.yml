@@ -6,9 +6,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
@@ -20,12 +20,50 @@ jobs:
       - run: npm run lint
       - run: npm run prettier
 
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          # npm ci runs in the web container, there is nothing to cache.
+          package-manager-cache: false
+      - uses: ddev/github-action-setup-ddev@v1
+      # Installs the Drupal test site and the node modules in the web container.
+      - run: ddev setup
+      - run: ddev exec npm run dev:build
+      # Serve the production build in the web container, behind ddev's nginx.
+      # Added after the build, so that the daemon does not start without it.
+      - name: Serve the built playground
+        run: |
+          cat > .ddev/config.e2e.yaml <<'EOF'
+          web_extra_daemons:
+            - name: playground
+              command: node /var/www/html/playground/.output/server/index.mjs
+              directory: /var/www/html
+          EOF
+          ddev restart
+          curl --retry 30 --retry-delay 2 --retry-all-errors -fsSk -o /dev/null https://vuepal.ddev.site/de/ueber-uns
+      # node_modules were installed by `ddev setup` in the mounted project.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+        env:
+          VUEPAL_E2E_BUILD: '1'
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
   typecheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'

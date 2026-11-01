@@ -1,0 +1,6 @@
+fragment nodeArticle on NodeArticle {
+  __typename
+  title
+  uuid
+  lead: fieldLead
+}

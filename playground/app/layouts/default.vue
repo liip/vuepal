@@ -1,14 +1,8 @@
 <template>
   <div style="padding-top: 200px">
     <Navbar />
-    <div>
+    <main>
       <slot></slot>
-    </div>
+    </main>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useCurrentLanguage } from '#imports'
-
-const language = useCurrentLanguage()
-</script>

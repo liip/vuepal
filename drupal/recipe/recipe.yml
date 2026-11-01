@@ -1,0 +1,177 @@
+name: 'vuepal test site'
+description:
+  'The Drupal site that the vuepal playground and E2E tests run against.'
+type: Site
+install:
+  # drupal/graphql 5 uses the file.validator service without depending on file.
+  - file
+  - node
+  - menu_link_content
+  - path
+  - language
+  - content_translation
+  - redirect
+  - metatag
+  - schema_metatag
+  - schema_web_page
+  - environment_indicator
+  - frontend_routing
+  - graphql
+  - graphql_core_schema
+  - graphql_metatag_schema
+  - graphql_metatag_schema_org_schema
+  - graphql_environment_indicator
+config:
+  # Recipes only install simple config of the modules above, config entities
+  # (languages, metatag defaults) have to be imported explicitly.
+  import:
+    language: '*'
+    metatag: '*'
+  actions:
+    # Languages: German is the default, both languages use a path prefix.
+    language.entity.de:
+      createIfNotExists:
+        label: German
+        weight: -1
+    system.site:
+      simpleConfigUpdate:
+        default_langcode: de
+    language.negotiation:
+      simpleConfigUpdate:
+        url:
+          source: path_prefix
+          prefixes:
+            de: de
+            en: en
+          domains:
+            de: ''
+            en: ''
+
+    # Content types.
+    node.type.page:
+      createIfNotExists:
+        name: Page
+    node.type.article:
+      createIfNotExists:
+        name: Article
+    field.storage.node.field_lead:
+      createIfNotExists:
+        field_name: field_lead
+        entity_type: node
+        type: string_long
+    field.field.node.article.field_lead:
+      createIfNotExists:
+        field_name: field_lead
+        entity_type: node
+        bundle: article
+        label: Lead
+        translatable: true
+    field.storage.node.field_metatags:
+      createIfNotExists:
+        field_name: field_metatags
+        entity_type: node
+        type: metatag
+    field.field.node.page.field_metatags:
+      createIfNotExists:
+        field_name: field_metatags
+        entity_type: node
+        bundle: page
+        label: Metatags
+        translatable: true
+    field.field.node.article.field_metatags:
+      createIfNotExists:
+        field_name: field_metatags
+        entity_type: node
+        bundle: article
+        label: Metatags
+        translatable: true
+    language.content_settings.node.page:
+      createIfNotExists:
+        target_entity_type_id: node
+        target_bundle: page
+        default_langcode: site_default
+        language_alterable: true
+        third_party_settings:
+          content_translation:
+            enabled: true
+    language.content_settings.node.article:
+      createIfNotExists:
+        target_entity_type_id: node
+        target_bundle: article
+        default_langcode: site_default
+        language_alterable: true
+        third_party_settings:
+          content_translation:
+            enabled: true
+
+    # Metatags for nodes, including schema.org JSON-LD.
+    metatag.metatag_defaults.node:
+      set:
+        property_name: tags
+        value:
+          title: '[node:title] | [site:name]'
+          description: '[node:summary]'
+          canonical_url: '[node:url]'
+          schema_web_page_type: WebPage
+          schema_web_page_id: '[node:url]'
+
+    # The GraphQL server the playground queries.
+    graphql.graphql_servers.vuepal:
+      createIfNotExists:
+        label: vuepal
+        schema: core_composable
+        endpoint: /graphql
+        debug_flag: 0
+        caching: true
+        batching: true
+        disable_introspection: false
+        persisted_queries_settings: {}
+        schema_configuration:
+          core_composable:
+            enabled_entity_types:
+              node: node
+              menu: menu
+              configurable_language: configurable_language
+              redirect: redirect
+              # The menu extension references MenuLinkContent.
+              menu_link_content: menu_link_content
+            entity_base_fields:
+              fields:
+                uuid: uuid
+                label: label
+                langcode: langcode
+                entityTypeId: entityTypeId
+                entityBundle: entityBundle
+            fields:
+              node:
+                title: title
+                field_lead: field_lead
+              redirect:
+                status_code: status_code
+            bundles:
+              node:
+                page:
+                  enabled: true
+                article:
+                  enabled: true
+            # Adds fields such as `title: String` next to `titleRawField`.
+            generate_value_fields: true
+            extensions:
+              breadcrumb: breadcrumb
+              entity_query: entity_query
+              environment_indicator: environment_indicator
+              language_schema: language_schema
+              language_switch_links: language_switch_links
+              local_tasks: local_tasks
+              menu: menu
+              metatag: metatag
+              metatags_schema_org: metatags_schema_org
+              routing: routing
+    user.role.anonymous:
+      grantPermissions:
+        - 'access content'
+        - 'execute vuepal arbitrary graphql requests'
+    user.role.authenticated:
+      grantPermissions:
+        - 'access content'
+        - 'execute vuepal arbitrary graphql requests'

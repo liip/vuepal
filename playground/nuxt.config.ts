@@ -4,9 +4,13 @@ import {
 } from 'nuxt-language-negotiation/negotiators'
 
 export default defineNuxtConfig({
-  ssr: false,
   devtools: {
     enabled: true,
+  },
+
+  runtimeConfig: {
+    // Where the Nuxt server reaches Drupal. Set by NUXT_DRUPAL_URL in ddev.
+    drupalUrl: 'http://localhost',
   },
   modules: [
     'nuxt-graphql-middleware',
@@ -17,11 +21,10 @@ export default defineNuxtConfig({
 
   graphqlMiddleware: {
     autoImportPatterns: ['./app/**/*.graphql'],
-    // For local development:
-    // Set this to true to update the schema.
-    // Make sure the starterkit app is running.
-    downloadSchema: false,
-    graphqlEndpoint: 'http://starterkit.ddev.site/de/graphql',
+    // To update schema.graphql from the test site, run
+    // `ddev exec VUEPAL_DOWNLOAD_SCHEMA=1 npx nuxi prepare playground`.
+    downloadSchema: !!process.env.VUEPAL_DOWNLOAD_SCHEMA,
+    graphqlEndpoint: 'http://localhost/de/graphql',
     schemaPath: './../schema.graphql',
 
     codegenConfig: {
@@ -77,13 +80,14 @@ export default defineNuxtConfig({
     frontendRouting: {
       enabled: true,
       defaultLanguage: 'de',
-      outputPath: './../drupal/frontend_routing.settings.yml',
+      // Imported by the recipe of the test site.
+      outputPath: './../drupal/recipe/config/frontend_routing.settings.yml',
     },
     drupalRoute: {
       enabled: true,
       routeQueries: {
         nodeCanonical: {
-          fragments: ['nodePage'] as never[],
+          fragments: ['nodePage', 'nodeArticle'] as never[],
         },
       },
     },
@@ -95,13 +99,17 @@ export default defineNuxtConfig({
     },
     trustedOrigins: {
       enabled: true,
-      origins: [
-        'http://localhost:3001',
-        'http://localhost:3004',
-        'http://localhost:3000',
-        'https://localhost:3000',
-      ],
-      redirectUrl: 'https://localhost:3000',
+      // http://vuepal.ddev.site is not trusted, the E2E tests use it to check
+      // the redirect.
+      origins: ['https://vuepal.ddev.site'],
+      redirectUrl: 'https://vuepal.ddev.site',
+    },
+  },
+
+  vite: {
+    server: {
+      // The dev server runs behind ddev's nginx.
+      allowedHosts: ['vuepal.ddev.site'],
     },
   },
 
