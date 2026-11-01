@@ -54,6 +54,7 @@
     "fzf": "^0.5.2",
     "nuxt-graphql-middleware": "^5.3.2",
     "nuxt-language-negotiation": "^2.0.2",
+    "ufo": "^1.6.3",
     "yaml": "^2.8.2"
   },
   "devDependencies": {

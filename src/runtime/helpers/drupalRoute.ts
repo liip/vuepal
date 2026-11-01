@@ -45,7 +45,10 @@ export type UseDrupalRoute<T> = {
   metatags: ComputedRef<SerializableHead>
 
   /**
-   * The target path if the route is a redirect, else undefined.
+   * The URL the route redirects to, else undefined.
+   *
+   * This is the same URL that useDrupalRoute() redirects to: the current query
+   * parameters are added, unless the redirect target has its own.
    *
    * On the client the browser follows the redirect asynchronously. Use this
    * to render a message while the redirect is in progress, or when the browser

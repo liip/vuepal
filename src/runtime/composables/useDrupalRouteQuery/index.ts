@@ -84,12 +84,7 @@ export async function useDrupalRouteQuery<
   // useDrupalRoute() has already started the redirect. On the client the
   // browser follows it asynchronously, so do not throw a 404 that would be
   // rendered in the meantime.
-  if (
-    data.value &&
-    'route' in data.value &&
-    data.value.route &&
-    'redirect' in data.value.route
-  ) {
+  if (ctx.redirect.value) {
     return ctx
   }
 
