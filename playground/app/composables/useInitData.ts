@@ -1,4 +1,9 @@
-import { computed, useState, type ComputedRef } from '#imports'
+import {
+  computed,
+  useAsyncData,
+  useCurrentLanguage,
+  type ComputedRef,
+} from '#imports'
 import type { InitData, MenuLink } from '~~/types'
 
 type UseInitData = {
@@ -6,20 +11,17 @@ type UseInitData = {
 }
 
 export default async function (): Promise<UseInitData> {
-  const isLoaded = useState('initDataLoaded', () => false)
-  const data = useState<InitData>('initData', () => {
-    return {
-      menuLinks: [],
-    }
-  })
+  const language = useCurrentLanguage()
+  const { data } = await useAsyncData(
+    'initData',
+    () =>
+      $fetch<InitData>('/api/initData', {
+        query: { language: language.value },
+      }),
+    { watch: [language] },
+  )
 
-  if (!isLoaded.value) {
-    console.log('Performing init data request.')
-    data.value = await $fetch('/api/initData')
-    isLoaded.value = true
-  }
-
-  const menuLinks = computed(() => data.value.menuLinks)
+  const menuLinks = computed(() => data.value?.menuLinks || [])
 
   return { menuLinks }
 }

@@ -1,0 +1,9 @@
+keys:
+  contact-page:
+    aliases:
+      de: /kontakt
+      en: /contact-us
+  search:
+    aliases:
+      de: /suche
+      en: /search

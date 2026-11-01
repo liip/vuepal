@@ -13,8 +13,7 @@ import type {
   EntityQueryMixedTypenameQuery,
   EntityQueryTypenameInlineWithFragmentQuery,
   NodePageFragment,
-  NodePressReleaseFragment,
-  NodeContactFragment,
+  NodeArticleFragment,
 } from '#graphql-operations'
 import { expectType } from './helpers'
 import type { IsExact } from './helpers'
@@ -23,15 +22,15 @@ import type { IsExact } from './helpers'
 declare const allFragments: EntityQueryAllFragmentsQuery
 const allItems = allFragments.entityQuery.items
 
-const _pressReleases = filterByTypenames(allItems, 'NodePressRelease')
-expectType<IsExact<typeof _pressReleases, NodePressReleaseFragment[]>>()
+const _articles = filterByTypenames(allItems, 'NodeArticle')
+expectType<IsExact<typeof _articles, NodeArticleFragment[]>>()
 
-const _multiple = filterByTypenames(allItems, [
-  'NodePressRelease',
-  'NodeContact',
-])
+const _multiple = filterByTypenames(allItems, ['NodeArticle', 'NodePage'])
 expectType<
-  IsExact<typeof _multiple, (NodePressReleaseFragment | NodeContactFragment)[]>
+  IsExact<
+    typeof _multiple,
+    (NodeArticleFragment | (NodePageFragment & { __typename: 'NodePage' }))[]
+  >
 >()
 
 const _fromUndefined = filterByTypenames(
@@ -60,9 +59,9 @@ filterByTypenames(noTypename.entityQuery.items, 'NodePage')
 declare const withTypename: EntityQuerySingleFragmentWithTypenameQuery
 const _withTypenameItems = filterByTypenames(
   withTypename.entityQuery.items,
-  'NodeContact',
+  'NodeArticle',
 )
-expectType<IsExact<typeof _withTypenameItems, NodeContactFragment[]>>()
+expectType<IsExact<typeof _withTypenameItems, NodeArticleFragment[]>>()
 
 // Inline fragments only, no named fragments.
 declare const inlineOnly: EntityQueryInlineOnlyQuery
@@ -72,22 +71,19 @@ expectType<
   IsExact<typeof _inlinePage, { __typename: 'NodePage'; title?: string }[]>
 >()
 
-const _inlineContact = filterByTypenames(
+const _inlineArticle = filterByTypenames(
   inlineOnly.entityQuery.items,
-  'NodeContact',
+  'NodeArticle',
 )
 expectType<
-  IsExact<typeof _inlineContact, { __typename: 'NodeContact'; uuid: string }[]>
+  IsExact<typeof _inlineArticle, { __typename: 'NodeArticle'; uuid: string }[]>
 >()
 
 // Mixed: fragment without __typename + fragment with __typename.
-// Only NodePressReleaseFragment has __typename, so only it is filterable.
+// Only NodeArticleFragment has __typename, so only it is filterable.
 declare const mixed: EntityQueryMixedTypenameQuery
-const _mixedPress = filterByTypenames(
-  mixed.entityQuery.items,
-  'NodePressRelease',
-)
-expectType<IsExact<typeof _mixedPress, NodePressReleaseFragment[]>>()
+const _mixedArticles = filterByTypenames(mixed.entityQuery.items, 'NodeArticle')
+expectType<IsExact<typeof _mixedArticles, NodeArticleFragment[]>>()
 
 // __typename added via inline on Node + fragment without __typename.
 declare const inlineWithFragment: EntityQueryTypenameInlineWithFragmentQuery

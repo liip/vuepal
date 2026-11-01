@@ -1,5 +1,7 @@
+# nodePage has no __typename, nodeArticle has one.
+
 # All fragments + __typename via inline on Node.
-# items type: (NodePageFragment & { __typename } | NodeContactFragment | NodePressReleaseFragment | object) | null
+# items type: (NodePageFragment & { __typename } | NodeArticleFragment | object) | null
 query entityQueryAllFragments($limit: Int) {
   entityQuery(entityType: NODE, limit: $limit) {
     items {
@@ -7,8 +9,7 @@ query entityQueryAllFragments($limit: Int) {
         __typename
       }
       ...nodePage
-      ...nodePressRelease
-      ...nodeContact
+      ...nodeArticle
     }
   }
 }
@@ -26,12 +27,11 @@ query entityQuerySingleFragmentNoTypename($limit: Int) {
 }
 
 # Single fragment that includes __typename.
-# nodeContact has __typename in the fragment.
-# items type: (NodeContactFragment | object) | null
+# items type: (NodeArticleFragment | object) | null
 query entityQuerySingleFragmentWithTypename($limit: Int) {
   entityQuery(entityType: NODE, limit: $limit) {
     items {
-      ...nodeContact
+      ...nodeArticle
     }
   }
 }
@@ -55,7 +55,7 @@ query entityQueryInlineOnly($limit: Int) {
         __typename
         title
       }
-      ... on NodeContact {
+      ... on NodeArticle {
         __typename
         uuid
       }
@@ -64,13 +64,13 @@ query entityQueryInlineOnly($limit: Int) {
 }
 
 # Mix: fragment without __typename (nodePage) combined with fragment
-# that has __typename (nodePressRelease). No inline __typename.
-# items type: (NodePageFragment | NodePressReleaseFragment | object) | null
+# that has __typename (nodeArticle). No inline __typename.
+# items type: (NodePageFragment | NodeArticleFragment | object) | null
 query entityQueryMixedTypename($limit: Int) {
   entityQuery(entityType: NODE, limit: $limit) {
     items {
       ...nodePage
-      ...nodePressRelease
+      ...nodeArticle
     }
   }
 }

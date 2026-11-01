@@ -1,0 +1,58 @@
+{
+  "name": "liip/vuepal-test-site",
+  "description": "Minimal Drupal site that the vuepal playground and E2E tests run against.",
+  "type": "project",
+  "license": "MIT",
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "composer/installers": "^2.3",
+    "drupal/core-composer-scaffold": "^11.2",
+    "drupal/core-recommended": "^11.2",
+    "drupal/environment_indicator": "^4.0",
+    "drupal/frontend_routing": "^1.0",
+    "drupal/graphql": "^5.1",
+    "drupal/graphql_core_schema": "^1.0",
+    "drupal/metatag": "^2.1",
+    "drupal/redirect": "^1.11",
+    "drupal/schema_metatag": "^3.0",
+    "drush/drush": "^13.6"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "drupal/core-composer-scaffold": true,
+      "php-http/discovery": true,
+      "symfony/runtime": true
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "drupal-scaffold": {
+      "gitignore": false,
+      "locations": {
+        "web-root": "web/"
+      },
+      "file-mapping": {
+        "[project-root]/.editorconfig": false,
+        "[project-root]/.gitattributes": false,
+        "[project-root]/recipes/README.txt": false,
+        "[web-root]/sites/default/settings.php": "settings.php"
+      }
+    },
+    "installer-paths": {
+      "web/core": ["type:drupal-core"],
+      "web/libraries/{$name}": ["type:drupal-library"],
+      "web/modules/contrib/{$name}": ["type:drupal-module"],
+      "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+      "web/themes/contrib/{$name}": ["type:drupal-theme"],
+      "drush/Commands/contrib/{$name}": ["type:drupal-drush"]
+    }
+  }
+}

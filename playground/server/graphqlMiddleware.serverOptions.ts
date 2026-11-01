@@ -1,17 +1,14 @@
 import { defineGraphqlServerOptions } from 'nuxt-graphql-middleware/server-options'
-import adminToolbar from './mocks/adminToolbar.json'
-import localTasks from './mocks/localTasks.json'
+import { useRuntimeConfig } from '#imports'
+import { getForwardedHeaders } from '#shared/forwardedHeaders'
 
-export default defineGraphqlServerOptions({
-  doGraphqlRequest(context) {
-    if (context.operationName === 'adminToolbar') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return Promise.resolve(adminToolbar) as any
-    } else if (context.operationName === 'localTasks') {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return Promise.resolve(localTasks) as any
-    }
+export default defineGraphqlServerOptions<{ language: string }>({
+  graphqlEndpoint(_event, _operation, _operationName, context) {
+    const language = context?.client?.language || 'de'
+    return `${useRuntimeConfig().drupalUrl}/${language}/graphql`
+  },
 
-    throw new Error('Unknown GraphQL operation.')
+  serverFetchOptions(event) {
+    return { headers: getForwardedHeaders(event) }
   },
 })

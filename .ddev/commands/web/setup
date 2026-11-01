@@ -1,0 +1,19 @@
+#!/bin/bash
+
+## Description: Install the Drupal test site from scratch and prepare the playground
+## Usage: setup
+## Example: ddev setup
+
+set -euo pipefail
+
+cd /var/www/html/drupal
+composer install --no-interaction
+drush site:install minimal -y --site-name=vuepal --account-name=admin --account-pass=admin
+drush recipe /var/www/html/drupal/recipe -y
+drush php:script /var/www/html/drupal/content.php
+drush cache:rebuild
+
+cd /var/www/html
+# The npm version from packageManager in package.json, like in CI.
+COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack npm ci
+npm run dev:prepare

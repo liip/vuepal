@@ -3,10 +3,10 @@
  */
 
 import { removeTypename } from '#vuepal/helpers/graphql'
-import type { NodePressReleaseFragment } from '#graphql-operations'
+import type { NodeArticleFragment } from '#graphql-operations'
 
-declare const pressRelease: NodePressReleaseFragment
-const withoutTypename = removeTypename(pressRelease)
+declare const article: NodeArticleFragment
+const withoutTypename = removeTypename(article)
 
 // Existing fields are preserved.
 const _title: typeof withoutTypename.title = undefined

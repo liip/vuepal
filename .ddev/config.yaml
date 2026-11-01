@@ -1,0 +1,18 @@
+name: vuepal
+type: drupal11
+docroot: drupal/web
+composer_root: drupal
+php_version: "8.4"
+webserver_type: nginx-fpm
+database:
+  type: mariadb
+  version: "11.8"
+nodejs_version: auto
+xdebug_enabled: false
+# The test site ships its own settings.php (see drupal/settings.php).
+disable_settings_management: true
+working_dir:
+  web: /var/www/html
+web_environment:
+  # The Nuxt server calls Drupal through nginx inside the web container.
+  - NUXT_DRUPAL_URL=http://localhost

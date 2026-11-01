@@ -1,12 +1,16 @@
 <template>
   <div>
-    <h1>This is the contact page, a static node asdf.</h1>
+    <PageHeader />
+    <NodePage v-if="entity" :title="entity.title" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { definePageMeta } from '#imports'
+import { definePageMeta, useDrupalRouteQuery } from '#imports'
+import { NodePage, PageHeader } from '#components'
 
+// The frontendRouting feature writes this route to frontend_routing.settings,
+// Drupal assigns a node and its aliases to it.
 definePageMeta({
   name: 'contact-page',
   drupalFrontendRoute: true,
@@ -15,4 +19,6 @@ definePageMeta({
     en: '/contact-us',
   },
 })
+
+const { entity } = await useDrupalRouteQuery('nodeCanonical')
 </script>

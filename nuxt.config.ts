@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     tsConfig: {
-      exclude: ['../playground', '../src/build'],
+      exclude: ['../playground', '../src/build', '../drupal', '../test'],
     },
     nodeTsConfig: {
       exclude: ['../src/adapter.ts'],
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   graphqlMiddleware: {
     autoImportPatterns: ['./playground/app/**/*.graphql'],
     downloadSchema: false,
-    graphqlEndpoint: 'http://starterkit.ddev.site/de/graphql',
+    graphqlEndpoint: 'http://localhost/de/graphql',
     schemaPath: './schema.graphql',
   },
   languageNegotiation: {

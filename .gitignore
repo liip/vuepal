@@ -13,7 +13,15 @@ npmBuild/
 
 playground/translations.graphql
 
-drupal/frontend_routing.settings.yml
-
 .npm
 .idea/
+
+# Drupal test site (installed by `ddev setup`)
+drupal/web
+drupal/vendor
+.ddev/config.e2e.yaml
+
+# Playwright
+test-results/
+playwright-report/
+test/e2e/.auth/

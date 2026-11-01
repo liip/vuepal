@@ -8,7 +8,7 @@ import type {
   EntityQueryInlineOnlyQuery,
   EntityQuerySingleFragmentWithTypenameQuery,
   NodePageFragment,
-  NodeContactFragment,
+  NodeArticleFragment,
 } from '#graphql-operations'
 import { expectType } from './helpers'
 import type { IsExact } from './helpers'
@@ -29,8 +29,8 @@ if (
 }
 
 // Accepts null/undefined.
-isTypeName<NodeContactFragment>(null, 'NodeContact')
-isTypeName<NodeContactFragment>(undefined, 'NodeContact')
+isTypeName<NodeArticleFragment>(null, 'NodeArticle')
+isTypeName<NodeArticleFragment>(undefined, 'NodeArticle')
 
 // Narrowing from inline fragments.
 declare const _inlineOnly: EntityQueryInlineOnlyQuery
@@ -54,6 +54,6 @@ type WithTypenameItem = NonNullable<
 >
 declare const withTypenameItem: WithTypenameItem
 
-if (isTypeName<NodeContactFragment>(withTypenameItem, 'NodeContact')) {
-  expectType<IsExact<typeof withTypenameItem, NodeContactFragment>>()
+if (isTypeName<NodeArticleFragment>(withTypenameItem, 'NodeArticle')) {
+  expectType<IsExact<typeof withTypenameItem, NodeArticleFragment>>()
 }

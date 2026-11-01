@@ -1,0 +1,9 @@
+#!/bin/bash
+
+## Description: Start the playground's Nuxt dev server in the web container
+## Usage: frontend
+## Example: ddev frontend
+## ExecRaw: true
+
+cd /var/www/html
+npm run dev

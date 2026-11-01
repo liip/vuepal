@@ -3,20 +3,20 @@
  */
 
 import { narrowTypeByProperty } from '#vuepal/helpers/graphql'
-import type { NodePageFragment, NodeContactFragment } from '#graphql-operations'
+import type { NodePageFragment, NodeArticleFragment } from '#graphql-operations'
 import { expectType } from './helpers'
 import type { IsExact } from './helpers'
 
 // Narrows to the union member that has the property.
-type PageOrContact =
+type PageOrArticle =
   | (NodePageFragment & { __typename: 'NodePage' })
-  | NodeContactFragment
+  | NodeArticleFragment
 
-declare const entity: PageOrContact
+declare const entity: PageOrArticle
 
-const _contact = narrowTypeByProperty(entity, 'uuid')
-expectType<IsExact<typeof _contact, NodeContactFragment | undefined>>()
+const _article = narrowTypeByProperty(entity, 'uuid')
+expectType<IsExact<typeof _article, NodeArticleFragment | undefined>>()
 
 // Accepts null/undefined.
-narrowTypeByProperty(null as PageOrContact | null, 'uuid')
-narrowTypeByProperty(undefined as PageOrContact | undefined, 'uuid')
+narrowTypeByProperty(null as PageOrArticle | null, 'uuid')
+narrowTypeByProperty(undefined as PageOrArticle | undefined, 'uuid')
