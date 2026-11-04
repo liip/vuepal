@@ -5,8 +5,7 @@
       :class="{ 'vp-is-first': level === 0 }"
       :href="link.url?.path || ''"
       :data-route-name="routeName"
-      @mouseover="onMouseOver"
-      @mouseleave="onMouseLeave"
+      @mouseenter="emit('hover')"
     >
       <span v-if="style" class="vuepal-admin-toolbar-icon" :style="style" />
       <span class="vuepal-admin-toolbar-text">{{ link!.label }}</span>
@@ -80,23 +79,6 @@ const getIconPath = (routeName: string | undefined | null) => {
 const emit = defineEmits(['hover'])
 
 const localActive = ref(-1)
-
-let timeout: number | null = null
-
-function onMouseOver() {
-  if (timeout) {
-    clearTimeout(timeout)
-  }
-  timeout = window.setTimeout(() => {
-    emit('hover')
-  }, 300)
-}
-
-function onMouseLeave() {
-  if (timeout) {
-    window.clearTimeout(timeout)
-  }
-}
 
 watch(
   () => props.active,
