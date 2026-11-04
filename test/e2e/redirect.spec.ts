@@ -63,6 +63,24 @@ test.describe('redirects', () => {
     await expect(page.getByText('Page not found')).toHaveCount(0)
   })
 
+  // graphql_core_schema returns a redirect to the login form, with the status
+  // code 403. Browsers follow the meta refresh of the page, not the Location.
+  test('redirects to the login form for an unpublished node', async ({
+    page,
+    request,
+  }, testInfo) => {
+    if (!isSpa(testInfo)) {
+      const response = await request.get('/de/entwurf', { maxRedirects: 0 })
+      expect(response.status()).toBe(403)
+      expect(response.headers().location).toBe(
+        '/de/user/login?destination=/de/entwurf',
+      )
+    }
+    await page.goto('/de/entwurf')
+    await expect(page).toHaveURL('/de/user/login?destination=/de/entwurf')
+    await expect(page.locator('#edit-name')).toBeVisible()
+  })
+
   test('shows the redirect target on a direct load in SPA mode', async ({
     page,
   }, testInfo) => {

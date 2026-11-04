@@ -1,4 +1,8 @@
-import { type DrupalRouteQueries, mapping } from '#vuepal-build/route-queries'
+import {
+  type DrupalRouteQueries,
+  mapping,
+  entityTypes,
+} from '#vuepal-build/route-queries'
 import { useAsyncGraphqlQuery, useRoute, createError } from '#imports'
 import type { UseDrupalRoute } from './../../helpers/drupalRoute'
 import {
@@ -27,7 +31,8 @@ type UseDrupalRouteQueryOptions = {
  *
  * The composable will throw these errors:
  * - 500: The route query itself has an error (e.g. backend is down)
- * - 404: Route does not exist in Drupal or there is no entity.
+ * - 404: Route does not exist in Drupal, there is no entity, or none of the
+ *   fragments of the route query covers the entity's type.
  *
  * You can prevent throwing any errors by passing `{ noError: true }` as the second argument.
  */
@@ -63,7 +68,10 @@ export async function useDrupalRouteQuery<
     },
   )
 
-  const setup = setupDrupalRoute<E>(asyncData.data, route)
+  const setup = setupDrupalRoute<E>(asyncData.data, route, {
+    name,
+    entityTypes: entityTypes[name],
+  })
 
   const { data, error } = await asyncData
 

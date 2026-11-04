@@ -13,12 +13,15 @@ export function extractVimeoId(url: string): string | undefined {
 
 /**
  * Extract the ID from a YouTube URL.
+ *
+ * Returns null when the ID is not 11 letters, digits, "-" or "_", e.g. for
+ * "watch?v=../../abcde".
  */
 export function extractYouTubeId(url: string): string | null {
   const regExp =
     /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
-  const match = url.match(regExp)
-  return match && match[7]?.length === 11 ? match[7] : null
+  const id = url.match(regExp)?.[7]
+  return id && /^[\w-]{11}$/.test(id) ? id : null
 }
 
 type YouTubeThumbnailSize =

@@ -1,4 +1,4 @@
-import type { Page, TestInfo } from '@playwright/test'
+import { expect, type Page, type TestInfo } from '@playwright/test'
 
 /**
  * Session of the admin user, written by auth.setup.ts.
@@ -38,4 +38,17 @@ export async function goto(page: Page, path: string) {
   const response = await page.goto(path)
   await waitForHydration(page)
   return response
+}
+
+/**
+ * Log in as admin with the Drupal login form, in a new Drupal session.
+ *
+ * The admin account is created by `ddev setup`.
+ */
+export async function logIn(page: Page) {
+  await page.goto('/de/user/login')
+  await page.locator('#edit-name').fill('admin')
+  await page.locator('#edit-pass').fill('admin')
+  await page.locator('#edit-submit').click()
+  await expect(page).toHaveURL(/\/de\/user\/1/)
 }

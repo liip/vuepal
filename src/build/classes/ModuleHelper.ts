@@ -220,20 +220,28 @@ export class ModuleHelper {
     this.logDebug('Applied build config')
   }
 
+  /**
+   * Adds a template for runtime code and/or its types.
+   *
+   * When a callback returns a function, that function is called each time
+   * Nuxt generates the template.
+   */
   public addTemplate(
     path: string,
-    build?: (() => string) | null,
+    build?: (() => string | (() => string)) | null,
     buildTypes?: (() => string | (() => string)) | null,
   ) {
     if (build) {
-      const content = build().trim()
+      const result = build()
+      const getContents =
+        typeof result === 'string' ? () => result.trim() : () => result().trim()
       const filename = path.startsWith('/')
         ? path
         : 'vuepal-build/' + path + '.js'
       addTemplate({
         filename,
         write: true,
-        getContents: () => content,
+        getContents,
       })
     }
 

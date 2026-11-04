@@ -21,6 +21,7 @@ install:
   - graphql_metatag_schema
   - graphql_metatag_schema_org_schema
   - graphql_environment_indicator
+  - graphql_messenger
 config:
   # Recipes only install simple config of the modules above, config entities
   # (languages, metatag defaults) have to be imported explicitly.
@@ -54,6 +55,10 @@ config:
     node.type.article:
       createIfNotExists:
         name: Article
+    # Not exposed by the GraphQL server, see content.php.
+    node.type.event:
+      createIfNotExists:
+        name: Event
     field.storage.node.field_lead:
       createIfNotExists:
         field_name: field_lead
@@ -164,6 +169,7 @@ config:
               language_switch_links: language_switch_links
               local_tasks: local_tasks
               menu: menu
+              messenger: messenger
               metatag: metatag
               metatags_schema_org: metatags_schema_org
               routing: routing

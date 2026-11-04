@@ -37,8 +37,13 @@ function getTitle(tag: MetatagFragment): string | undefined {
  * The output is an object where each of the key/value pairs is reduced to a
  * single object:
  * { one: 'foo', two: 'bar' }
+ *
+ * The keys come from Drupal and are only known at runtime, so the object is
+ * typed as a link or meta tag where it is added.
  */
-function getTagObject(attributes: MetatagFragment['attributes']): Link | Meta {
+function getTagObject(
+  attributes: MetatagFragment['attributes'],
+): Record<string, string> {
   return attributes.reduce<Record<string, string>>((acc, v) => {
     acc[v.key] = v.value
     return acc
@@ -83,9 +88,9 @@ export function buildDrupalMetatags(
       } else {
         const item = getTagObject(tag.attributes)
         if (tag.tag === 'link') {
-          link.push(item)
+          link.push(item as unknown as Link)
         } else if (tag.tag === 'meta') {
-          meta.push(item)
+          meta.push(item as unknown as Meta)
         }
       }
     }

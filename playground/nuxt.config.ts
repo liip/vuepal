@@ -61,7 +61,9 @@ export default defineNuxtConfig({
       'postcss-import': {},
       'postcss-mixins': {},
       'postcss-nested-import': {},
-      'tailwindcss/nesting': {},
+      // Nuxt imports PostCSS plugins as ES modules, which can't import a
+      // directory.
+      'tailwindcss/nesting/index.js': {},
       'postcss-url': {},
       tailwindcss: {},
       cssnano: {
@@ -85,10 +87,14 @@ export default defineNuxtConfig({
     },
     drupalRoute: {
       enabled: true,
+      // Every route query loads the messenger messages, see plugins/drupalRoute.ts.
+      queryFragments: ['routeGlobal'],
       routeQueries: {
         nodeCanonical: {
-          fragments: ['nodePage', 'nodeArticle'] as never[],
+          fragments: ['nodePage', 'nodeArticle'],
         },
+        // For pages that only need the route, e.g. pages/news.vue.
+        routeOnly: {},
       },
     },
     languageSwitchLinks: {

@@ -2,6 +2,7 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { withQuery } from 'ufo'
 import type { NuxtApp } from '#app'
 import type { UseDrupalRouteFragment } from '#graphql-operations'
+import type { DrupalRouteQueries } from '#vuepal-build/route-queries'
 import { buildDrupalMetatags } from './../buildDrupalMetatags'
 import {
   useNuxtApp,
@@ -17,14 +18,55 @@ import {
 import type { DrupalRoute, UseDrupalRoute } from './../../helpers/drupalRoute'
 import type { DrupalRouteMetatags } from '../../types/metatags'
 
+/**
+ * The route query that useDrupalRouteQuery() was called with, and its entity.
+ *
+ * Both are undefined when useDrupalRoute() was called directly.
+ */
+type DrupalRouteHookEntity =
+  | {
+      [K in keyof DrupalRouteQueries]: {
+        /**
+         * The name of the route query in the drupalRoute.routeQueries option.
+         */
+        queryName: K
+
+        /**
+         * The entity of the route, undefined with noError when there is none.
+         */
+        entity?: DrupalRouteQueries[K]
+      }
+    }[keyof DrupalRouteQueries]
+  | {
+      queryName?: undefined
+      entity?: undefined
+    }
+
 export type DrupalRouteHookPayload = {
   /**
    * The Nuxt route path for which the useDrupalRoute composable was called.
    */
   path: string
   drupalRoute?: DrupalRoute
+
+  /**
+   * The response of the query, including the fields of the
+   * drupalRoute.queryFragments option.
+   */
   routeQuery?: UseDrupalRouteFragment | null
   metatags: DrupalRouteMetatags
+} & DrupalRouteHookEntity
+
+/**
+ * The route query of useDrupalRouteQuery().
+ */
+export type DrupalRouteQuery = {
+  name: keyof DrupalRouteQueries
+
+  /**
+   * The object types of the entities the route query accepts, null for any.
+   */
+  entityTypes: string[] | null
 }
 
 export type UseDrupalRouteQueryInput =
@@ -63,6 +105,7 @@ type HandleOptions = {
 export function setupDrupalRoute<T extends object = object>(
   queryInput: UseDrupalRouteQueryInput,
   providedRoute?: RouteLocationNormalizedLoaded,
+  routeQuery?: DrupalRouteQuery,
 ): DrupalRouteSetup<T> {
   const app = useNuxtApp()
 
@@ -86,13 +129,22 @@ export function setupDrupalRoute<T extends object = object>(
 
   useHead(metatags)
 
-  const entity = computed<T | undefined>(() =>
-    query.value?.route &&
-    'entity' in query.value.route &&
-    query.value.route.entity
-      ? (query.value.route.entity as T)
-      : undefined,
-  )
+  const entity = computed<T | undefined>(() => {
+    const route = query.value?.route
+    if (!route || !('entity' in route) || !route.entity) {
+      return
+    }
+
+    // An entity that none of the fragments of the route query covers is
+    // handled like a missing entity.
+    const entityTypes = routeQuery?.entityTypes
+    const typename = (route.entity as { __typename?: string }).__typename
+    if (entityTypes && (!typename || !entityTypes.includes(typename))) {
+      return
+    }
+
+    return route.entity as T
+  })
 
   const drupalRoute = computed<DrupalRoute>(() => {
     const route = query.value?.route
@@ -130,12 +182,17 @@ export function setupDrupalRoute<T extends object = object>(
       : withQuery(route.path, nuxtRoute.query)
   })
 
-  const hookPayload = computed<DrupalRouteHookPayload>(() => ({
-    path: nuxtRoute.path,
-    drupalRoute: drupalRoute.value,
-    metatags: metatags.value,
-    routeQuery: query.value,
-  }))
+  const hookPayload = computed<DrupalRouteHookPayload>(
+    () =>
+      ({
+        path: nuxtRoute.path,
+        drupalRoute: drupalRoute.value,
+        metatags: metatags.value,
+        routeQuery: query.value,
+        queryName: routeQuery?.name,
+        entity: routeQuery ? entity.value : undefined,
+      }) as DrupalRouteHookPayload,
+  )
 
   return {
     app,

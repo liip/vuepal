@@ -45,6 +45,31 @@ test.describe('useDrupalRouteQuery()', () => {
     await expect(page.getByText('Page not found').first()).toBeVisible()
   })
 
+  test('shows a 404 page for an entity that no fragment of the route query covers', async ({
+    page,
+  }, testInfo) => {
+    // A node of the event bundle, which nodeCanonical has no fragment for.
+    const response = await page.goto('/de/veranstaltungen/sommerfest')
+    if (!isSpa(testInfo)) {
+      expect(response?.status()).toBe(404)
+    }
+    await expect(page.getByText('Page not found').first()).toBeVisible()
+  })
+
+  test('renders any entity with a route query without fragments', async ({
+    page,
+  }, testInfo) => {
+    const response = await goto(page, '/de/neuigkeiten')
+    if (!isSpa(testInfo)) {
+      expect(response?.status()).toBe(200)
+    }
+    await expect(page.locator('.news-page')).toHaveText('The news page.')
+    await expect(page).toHaveTitle('Neuigkeiten | vuepal')
+    await expect(
+      page.locator('.language-switch [hreflang="en"]'),
+    ).toHaveAttribute('href', '/en/news')
+  })
+
   test('shows a 404 page after client-side navigation', async ({ page }) => {
     await goto(page, '/de/ueber-uns')
     await page
@@ -62,6 +87,34 @@ test.describe('useDrupalRouteQuery()', () => {
       expect(response?.status()).toBe(200)
     }
     await expect(page.locator('.search-page')).toHaveText('The search page.')
+  })
+})
+
+test.describe('vuepal:drupal-route hook', () => {
+  test('receives the name and the entity of the route query', async ({
+    page,
+  }) => {
+    await goto(page, '/en/articles/first-article')
+    const hook = page.locator('.route-hook')
+    await expect(hook).toHaveAttribute('data-query-name', 'nodeCanonical')
+    await expect(hook).toHaveAttribute('data-entity-type', 'NodeArticle')
+  })
+
+  test('receives the entity of a route query without fragments', async ({
+    page,
+  }) => {
+    await goto(page, '/de/neuigkeiten')
+    const hook = page.locator('.route-hook')
+    await expect(hook).toHaveAttribute('data-query-name', 'routeOnly')
+    await expect(hook).toHaveAttribute('data-entity-type', 'NodePage')
+  })
+
+  test('receives no route query from useDrupalRoute()', async ({ page }) => {
+    await goto(page, '/de/kontakt')
+    await expect(page.locator('.node-page h1')).toHaveText('Kontakt')
+    const hook = page.locator('.route-hook')
+    await expect(hook).not.toHaveAttribute('data-query-name')
+    await expect(hook).not.toHaveAttribute('data-entity-type')
   })
 })
 

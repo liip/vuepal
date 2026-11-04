@@ -21,6 +21,8 @@ export default withNuxt({
     rules: {
       'vue/multi-word-component-names': 'off',
       'vue/no-v-text-v-html-on-component': 'off',
-      'vue/no-v-html': 'off',
+      // Content from Drupal (labels, titles) can contain markup that editors
+      // entered. Render it with interpolation.
+      'vue/no-v-html': 'error',
     },
   })

@@ -1,0 +1,4 @@
+# Spread into every route query, see the queryFragments option.
+fragment routeGlobal on Query {
+  messengerMessages
+}
