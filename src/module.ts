@@ -62,7 +62,7 @@ export default defineNuxtModule<ModuleOptions>({
         logger.box(e.message)
       }
 
-      throw new Error('Failed to initialise vuepal.')
+      throw new Error('Failed to initialise vuepal.', { cause: e })
     }
 
     helper.inlineNitroExternals(

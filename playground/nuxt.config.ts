@@ -61,7 +61,9 @@ export default defineNuxtConfig({
       'postcss-import': {},
       'postcss-mixins': {},
       'postcss-nested-import': {},
-      'tailwindcss/nesting': {},
+      // Nuxt imports PostCSS plugins as ES modules, which can't import a
+      // directory.
+      'tailwindcss/nesting/index.js': {},
       'postcss-url': {},
       tailwindcss: {},
       cssnano: {
