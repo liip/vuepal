@@ -25,7 +25,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "skills"
   ],
   "scripts": {
     "prepack": "npm run dev:prepare && npm run styles:build && nuxt-module-build build && find dist/ -type f -name '*.*' | grep '.spec.' | xargs rm -f",

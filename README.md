@@ -126,9 +126,10 @@ export default defineNuxtConfig({
 })
 ```
 
-The fragments can't use variables other than `$path`. Route queries are cached
-on the client (see the `clientCache` option), so when the user returns to a
-page, the fields come from the cache.
+The fragments can't use variables other than `$path`. With the client cache of
+nuxt-graphql-middleware enabled (`graphqlMiddleware.clientCache`), a page the
+user returns to gets the fields from the cached response, unless
+`useDrupalRouteQuery()` is called with `clientCache: false`.
 
 #### The vuepal:drupal-route hook
 
@@ -274,6 +275,27 @@ export default defineNuxtConfig({
   },
 })
 ```
+
+## Agent skill
+
+The package ships an [agent skill](https://agentskills.io) in
+`skills/vuepal-route-queries`. It teaches coding agents like Claude Code the
+rules of route queries: which entity types a route query accepts, when a page
+404s or redirects, where the route's data is available, and how to debug it. It
+matches the installed version of the module.
+
+To link it into your project:
+
+- With pnpm 12.11 or newer, run `pnpm approve vuepal`. pnpm links the skills of
+  approved direct dependencies when it installs them.
+- With [skills-npm](https://github.com/antfu/skills-npm), run
+  `npm i -D skills-npm` and `npx skills-npm setup`. It links the skills of your
+  installed packages on every install.
+
+Or copy the skill from GitHub with the
+[skills CLI](https://github.com/vercel-labs/skills):
+`npx skills add liip/vuepal`. This copy follows the main branch, not your
+installed version.
 
 ## Development
 
