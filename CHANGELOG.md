@@ -1,5 +1,49 @@
 # Changelog
 
+## v3.1.0
+
+[compare changes](https://github.com/liip/vuepal/compare/1cd7a3b1...v3.1.0)
+
+### 🚀 Enhancements
+
+- Expose redirect target in useDrupalRoute context ([b4b32e49](https://github.com/liip/vuepal/commit/b4b32e49))
+- Check the entity type in route queries, add queryFragments ([67433e03](https://github.com/liip/vuepal/commit/67433e03))
+- Add an agent skill for route queries ([8a4ba79f](https://github.com/liip/vuepal/commit/8a4ba79f))
+
+### 🩹 Fixes
+
+- Do not throw 404 for redirect routes in useDrupalRouteQuery ([74e50a7e](https://github.com/liip/vuepal/commit/74e50a7e))
+- Call composables in useDrupalRouteQuery() before awaiting the query ([01e8bdb6](https://github.com/liip/vuepal/commit/01e8bdb6))
+- Render the matches of the command palette with interpolation ([f78e2699](https://github.com/liip/vuepal/commit/f78e2699))
+- Accept only valid YouTube IDs ([bbc25a46](https://github.com/liip/vuepal/commit/bbc25a46))
+- Ship the Vue components compiled to JavaScript ([07208c45](https://github.com/liip/vuepal/commit/07208c45))
+
+### 💅 Refactors
+
+- Use the redirect URL from useDrupalRoute for the redirect and the 404 check ([c8793825](https://github.com/liip/vuepal/commit/c8793825))
+
+### 📖 Documentation
+
+- Check for duplicate document names in the route queries skill ([9149038b](https://github.com/liip/vuepal/commit/9149038b))
+- Cover empty pages with a 200 in the route queries skill ([8783ffa6](https://github.com/liip/vuepal/commit/8783ffa6))
+
+### 🏡 Chore
+
+- Use auto-imported components in the playground pages ([8d6fb754](https://github.com/liip/vuepal/commit/8d6fb754))
+- Add CLAUDE.md ([25e4f318](https://github.com/liip/vuepal/commit/25e4f318))
+- Build the styles in ddev setup ([0e4855d0](https://github.com/liip/vuepal/commit/0e4855d0))
+- Update the GitHub actions to v7 ([7fa6a268](https://github.com/liip/vuepal/commit/7fa6a268))
+
+### ✅ Tests
+
+- Add E2E tests against a minimal Drupal test site ([9ca5aa4e](https://github.com/liip/vuepal/commit/9ca5aa4e))
+- Cover all paths of useDrupalRoute() and test the build locally ([0bfcafc5](https://github.com/liip/vuepal/commit/0bfcafc5))
+
+### ❤️ Contributors
+
+- Jan Hug <me@dulnan.net>
+- Jon Minder ([@ayalon](https://github.com/ayalon))
+
 ## v3.0.6
 
 [compare changes](https://github.com/liip/vuepal/compare/v3.0.5...v3.0.6)
