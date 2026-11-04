@@ -43,9 +43,13 @@ With `noError: true`, the page renders with `entity` undefined instead of the
 
 1. **Give the route query a fragment for every entity type the page renders.** A
    catch-all page needs one per bundle, and a new bundle in Drupal is a 404
-   until its fragment is added. A fragment on an interface such as `Node`
-   accepts every type that implements it. Fragments are on types that implement
-   `Entity`.
+   until its fragment is added. Fragments are on types that implement `Entity`.
+   A type that the route query accepts but the template doesn't render is an
+   empty page with a 200, not a 404. This happens with a fragment on an
+   interface such as `Node`, which accepts every type that implements it; with
+   `noError: true`; and with `useDrupalRoute()` and the page's own query (e.g.
+   the starterkit's `useCachedDrupalRouteQuery`), which doesn't check the entity
+   type.
 2. **A page that renders none of its node's fields gets a route query without
    fragments**, e.g. `routeOnly: {}`. It loads only the route (metatags,
    breadcrumb, language links), and its `entity` only has a `__typename`. A full
@@ -104,7 +108,8 @@ generated documents (`.nuxt/nuxt-graphql-middleware/hook-documents.graphql`).
 
 For every changed page, load a path of each entity type it renders, once
 directly (server-rendered) and once by client-side navigation from another page.
-A catch-all page also gets a path of a type it doesn't render.
+A page that renders the entity also gets a path of a type it doesn't render (a
+route-only page, rule 2, renders any type).
 
 Done when every document name is defined once, each path renders its fields with
 Drupal's title and description, the page of an unrendered type is a 404, and

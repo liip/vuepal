@@ -21,8 +21,16 @@ Check in this order; the first match is usually the cause.
    `<EntityType>Unexposed`, e.g. `NodeUnexposed`: enable the bundle in the
    server's configuration first.
 
-## A page renders without its fields
+## A page is empty or renders without its fields, with a 200
 
+- **The template has no branch for the entity's type.** A fragment on an
+  interface such as `Node` accepts every type that implements it, also a bundle
+  added later. Add the branch, or give the route query a fragment per rendered
+  type.
+- **`useDrupalRoute()` with the page's own query** (e.g. the starterkit's
+  `useCachedDrupalRouteQuery`) doesn't check the entity type, so a type without
+  a fragment renders instead of a 404. Use `useDrupalRouteQuery()`, or throw the
+  404 with `createError()` for the types the page doesn't render.
 - **`noError: true` hides the 404** of an entity type without a fragment, so
   `entity` is undefined.
 - **A cast hides a wrong type**, e.g. `entity as NodePageFragment` on a page
