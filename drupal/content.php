@@ -74,14 +74,32 @@ vuepal_create_node('article',
   ],
 );
 
-// The node behind the "contact-page" key of frontend_routing. Its aliases come
-// from frontend_routing.settings, which the playground generates.
+// A node of a bundle that the GraphQL server does not expose, so its type is
+// NodeUnexposed. No fragment of the playground's route queries covers it.
+Node::create([
+  'type' => 'event',
+  'langcode' => 'de',
+  'status' => 1,
+  'uid' => 1,
+  'title' => 'Sommerfest',
+  'path' => ['alias' => '/veranstaltungen/sommerfest'],
+])->save();
+
+// The nodes behind the keys of frontend_routing. Their aliases come from
+// frontend_routing.settings, which the playground generates.
 $keys = \Drupal::config('frontend_routing.settings')->get('keys');
 $contact = vuepal_create_node('page',
   ['title' => 'Kontakt', 'alias' => $keys['contact-page']['aliases']['de']],
   ['title' => 'Contact', 'alias' => $keys['contact-page']['aliases']['en']],
 );
-\Drupal::state()->set('frontend_routing.settings', ['contact-page' => $contact->id()]);
+$news = vuepal_create_node('page',
+  ['title' => 'Neuigkeiten', 'alias' => $keys['news-page']['aliases']['de']],
+  ['title' => 'News', 'alias' => $keys['news-page']['aliases']['en']],
+);
+\Drupal::state()->set('frontend_routing.settings', [
+  'contact-page' => $contact->id(),
+  'news-page' => $news->id(),
+]);
 
 // The minimal profile uses /user/login as the front page, and the route
 // normalizer of the redirect module would then redirect the login form to /de.
@@ -92,6 +110,16 @@ $home = vuepal_create_node('page',
 \Drupal::configFactory()->getEditable('system.site')
   ->set('page.front', '/node/' . $home->id())
   ->save();
+
+// Anonymous users get access denied.
+Node::create([
+  'type' => 'page',
+  'langcode' => 'de',
+  'status' => 0,
+  'uid' => 1,
+  'title' => 'Entwurf',
+  'path' => ['alias' => '/entwurf'],
+])->save();
 
 // A file the browser downloads instead of displaying it.
 \Drupal::service('file_system')->saveData(

@@ -3,6 +3,10 @@ keys:
     aliases:
       de: /kontakt
       en: /contact-us
+  news-page:
+    aliases:
+      de: /neuigkeiten
+      en: /news
   search:
     aliases:
       de: /suche

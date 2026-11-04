@@ -85,10 +85,14 @@ export default defineNuxtConfig({
     },
     drupalRoute: {
       enabled: true,
+      // Every route query loads the messenger messages, see plugins/drupalRoute.ts.
+      queryFragments: ['routeGlobal'],
       routeQueries: {
         nodeCanonical: {
-          fragments: ['nodePage', 'nodeArticle'] as never[],
+          fragments: ['nodePage', 'nodeArticle'],
         },
+        // For pages that only need the route, e.g. pages/news.vue.
+        routeOnly: {},
       },
     },
     languageSwitchLinks: {

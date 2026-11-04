@@ -1136,6 +1136,8 @@ enum MenuName {
   TOOLS
 }
 
+scalar MessengerMessage
+
 """
 """
 type Metatag {
@@ -1167,6 +1169,8 @@ type MetatagAttribute {
 """
 """
 type Mutation {
+  messengerMessages: MessengerMessage
+
   """
   """
   ping: String
@@ -1413,6 +1417,70 @@ type NodePage implements Entity & EntityLinkable & EntityRevisionable & EntityTr
 }
 
 """
+Event {entity_type: node, bundle: unexposed}
+"""
+type NodeUnexposed implements Entity & EntityLinkable & EntityRevisionable & Node {
+  """
+  The bundle ID of the entity.
+  """
+  entityBundle: String!
+
+  """
+  The revision identifier of the entity, or NULL if the entity does not have a revision identifier.
+  """
+  entityRevisionId: String
+
+  """
+  The entity type ID.
+  """
+  entityTypeId: String!
+
+  """
+  """
+  id: String
+
+  """
+  Checks if this entity is the latest revision.
+  """
+  isLatestRevision: Boolean
+
+  """
+  The label of this entity.
+  """
+  label: String
+
+  """
+  The langcode of this entity.
+  """
+  langcode: String
+
+  """
+  {value} {field: title}
+  """
+  title: String
+
+  """
+  {field: title}
+  """
+  titleRawField: FieldItemListString
+
+  """
+  Get the URL, defaults to canonical.
+  """
+  url(options: UrlOptions, rel: String): Url
+
+  """
+  The unique UUID.
+  """
+  uuid: String!
+
+  """
+  TRUE if the entity object was a revision, FALSE otherwise.
+  """
+  wasDefaultRevision: Boolean
+}
+
+"""
 """
 type Query {
   activeEnvironment: ActiveEnvironment
@@ -1460,6 +1528,7 @@ type Query {
     """
     name: MenuName!
   ): Menu
+  messengerMessages: MessengerMessage
 
   """
   """
