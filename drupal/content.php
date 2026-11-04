@@ -9,6 +9,7 @@
  */
 
 use Drupal\Core\File\FileExists;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\redirect\Entity\Redirect;
@@ -145,5 +146,15 @@ foreach ($redirects as [$langcode, $source, $target, $status]) {
     'status_code' => $status,
   ])->save();
 }
+
+// An admin menu link with markup in its label. Users with the "administer
+// menu" permission can add one, and the command palette of the admin toolbar
+// must render it as text.
+MenuLinkContent::create([
+  'title' => 'Vuepal <img src=x onerror="window.vuepalXss=true">',
+  'link' => ['uri' => 'internal:/node/1'],
+  'menu_name' => 'admin',
+  'parent' => 'system.admin_structure',
+])->save();
 
 echo "Created the vuepal test content.\n";

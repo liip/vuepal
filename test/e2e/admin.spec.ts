@@ -63,6 +63,20 @@ test.describe('logged in', () => {
     await expect(page).toHaveURL('/de/node/1/edit')
     await expect(page.locator('#edit-title-0-value')).toHaveValue('Über uns')
   })
+
+  // content.php adds an admin menu link with markup in its label.
+  test('the command palette renders menu labels as text', async ({ page }) => {
+    await goto(page, '/de/ueber-uns')
+    await page.keyboard.press('ControlOrMeta+KeyK')
+    await page.locator('.vuepal-command-palette-input input').fill('vuepal')
+
+    const item = page.locator('.vuepal-command-palette-item').first()
+    await expect(item).toContainText(
+      'Vuepal <img src=x onerror="window.vuepalXss=true">',
+    )
+    await expect(item.locator('img')).toHaveCount(0)
+    await expect(item.locator('em')).toHaveText(['Vuepal'])
+  })
 })
 
 test.describe('Drupal messages', () => {
