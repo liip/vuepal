@@ -95,13 +95,20 @@ With `noError: true`, the page renders with `entity` undefined instead of the
 
 ## Check it
 
+Check that no GraphQL document name is defined twice (rule 10). The build
+doesn't report it: GraphQL validates each operation on its own. After
+`nuxi prepare`, compare the names in the project's `.graphql` files with those
+in the files that modules add (listed in
+`.nuxt/nuxt-graphql-middleware/hook-files.js`, vuepal's among them) and in the
+generated documents (`.nuxt/nuxt-graphql-middleware/hook-documents.graphql`).
+
 For every changed page, load a path of each entity type it renders, once
 directly (server-rendered) and once by client-side navigation from another page.
 A catch-all page also gets a path of a type it doesn't render.
 
-Done when each path renders its fields with Drupal's title and description, the
-page of an unrendered type is a 404, and every changed hook received the
-expected `queryName`.
+Done when every document name is defined once, each path renders its fields with
+Drupal's title and description, the page of an unrendered type is a 404, and
+every changed hook received the expected `queryName`.
 
 When a page 404s, renders without its fields or behaves otherwise unexpectedly,
 go through [troubleshooting](references/troubleshooting.md).
