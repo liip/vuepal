@@ -4,84 +4,296 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * The admin toolbar looks like the horizontal toolbar of Gin 5 with
+ * admin_toolbar, so that it doesn't change when switching between the
+ * frontend and Drupal. The values are from Gin's
+ * css/layout/horizontal_toolbar.css and css/components/toolbar.css.
+ */
+
 .vuepal-admin-toolbar {
-  @apply relative top-0 left-0 w-full bg-white shadow-md font-sans;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 900001;
-  background: white;
-  font-size: 14px;
+  background: #fff;
+  color: #222330;
+  /* <VuepalAdminToolbar> loads Ginter. */
+  font-family:
+    Ginter,
+    Inter,
+    'Helvetica Neue',
+    BlinkMacSystemFont,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Oxygen-Sans,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+  /* Inherited from the body in Gin. */
+  overflow-wrap: break-word;
+  hyphens: auto;
   --vuepal-environment-color: #ccc;
   border-top: 6px solid var(--vuepal-environment-color);
+  box-shadow:
+    0 0 4px rgba(0, 0, 0, 0.1),
+    0 2px 6px 2px rgba(0, 0, 0, 0.03);
 
-  a {
-    @apply flex px-15 py-10 text-black justify-between items-center hover:bg-slate-100 no-underline whitespace-nowrap;
-    svg {
-      @apply w-[14px] h-[14px];
-    }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  > ul {
-    @apply flex m-0 list-none p-0;
-    margin-left: min(5vw, 32px);
-    margin-right: min(5vw, 48px);
-    ul {
-      @apply absolute bg-white list-none p-0 min-w-[200px];
-      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
-    }
-
-    > li > ul {
-      top: 100%;
-      left: 0;
-
-      > li ul {
-        left: 100%;
-        top: 0;
-      }
-    }
+  .vuepal-admin-toolbar-bar {
+    display: flex;
+    /* As wide as its links, to measure whether it fits. */
+    width: max-content;
   }
+
+  > .vuepal-admin-toolbar-bar,
+  .vuepal-admin-toolbar-collapsed {
+    margin-inline: min(5vw, 48px);
+  }
+
   li {
     position: relative;
-    &:hover {
-      > a {
-        background: #eee;
+  }
+
+  .vuepal-admin-toolbar-bar li ul {
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    background: #fff;
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+  }
+
+  .vuepal-admin-toolbar-bar > li > ul {
+    top: 100%;
+    left: 0;
+  }
+
+  /* Overlaps the parent submenu, like admin_toolbar. */
+  .vuepal-admin-toolbar-bar li li ul {
+    top: -1px;
+    left: 197px;
+  }
+
+  /* The links of the submenus. The top-level links override some of it. */
+  .vuepal-admin-toolbar-link {
+    position: relative;
+    display: block;
+    padding: 13px 1.3333em;
+    color: #222330;
+    text-decoration: none;
+    /* Long labels wrap, because the submenus have a fixed width. */
+    white-space: normal;
+
+    > svg {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      width: 14px;
+      height: 14px;
+      color: #767676;
+    }
+  }
+
+  .vuepal-admin-toolbar-bar li li:hover > .vuepal-admin-toolbar-link {
+    color: #0444c4;
+    background: rgba(5, 80, 230, 0.15);
+
+    > svg {
+      color: #0550e6;
+    }
+  }
+
+  /* The links of the top-level bar. */
+  .vuepal-admin-toolbar-link.vp-is-first {
+    padding: 20px 1.25em 20px 3.25em;
+    white-space: nowrap;
+
+    /* Highlighted when the submenu is open, not on hover. */
+    &.vp-is-open {
+      color: #0444c4;
+      background: rgba(5, 80, 230, 0.1);
+
+      .vuepal-admin-toolbar-icon {
+        background: #0550e6;
+      }
+    }
+  }
+
+  .vuepal-admin-toolbar-icon {
+    position: absolute;
+    top: 0;
+    left: 1em;
+    width: 20px;
+    height: 100%;
+    background: #414247;
+    -webkit-mask-position: center center;
+    mask-position: center center;
+    -webkit-mask-size: 18px 18px;
+    mask-size: 18px 18px;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  /* The Drupal logo of admin_toolbar_tools. */
+  .vp-is-front {
+    margin-left: -16px;
+  }
+
+  .vuepal-admin-toolbar-link.vp-is-first[data-route-name='<front>'] {
+    padding-left: 2.875em;
+    text-indent: -999em;
+
+    /* Keeps the color of the environment while its submenu is open. */
+    &,
+    &.vp-is-open {
+      .vuepal-admin-toolbar-icon {
+        top: -1px;
+        left: 14px;
+        width: 24px;
+        -webkit-mask-size: 28px 28px;
+        mask-size: 28px 28px;
+        background: var(--vuepal-environment-color);
       }
     }
   }
 }
 
-.vuepal-admin-toolbar-icon {
-  @apply w-18 h-18;
-  background: currentColor;
-  display: inline-block;
-  margin-right: 0.5em;
-  -webkit-mask-position: center center;
-  mask-position: center center;
-  -webkit-mask-size: 17px 17px;
-  mask-size: 17px 17px;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+/*
+ * When the bar doesn't fit, the Drupal logo and a button for a sidebar with
+ * the links replace it.
+ */
+.vuepal-admin-toolbar.vp-is-collapsed {
+  /* Hidden, but still laid out, to measure whether it fits again. */
+  > .vuepal-admin-toolbar-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+  }
 }
 
-.vuepal-admin-toolbar-link {
-  @apply py-18;
+.vuepal-admin-toolbar-collapsed {
+  display: flex;
+}
 
-  &.vp-is-first {
-    @apply py-20;
+.vuepal-admin-toolbar-menu-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 53px;
+  margin: 0;
+  padding: 0 1.25em 0 1em;
+  border: 0;
+  background: none;
+  color: #222330;
+  font: inherit;
+  cursor: pointer;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: #414247;
   }
 
-  &[data-route-name='<front>'] {
-    @apply h-full;
-    padding: 0;
-    width: 54px;
-    .vuepal-admin-toolbar-icon {
-      width: 100%;
-      height: 100%;
-      -webkit-mask-size: 28px 28px;
-      mask-size: 28px 28px;
-      mask-position: 14px center;
-      background: var(--vuepal-environment-color);
+  &:hover,
+  &[aria-expanded='true'] {
+    color: #0444c4;
+    background: rgba(5, 80, 230, 0.1);
+
+    svg {
+      color: #0550e6;
     }
-    .vuepal-admin-toolbar-text {
-      display: none;
+  }
+}
+
+.vuepal-admin-toolbar-sidebar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 280px;
+  max-width: 100vw;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.15);
+
+  .vuepal-admin-toolbar-sidebar-row {
+    display: flex;
+    border-bottom: 1px solid #e8e9ef;
+
+    &:hover {
+      background: rgba(5, 80, 230, 0.1);
+    }
+  }
+
+  .vuepal-admin-toolbar-sidebar-link {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding: 13px 1.25em 13px calc(42px + var(--vp-level) * 16px);
+    color: #222330;
+    text-decoration: none;
+
+    &:hover {
+      color: #0444c4;
+    }
+  }
+
+  /* The top level, with the icons. */
+  > ul > li > .vuepal-admin-toolbar-sidebar-row {
+    .vuepal-admin-toolbar-sidebar-link {
+      padding-block: 20px;
+    }
+
+    &:hover .vuepal-admin-toolbar-icon {
+      background: #0550e6;
+    }
+  }
+
+  /* The submenus are a shade darker per level. */
+  ul ul {
+    background: rgba(5, 80, 230, 0.03);
+  }
+
+  .vuepal-admin-toolbar-sidebar-toggle {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    border: 0;
+    border-left: 1px solid #e8e9ef;
+    background: none;
+    color: #767676;
+    cursor: pointer;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.15s;
+    }
+
+    &:hover {
+      color: #0550e6;
+    }
+
+    &[aria-expanded='true'] {
+      color: #0550e6;
+
+      svg {
+        transform: rotate(90deg);
+      }
     }
   }
 }

@@ -1,28 +1,43 @@
 <template>
-  <li v-if="link" ref="item">
+  <li
+    v-if="link"
+    ref="item"
+    :class="{ 'vp-is-front': level === 0 && routeName === '<front>' }"
+  >
     <a
       class="vuepal-admin-toolbar-link"
-      :class="{ 'vp-is-first': level === 0 }"
+      :class="{
+        'vp-is-first': level === 0,
+        'vp-is-open': active && hasSubtree,
+      }"
       :href="link.url?.path || ''"
       :data-route-name="routeName"
-      @mouseenter="hoverIntent.onPointer"
-      @mousemove="hoverIntent.onPointer"
-      @mouseleave="hoverIntent.cancel"
+      @pointerenter="onPointer"
+      @pointermove="onPointer"
+      @pointerleave="onPointerLeave"
+      @pointerdown="pointerType = $event.pointerType"
+      @click="onClick"
     >
       <span v-if="style" class="vuepal-admin-toolbar-icon" :style="style" />
       <span class="vuepal-admin-toolbar-text">{{ link!.label }}</span>
 
+      <!-- The "handle" icon of Gin. -->
       <svg
-        v-if="subtree && subtree.length && level > 0"
+        v-if="hasSubtree && level > 0"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 16 16"
+        viewBox="0 0 24 24"
       >
         <path
-          d="M8.053 8.355c.193-.195.193-.517 0-.711l-3.26-3.289c-.193-.195-.192-.514.002-.709l1.371-1.371c.194-.194.512-.193.706.001l5.335 5.369c.195.195.195.515 0 .708l-5.335 5.37c-.194.192-.512.193-.706.002l-1.371-1.371c-.194-.195-.195-.514-.002-.709l3.26-3.29z"
+          d="m8 20 8-8-8-8"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         />
       </svg>
     </a>
-    <ul v-if="subtree && subtree.length && active">
+    <ul v-if="hasSubtree && active">
       <AdminToolbarSubtree
         v-for="(subLink, i) in subtree"
         :key="i"
@@ -32,7 +47,7 @@
         :subtree="
           'subtree' in subLink && subLink.subtree ? subLink.subtree : undefined
         "
-        @hover="localActive = i"
+        @open="localActive = i"
       />
     </ul>
   </li>
@@ -63,6 +78,8 @@ const props = withDefaults(
   },
 )
 
+const hasSubtree = computed(() => !!props.subtree?.length)
+
 const style = computed(() => {
   if (props.level === 0) {
     return {
@@ -79,7 +96,10 @@ const getIconPath = (routeName: string | undefined | null) => {
   return adminToolbarIcons[routeName] || adminToolbarIcons.fallback
 }
 
-const emit = defineEmits(['hover'])
+const emit = defineEmits<{
+  /** Makes the link the active one of its list, which opens its submenu. */
+  open: []
+}>()
 
 const item = ref<HTMLLIElement | null>(null)
 
@@ -90,12 +110,38 @@ const hoverIntent = createHoverIntent({
   // Only the active link of a list renders its submenu.
   getOpenSubmenu: () =>
     item.value?.parentElement?.querySelector(':scope > li > ul') ?? null,
-  onIntent: () => emit('hover'),
+  onIntent: () => emit('open'),
 })
 
 // A timer still running when the parent submenu closes would make this link
 // active again, so it would be open the next time the parent submenu opens.
 onBeforeUnmount(hoverIntent.cancel)
+
+// Touch has no hover. The browser still sends pointer events for a tap, which
+// must not open the submenu: the tap does (onClick()).
+function onPointer(e: PointerEvent) {
+  if (e.pointerType !== 'touch') {
+    hoverIntent.onPointer(e)
+  }
+}
+
+function onPointerLeave(e: PointerEvent) {
+  if (e.pointerType !== 'touch') {
+    hoverIntent.cancel()
+  }
+}
+
+/** The type of the pointer that clicks the link. */
+let pointerType = ''
+
+// The first tap opens the submenu, the second follows the link.
+function onClick(e: MouseEvent) {
+  if (pointerType === 'touch' && hasSubtree.value && !props.active) {
+    e.preventDefault()
+    emit('open')
+  }
+  pointerType = ''
+}
 
 const localActive = ref(-1)
 

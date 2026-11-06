@@ -195,6 +195,13 @@ The admin toolbar component fetches the Drupal administration menu and displays
 it in your frontend application.
 ![toolbar.png](https://github.com/liip/vuepal/blob/main/screenshots/toolbar.png)
 
+When the toolbar is too narrow for its links, the Drupal logo and a "Manage"
+button replace them. The button is labeled in German, French or Italian when
+that's the current language, and in English otherwise. It opens the links in a
+sidebar, where every submenu can be expanded. So the toolbar doesn't have to be
+hidden on small screens. On touch screens, the first tap on a link with a
+submenu opens the submenu, and the second tap follows the link.
+
 ### Usage
 
 ```vue
