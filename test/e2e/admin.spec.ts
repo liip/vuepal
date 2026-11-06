@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Locator, type Page } from '@playwright/test'
 import { ADMIN_STORAGE_STATE, goto, isSpa, logIn } from './helpers'
 
 test.describe('anonymous', () => {
@@ -79,6 +79,132 @@ test.describe('logged in', () => {
   })
 })
 
+// The rules are documented in src/runtime/helpers/hoverIntent.ts. The pointer
+// only moves when the test moves it. "Right away" is checked once with
+// isVisible(), which doesn't wait: a delayed submenu is at least 100ms late.
+test.describe('admin toolbar submenus', () => {
+  test.use({ storageState: ADMIN_STORAGE_STATE })
+
+  async function center(locator: Locator) {
+    const box = (await locator.boundingBox())!
+    return { x: box.x + box.width / 2, y: box.y + box.height / 2 }
+  }
+
+  async function openStructure(page: Page) {
+    await goto(page, '/de/ueber-uns')
+    const toolbar = page.locator('.vuepal-admin-toolbar')
+    await toolbar.getByRole('link', { name: 'Structure', exact: true }).hover()
+    await expect(
+      toolbar.getByRole('link', { name: 'Content types', exact: true }),
+    ).toBeVisible()
+    return toolbar
+  }
+
+  test('open when the pointer rests on a link', async ({ page }) => {
+    await openStructure(page)
+  })
+
+  test('open right away when the pointer moves up into the toolbar', async ({
+    page,
+  }) => {
+    await goto(page, '/de/ueber-uns')
+    const toolbar = page.locator('.vuepal-admin-toolbar')
+    const link = await center(
+      toolbar.getByRole('link', { name: 'Structure', exact: true }),
+    )
+    await page.mouse.move(link.x, link.y + 300)
+    await page.mouse.move(link.x, link.y, { steps: 5 })
+    expect(
+      await toolbar
+        .getByRole('link', { name: 'Content types', exact: true })
+        .isVisible(),
+    ).toBe(true)
+  })
+
+  test('do not open when the pointer passes over the links', async ({
+    page,
+  }) => {
+    await goto(page, '/de/ueber-uns')
+    const toolbar = page.locator('.vuepal-admin-toolbar')
+    const box = (await toolbar.boundingBox())!
+    const y = box.y + box.height / 2
+    await page.mouse.move(box.x + 1, y)
+    // Ends right of the last link, still inside the toolbar.
+    await page.mouse.move(box.x + box.width - 1, y, { steps: 20 })
+    // Proving that nothing opens needs a wait longer than the delay.
+    await page.waitForTimeout(300)
+    await expect(toolbar.locator('li ul')).toHaveCount(0)
+  })
+
+  test('switch right away once a submenu is open', async ({ page }) => {
+    const toolbar = await openStructure(page)
+    const link = await center(
+      toolbar.getByRole('link', { name: 'Content', exact: true }),
+    )
+    await page.mouse.move(link.x, link.y, { steps: 5 })
+    expect(
+      await toolbar
+        .getByRole('link', { name: 'Add content', exact: true })
+        .isVisible(),
+    ).toBe(true)
+  })
+
+  test('open the submenus of a submenu right away', async ({ page }) => {
+    const toolbar = await openStructure(page)
+    const link = await center(
+      toolbar.getByRole('link', { name: 'Content types', exact: true }),
+    )
+    await page.mouse.move(link.x, link.y, { steps: 5 })
+    expect(
+      await toolbar
+        .getByRole('link', { name: 'Add content type', exact: true })
+        .isVisible(),
+    ).toBe(true)
+  })
+
+  /**
+   * Open the submenu of "Content types", then move diagonally down towards it,
+   * across the link below "Content types".
+   */
+  async function crossSibling(page: Page) {
+    const toolbar = await openStructure(page)
+    await toolbar
+      .getByRole('link', { name: 'Content types', exact: true })
+      .hover()
+    const submenuLink = toolbar.getByRole('link', {
+      name: 'Page',
+      exact: true,
+    })
+    await expect(submenuLink).toBeVisible()
+    const sibling = (await toolbar
+      .getByRole('link', { name: /^Vuepal/ })
+      .boundingBox())!
+    await page.mouse.move(
+      sibling.x + sibling.width - 20,
+      sibling.y + sibling.height / 2,
+      { steps: 5 },
+    )
+    return submenuLink
+  }
+
+  test('stay open while the pointer crosses a sibling on its way to the submenu', async ({
+    page,
+  }) => {
+    const submenuLink = await crossSibling(page)
+    const target = await center(submenuLink)
+    await page.mouse.move(target.x, target.y, { steps: 5 })
+    await page.waitForTimeout(400)
+    await expect(submenuLink).toBeVisible()
+  })
+
+  test('switch to a crossed sibling when the pointer stops on it', async ({
+    page,
+  }) => {
+    const submenuLink = await crossSibling(page)
+    await expect(submenuLink).toBeHidden()
+  })
+})
+
 test.describe('Drupal messages', () => {
   // The route query loads the messages with the routeGlobal fragment of the
   // queryFragments option.
@@ -92,7 +218,9 @@ test.describe('Drupal messages', () => {
     await logIn(page)
 
     await page.goto('/de/node/2/edit')
-    await page.locator('#edit-submit').click()
+    // Gin's save button in the sticky header. The fixed toolbar covers the
+    // form's own button.
+    await page.locator('#gin-sticky-edit-submit').click()
     await expect(page).toHaveURL('/de/ueber-uns/team')
     await expect(page.locator('.drupal-messages')).toHaveText(
       'Page Team has been updated.',

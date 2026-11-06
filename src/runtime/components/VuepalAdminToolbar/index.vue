@@ -36,13 +36,21 @@ import {
   computed,
   onMounted,
   onBeforeUnmount,
+  provide,
 } from '#imports'
 import { createAdapter } from '#vuepal-build/adapter'
 import './../../css/output.css'
 import Palette from './Palette/index.vue'
+import {
+  createPointerHistory,
+  POINTER_HISTORY,
+} from './../../helpers/hoverIntent'
 
 const adapter = createAdapter()
 const language = adapter.getCurrentLanguage()
+
+const pointerHistory = createPointerHistory()
+provide(POINTER_HISTORY, pointerHistory)
 
 const active = ref(-1)
 const showPalette = ref(false)
@@ -110,9 +118,11 @@ const onKeyDown = (e: KeyboardEvent) => {
 
 onMounted(() => {
   document.addEventListener('keydown', onKeyDown)
+  pointerHistory.start()
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('keydown', onKeyDown)
+  pointerHistory.stop()
 })
 </script>

@@ -1,12 +1,13 @@
 <template>
-  <li v-if="link">
+  <li v-if="link" ref="item">
     <a
       class="vuepal-admin-toolbar-link"
       :class="{ 'vp-is-first': level === 0 }"
       :href="link.url?.path || ''"
       :data-route-name="routeName"
-      @mouseover="onMouseOver"
-      @mouseleave="onMouseLeave"
+      @mouseenter="hoverIntent.onPointer"
+      @mousemove="hoverIntent.onPointer"
+      @mouseleave="hoverIntent.cancel"
     >
       <span v-if="style" class="vuepal-admin-toolbar-icon" :style="style" />
       <span class="vuepal-admin-toolbar-text">{{ link!.label }}</span>
@@ -38,9 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, computed } from '#imports'
+import { ref, watch, computed, inject, onBeforeUnmount } from '#imports'
 import { adminToolbarIcons } from '#vuepal-build/admin-config'
 import type { AdminMenuLinkFragment } from './../../types'
+import { createHoverIntent, POINTER_HISTORY } from './../../helpers/hoverIntent'
 
 defineOptions({
   name: 'AdminToolbarSubtree',
@@ -79,24 +81,23 @@ const getIconPath = (routeName: string | undefined | null) => {
 
 const emit = defineEmits(['hover'])
 
+const item = ref<HTMLLIElement | null>(null)
+
+const hoverIntent = createHoverIntent({
+  history: inject(POINTER_HISTORY, null),
+  isTopLevel: () => props.level === 0,
+  isActive: () => props.active,
+  // Only the active link of a list renders its submenu.
+  getOpenSubmenu: () =>
+    item.value?.parentElement?.querySelector(':scope > li > ul') ?? null,
+  onIntent: () => emit('hover'),
+})
+
+// A timer still running when the parent submenu closes would make this link
+// active again, so it would be open the next time the parent submenu opens.
+onBeforeUnmount(hoverIntent.cancel)
+
 const localActive = ref(-1)
-
-let timeout: number | null = null
-
-function onMouseOver() {
-  if (timeout) {
-    clearTimeout(timeout)
-  }
-  timeout = window.setTimeout(() => {
-    emit('hover')
-  }, 300)
-}
-
-function onMouseLeave() {
-  if (timeout) {
-    window.clearTimeout(timeout)
-  }
-}
 
 watch(
   () => props.active,
