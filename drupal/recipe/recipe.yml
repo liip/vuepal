@@ -22,6 +22,13 @@ install:
   - graphql_metatag_schema_org_schema
   - graphql_environment_indicator
   - graphql_messenger
+  # The admin theme and toolbar of the blökkli starterkit, to compare
+  # <VuepalAdminToolbar> with the Drupal toolbar.
+  - toolbar
+  - admin_toolbar
+  - admin_toolbar_tools
+  - gin_toolbar
+  - gin
 config:
   # Recipes only install simple config of the modules above, config entities
   # (languages, metatag defaults) have to be imported explicitly.
@@ -29,6 +36,16 @@ config:
     language: '*'
     metatag: '*'
   actions:
+    # Like the starterkit: Gin for Drupal's pages, with the horizontal toolbar
+    # that admin_toolbar adds its dropdowns to.
+    system.theme:
+      simpleConfigUpdate:
+        default: gin
+        admin: gin
+    gin.settings:
+      simpleConfigUpdate:
+        classic_toolbar: horizontal
+
     # Languages: German is the default, both languages use a path prefix.
     language.entity.de:
       createIfNotExists:

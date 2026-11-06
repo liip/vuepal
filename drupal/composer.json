@@ -11,10 +11,12 @@
   ],
   "require": {
     "composer/installers": "^2.3",
+    "drupal/admin_toolbar": "~3.0",
     "drupal/core-composer-scaffold": "^11.2",
     "drupal/core-recommended": "^11.2",
     "drupal/environment_indicator": "^4.0",
     "drupal/frontend_routing": "^1.0",
+    "drupal/gin": "^5.0",
     "drupal/graphql": "^5.1",
     "drupal/graphql_core_schema": "^1.0",
     "drupal/metatag": "^2.1",

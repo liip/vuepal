@@ -92,7 +92,9 @@ test.describe('Drupal messages', () => {
     await logIn(page)
 
     await page.goto('/de/node/2/edit')
-    await page.locator('#edit-submit').click()
+    // Gin's save button in the sticky header. The fixed toolbar covers the
+    // form's own button.
+    await page.locator('#gin-sticky-edit-submit').click()
     await expect(page).toHaveURL('/de/ueber-uns/team')
     await expect(page.locator('.drupal-messages')).toHaveText(
       'Page Team has been updated.',
