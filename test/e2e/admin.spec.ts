@@ -297,6 +297,144 @@ test.describe('admin toolbar styles', () => {
   })
 })
 
+// When the bar doesn't fit, the Drupal logo and a button that opens the links
+// in a sidebar replace it.
+test.describe('admin toolbar on narrow screens', () => {
+  test.use({
+    storageState: ADMIN_STORAGE_STATE,
+    viewport: { width: 600, height: 700 },
+  })
+
+  async function openSidebar(page: Page) {
+    await goto(page, '/de/ueber-uns')
+    const button = page.getByRole('button', { name: 'Verwalten' })
+    await button.click()
+    const sidebar = page.locator('.vuepal-admin-toolbar-sidebar')
+    await expect(sidebar).toBeVisible()
+    return { button, sidebar }
+  }
+
+  test('collapse exactly when the bar does not fit', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 700 })
+    await goto(page, '/de/ueber-uns')
+    const bar = page.locator(
+      '.vuepal-admin-toolbar > .vuepal-admin-toolbar-bar',
+    )
+    const structure = bar.getByRole('link', { name: 'Structure', exact: true })
+    const button = page.getByRole('button', { name: 'Verwalten' })
+    await expect(structure).toBeVisible()
+    await expect(button).toHaveCount(0)
+
+    // The bar is as wide as its links, with margins of up to 48px.
+    await page.evaluate(() => document.fonts.load('13px Ginter'))
+    const width = await bar.evaluate((el) => el.getBoundingClientRect().width)
+    const fits = Math.ceil(width) + 2 * 48
+    await page.setViewportSize({ width: fits - 20, height: 700 })
+    await expect(button).toBeVisible()
+    await expect(structure).toBeHidden()
+    await page.setViewportSize({ width: fits + 20, height: 700 })
+    await expect(structure).toBeVisible()
+    await expect(button).toHaveCount(0)
+  })
+
+  test('open every level of the links in the sidebar', async ({ page }) => {
+    const { sidebar } = await openSidebar(page)
+    // The Drupal logo stays in the bar.
+    await expect(sidebar.locator('[data-route-name="<front>"]')).toHaveCount(0)
+    await expect(
+      sidebar.getByRole('link', { name: 'Structure', exact: true }),
+    ).toHaveAttribute('href', '/de/admin/structure')
+
+    const toggle = (name: string) =>
+      sidebar.getByRole('button', { name, exact: true })
+    await toggle('Structure').click()
+    await expect(toggle('Structure')).toHaveAttribute('aria-expanded', 'true')
+    await toggle('Content types').click()
+    await expect(
+      sidebar.getByRole('link', { name: 'Article', exact: true }),
+    ).toBeVisible()
+
+    // One open submenu per list.
+    await toggle('Content').click()
+    await expect(
+      sidebar.getByRole('link', { name: 'Block layout', exact: true }),
+    ).toHaveCount(0)
+  })
+
+  test('close the sidebar with Escape', async ({ page }) => {
+    const { button, sidebar } = await openSidebar(page)
+    await page.keyboard.press('Tab')
+    await expect(
+      sidebar.getByRole('link', { name: 'Content', exact: true }),
+    ).toBeFocused()
+    await page.keyboard.press('Escape')
+    await expect(sidebar).toBeHidden()
+    await expect(button).toBeFocused()
+  })
+
+  test('close the sidebar on a click outside', async ({ page }) => {
+    const { sidebar } = await openSidebar(page)
+    await page.mouse.click(500, 600)
+    await expect(sidebar).toBeHidden()
+  })
+
+  test('the button is labeled in the current language', async ({ page }) => {
+    await goto(page, '/de/ueber-uns')
+    await expect(page.locator('.vuepal-admin-toolbar-menu-button')).toHaveText(
+      'Verwalten',
+    )
+    await goto(page, '/en/about-us')
+    await expect(page.locator('.vuepal-admin-toolbar-menu-button')).toHaveText(
+      'Manage',
+    )
+  })
+
+  test('the Drupal logo opens its submenu on hover', async ({ page }) => {
+    await goto(page, '/de/ueber-uns')
+    const collapsed = page.locator('.vuepal-admin-toolbar-collapsed')
+    await collapsed.locator('[data-route-name="<front>"]').hover()
+    await expect(
+      collapsed.getByRole('link', { name: 'Flush all caches', exact: true }),
+    ).toBeVisible()
+  })
+})
+
+// Touch has no hover: the first tap on a link with a submenu opens it.
+test.describe('admin toolbar on touch screens', () => {
+  test.use({ storageState: ADMIN_STORAGE_STATE, hasTouch: true })
+
+  test('the first tap opens the submenu, the second follows the link', async ({
+    page,
+  }) => {
+    await goto(page, '/de/ueber-uns')
+    const toolbar = page.locator('.vuepal-admin-toolbar')
+    const link = (name: string) =>
+      toolbar.getByRole('link', { name, exact: true })
+
+    await link('Structure').tap()
+    await expect(link('Content types')).toBeVisible()
+    await link('Content types').tap()
+    await expect(link('Add content type')).toBeVisible()
+    await expect(page).toHaveURL('/de/ueber-uns')
+
+    await link('Content types').tap()
+    await expect(page).toHaveURL('/de/admin/structure/types')
+  })
+
+  test('a tap outside closes the submenus', async ({ page }) => {
+    await goto(page, '/de/ueber-uns')
+    const toolbar = page.locator('.vuepal-admin-toolbar')
+    await toolbar.getByRole('link', { name: 'Structure', exact: true }).tap()
+    const submenuLink = toolbar.getByRole('link', {
+      name: 'Content types',
+      exact: true,
+    })
+    await expect(submenuLink).toBeVisible()
+    await page.touchscreen.tap(600, 500)
+    await expect(submenuLink).toBeHidden()
+  })
+})
+
 test.describe('Drupal messages', () => {
   // The route query loads the messages with the routeGlobal fragment of the
   // queryFragments option.

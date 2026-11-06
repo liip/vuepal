@@ -83,7 +83,11 @@ export function createPointerHistory(): PointerHistory {
     return -1
   }
 
-  function onMouseMove(e: MouseEvent) {
+  function onPointerMove(e: PointerEvent) {
+    // Touch has no hover.
+    if (e.pointerType === 'touch') {
+      return
+    }
     samples.push({ x: e.clientX, y: e.clientY, t: e.timeStamp })
     // Keep the last position older than HISTORY: there a pointer rests.
     const index = indexAt(e.timeStamp - HISTORY)
@@ -103,14 +107,16 @@ export function createPointerHistory(): PointerHistory {
   return {
     start() {
       // Capture, so that the handlers of the links see the current position.
-      document.addEventListener('mousemove', onMouseMove, {
+      document.addEventListener('pointermove', onPointerMove, {
         capture: true,
         passive: true,
       })
       document.addEventListener('mouseout', onMouseOut, { passive: true })
     },
     stop() {
-      document.removeEventListener('mousemove', onMouseMove, { capture: true })
+      document.removeEventListener('pointermove', onPointerMove, {
+        capture: true,
+      })
       document.removeEventListener('mouseout', onMouseOut)
       samples.length = 0
     },
@@ -228,9 +234,9 @@ export type HoverIntentOptions = {
 }
 
 export type HoverIntent = {
-  /** For mouseenter and mousemove on the link. */
+  /** For pointerenter and pointermove on the link. */
   onPointer: (e: MouseEvent) => void
-  /** For mouseleave on the link. */
+  /** For pointerleave on the link. */
   cancel: () => void
 }
 

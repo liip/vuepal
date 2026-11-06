@@ -12,9 +12,11 @@
       }"
       :href="link.url?.path || ''"
       :data-route-name="routeName"
-      @mouseenter="hoverIntent.onPointer"
-      @mousemove="hoverIntent.onPointer"
-      @mouseleave="hoverIntent.cancel"
+      @pointerenter="onPointer"
+      @pointermove="onPointer"
+      @pointerleave="onPointerLeave"
+      @pointerdown="pointerType = $event.pointerType"
+      @click="onClick"
     >
       <span v-if="style" class="vuepal-admin-toolbar-icon" :style="style" />
       <span class="vuepal-admin-toolbar-text">{{ link!.label }}</span>
@@ -45,7 +47,7 @@
         :subtree="
           'subtree' in subLink && subLink.subtree ? subLink.subtree : undefined
         "
-        @hover="localActive = i"
+        @open="localActive = i"
       />
     </ul>
   </li>
@@ -94,7 +96,10 @@ const getIconPath = (routeName: string | undefined | null) => {
   return adminToolbarIcons[routeName] || adminToolbarIcons.fallback
 }
 
-const emit = defineEmits(['hover'])
+const emit = defineEmits<{
+  /** Makes the link the active one of its list, which opens its submenu. */
+  open: []
+}>()
 
 const item = ref<HTMLLIElement | null>(null)
 
@@ -105,12 +110,38 @@ const hoverIntent = createHoverIntent({
   // Only the active link of a list renders its submenu.
   getOpenSubmenu: () =>
     item.value?.parentElement?.querySelector(':scope > li > ul') ?? null,
-  onIntent: () => emit('hover'),
+  onIntent: () => emit('open'),
 })
 
 // A timer still running when the parent submenu closes would make this link
 // active again, so it would be open the next time the parent submenu opens.
 onBeforeUnmount(hoverIntent.cancel)
+
+// Touch has no hover. The browser still sends pointer events for a tap, which
+// must not open the submenu: the tap does (onClick()).
+function onPointer(e: PointerEvent) {
+  if (e.pointerType !== 'touch') {
+    hoverIntent.onPointer(e)
+  }
+}
+
+function onPointerLeave(e: PointerEvent) {
+  if (e.pointerType !== 'touch') {
+    hoverIntent.cancel()
+  }
+}
+
+/** The type of the pointer that clicks the link. */
+let pointerType = ''
+
+// The first tap opens the submenu, the second follows the link.
+function onClick(e: MouseEvent) {
+  if (pointerType === 'touch' && hasSubtree.value && !props.active) {
+    e.preventDefault()
+    emit('open')
+  }
+  pointerType = ''
+}
 
 const localActive = ref(-1)
 
