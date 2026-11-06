@@ -37,10 +37,12 @@ import {
   onMounted,
   onBeforeUnmount,
   provide,
+  useHead,
 } from '#imports'
 import { createAdapter } from '#vuepal-build/adapter'
 import './../../css/output.css'
 import Palette from './Palette/index.vue'
+import type { AdminMenuLinkFragment } from './../../types'
 import {
   createPointerHistory,
   POINTER_HISTORY,
@@ -51,6 +53,23 @@ const language = adapter.getCurrentLanguage()
 
 const pointerHistory = createPointerHistory()
 provide(POINTER_HISTORY, pointerHistory)
+
+// The font of Gin. Like the icons, it's loaded from the Gin theme in Drupal.
+// In output.css, Vite would warn in every build that it can't resolve the URL.
+useHead({
+  style: [
+    {
+      key: 'vuepal-admin-toolbar-font',
+      textContent: `@font-face {
+  font-family: 'Ginter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/themes/contrib/gin/dist/media/font/inter.woff2') format('woff2');
+}`,
+    },
+  ],
+})
 
 const active = ref(-1)
 const showPalette = ref(false)
@@ -79,6 +98,22 @@ if (!adapter.getAdminMenu) {
   )
 }
 
+/**
+ * Gin moves these links to the end of the toolbar (gin_preprocess_menu()).
+ */
+const MOVED_TO_END = ['system.admin_config', 'help.main']
+
+function moveToEnd(links: AdminMenuLinkFragment[]): AdminMenuLinkFragment[] {
+  const routeName = (link: AdminMenuLinkFragment) =>
+    link.link?.url?.routeName ?? ''
+  return [
+    ...links.filter((link) => !MOVED_TO_END.includes(routeName(link))),
+    ...MOVED_TO_END.flatMap((name) =>
+      links.filter((link) => routeName(link) === name),
+    ),
+  ]
+}
+
 const { data } = useLazyAsyncData(
   () =>
     adapter.getAdminMenu!().then((v) => {
@@ -89,7 +124,7 @@ const { data } = useLazyAsyncData(
               (v) => !!v.link,
             )
           : []
-      return { links, environment: v?.activeEnvironment }
+      return { links: moveToEnd(links), environment: v?.activeEnvironment }
     }),
   {
     watch: [language],

@@ -46,13 +46,13 @@ export default defineVuepalFeature<{
           'system.themes_page':
             '/themes/contrib/gin/dist/media/sprite.svg#appearance-view',
           'system.modules_list':
-            '/themes/contrib/gin/dist/media/sprite.svg#extend-view',
+            '/themes/contrib/gin/dist/media/sprite.svg#extend-new-view',
           'system.admin_config':
             '/themes/contrib/gin/dist/media/sprite.svg#config-view',
           'entity.group.collection':
             '/themes/contrib/gin/dist/media/sprite.svg#group-view',
           'entity.user.collection':
-            '/themes/contrib/gin/dist/media/sprite.svg#people-view',
+            '/themes/contrib/gin/dist/media/sprite.svg#people-new-view',
           'system.admin_reports':
             '/themes/contrib/gin/dist/media/sprite.svg#reports-view',
           'help.main': '/themes/contrib/gin/dist/media/sprite.svg#help-view',

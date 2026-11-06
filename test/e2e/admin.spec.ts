@@ -205,6 +205,98 @@ test.describe('admin toolbar submenus', () => {
   })
 })
 
+// <VuepalAdminToolbar> looks like the horizontal toolbar of Gin with
+// admin_toolbar. Comparing it with the Drupal toolbar shows when Gin changes.
+test.describe('admin toolbar styles', () => {
+  test.use({ storageState: ADMIN_STORAGE_STATE })
+
+  /**
+   * The text, box, font and colors of the visible links.
+   */
+  function getLinkStyles(links: Locator) {
+    return links.evaluateAll((elements) =>
+      elements
+        .filter((el) => el.checkVisibility())
+        .map((el) => {
+          const box = el.getBoundingClientRect()
+          const style = getComputedStyle(el)
+          // Gin draws the icons with ::before.
+          const icon = el.querySelector('.vuepal-admin-toolbar-icon')
+          const before = getComputedStyle(el, '::before')
+          return {
+            // The logo hides its text, which isn't the same: "Drupal" in
+            // Drupal, the title of the menu link in vuepal.
+            text: style.textIndent === '0px' ? el.textContent?.trim() : null,
+            box: [box.x, box.y, box.width, box.height].map(Math.round),
+            font: `${style.fontWeight} ${style.fontSize}/${style.lineHeight} ${style.fontFamily}`,
+            color: style.color,
+            background: style.backgroundColor,
+            icon: icon
+              ? getComputedStyle(icon).backgroundColor
+              : before.content === 'none' || before.display === 'none'
+                ? null
+                : before.backgroundColor,
+          }
+        }),
+    )
+  }
+
+  /**
+   * The styles of the toolbar at rest, with the submenu of "Structure" open,
+   * and with the submenu of "Content types" open.
+   *
+   * @param bar - The list of the top-level links.
+   */
+  async function getToolbarStyles(page: Page, path: string, bar: string) {
+    await page.mouse.move(0, 500)
+    await page.goto(path)
+    const links = page.locator(`${bar} > li > a`)
+    // Logged in, the app renders on the client only, so the toolbar is
+    // interactive once it's visible.
+    await expect(links.first()).toBeVisible()
+    await page.evaluate(() => document.fonts.load('13px Ginter'))
+
+    const item = (list: Locator, text: string) =>
+      list
+        .locator(':scope > li')
+        .filter({ has: page.locator(':scope > a', { hasText: text }) })
+    const structure = item(page.locator(bar), 'Structure')
+    const contentTypes = item(structure.locator(':scope > ul'), 'Content types')
+
+    const atRest = await getLinkStyles(links)
+    await structure.locator(':scope > a').hover()
+    await expect(contentTypes).toBeVisible()
+    const structureOpen = {
+      links: await getLinkStyles(links),
+      submenu: await getLinkStyles(structure.locator(':scope > ul > li > a')),
+    }
+    await contentTypes.locator(':scope > a').hover()
+    await expect(contentTypes.locator(':scope > ul')).toBeVisible()
+    const contentTypesOpen = {
+      submenu: await getLinkStyles(structure.locator(':scope > ul > li > a')),
+      submenuOfSubmenu: await getLinkStyles(
+        contentTypes.locator(':scope > ul > li > a'),
+      ),
+    }
+    return { atRest, structureOpen, contentTypesOpen }
+  }
+
+  test('are the same as in Drupal', async ({ page }) => {
+    const drupal = await getToolbarStyles(
+      page,
+      // No link of the toolbar is in the active trail of this page.
+      '/de/user/1',
+      '#toolbar-item-administration-tray .toolbar-menu-administration > .toolbar-menu',
+    )
+    const vuepal = await getToolbarStyles(
+      page,
+      '/de/ueber-uns',
+      '.vuepal-admin-toolbar > ul',
+    )
+    expect(vuepal).toEqual(drupal)
+  })
+})
+
 test.describe('Drupal messages', () => {
   // The route query loads the messages with the routeGlobal fragment of the
   // queryFragments option.
