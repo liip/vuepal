@@ -77,9 +77,12 @@ export async function useDrupalRouteQuery<
 
   // Throw an error when there was an error with the query, so that we
   // dont' serve a 404 for a page that would exist, but can not be loaded.
+  // A 5xx of the query is kept: a 503 while Drupal is unavailable lets the
+  // project show a maintenance page instead of an error page.
   if (error.value && !noError) {
+    const status = error.value.statusCode ?? 500
     throw createError({
-      statusCode: 500,
+      statusCode: status >= 500 ? status : 500,
       statusMessage: error.value.message,
       fatal: true,
     })

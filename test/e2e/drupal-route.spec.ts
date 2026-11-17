@@ -79,6 +79,28 @@ test.describe('useDrupalRouteQuery()', () => {
     await expect(page.getByText('Page not found').first()).toBeVisible()
   })
 
+  // While Drupal is unavailable the GraphQL middleware answers 503. The error
+  // keeps the status of the failed query, so that the project can show a
+  // maintenance page instead of an error page.
+  for (const status of [503, 500]) {
+    test(`keeps the status ${status} of a failed route query`, async ({
+      page,
+    }) => {
+      await goto(page, '/de/ueber-uns')
+      await page.route(/\/query\/route\w+\?/, (route) =>
+        route.fulfill({ status, body: '' }),
+      )
+      await page
+        .locator('.navbar')
+        .getByRole('link', { name: 'Artikel' })
+        .click()
+      await expect(
+        page.getByText(String(status), { exact: true }).first(),
+      ).toBeVisible()
+      await expect(page.getByText('Page not found')).toHaveCount(0)
+    })
+  }
+
   test('does not throw with noError for a path unknown to Drupal', async ({
     page,
   }, testInfo) => {
