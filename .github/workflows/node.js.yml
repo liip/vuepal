@@ -1,9 +1,15 @@
 name: Node.js CI
 
-on: [push]
+# A push runs the workflow only in the repository that receives it, so pull
+# requests from forks need the pull_request event. Branches of this repository
+# already run on push, so pull_request only runs for forks.
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -21,6 +27,7 @@ jobs:
       - run: npm run prettier
 
   e2e:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -59,6 +66,7 @@ jobs:
           retention-days: 7
 
   typecheck:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
