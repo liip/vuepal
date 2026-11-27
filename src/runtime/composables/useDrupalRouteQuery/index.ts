@@ -30,7 +30,10 @@ type UseDrupalRouteQueryOptions = {
  * Route queries are managed in nuxt.config.ts, in the vuepal.drupalRoute.routeQueries option.
  *
  * The composable will throw these errors:
- * - 500: The route query itself has an error (e.g. backend is down)
+ * - 500: The route query itself has an error (e.g. backend is down). A 5xx
+ *   status of the query is kept instead, e.g. a 503 when the `onServerError`
+ *   server option of nuxt-graphql-middleware answers 503 while Drupal is
+ *   unavailable. By default, the middleware answers 500.
  * - 404: Route does not exist in Drupal, there is no entity, or none of the
  *   fragments of the route query covers the entity's type.
  *
