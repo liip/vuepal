@@ -1,5 +1,39 @@
 # Changelog
 
+## v3.2.0
+
+[compare changes](https://github.com/liip/vuepal/compare/v3.1.0...v3.2.0)
+
+### 🚀 Enhancements
+
+- Collapse the admin toolbar into a sidebar when it doesn't fit ([20c9713](https://github.com/liip/vuepal/commit/20c9713))
+
+### 🩹 Fixes
+
+- Open admin toolbar submenus based on pointer movement ([216fd63](https://github.com/liip/vuepal/commit/216fd63))
+- Style the admin toolbar like the Drupal toolbar ([fbb683a](https://github.com/liip/vuepal/commit/fbb683a))
+- Keep the 5xx status of a failed route query in useDrupalRouteQuery ([cec3340](https://github.com/liip/vuepal/commit/cec3340))
+- Don't set nitro.externals, which Nitro v3 doesn't support ([a29ffdc](https://github.com/liip/vuepal/commit/a29ffdc))
+
+### 📖 Documentation
+
+- Say when useDrupalRouteQuery keeps the 5xx status of a failed query ([2b5d198](https://github.com/liip/vuepal/commit/2b5d198))
+
+### ✅ Tests
+
+- Add Gin and admin_toolbar to the test site ([abac141](https://github.com/liip/vuepal/commit/abac141))
+- Check that a 4xx of the route query is shown as a 500 ([7933e0f](https://github.com/liip/vuepal/commit/7933e0f))
+
+### 🤖 CI
+
+- Run the workflow for pull requests from forks ([c3cf69b](https://github.com/liip/vuepal/commit/c3cf69b))
+
+### ❤️ Contributors
+
+- Jan Hug <dulnan@me.com>
+- Jon Minder <jonathan.minder@liip.ch>
+- Noah Siegrist <noah.siegrist@edelweiss8.ch>
+
 ## v3.1.0
 
 [compare changes](https://github.com/liip/vuepal/compare/1cd7a3b1...v3.1.0)
