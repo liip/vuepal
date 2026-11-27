@@ -69,7 +69,6 @@ export class ModuleHelper {
   public readonly isModuleBuild: boolean
   public readonly isDebug: boolean
 
-  private nitroExternals: string[] = []
   private tsPaths: Record<string, string> = {}
 
   public readonly graphql: GraphqlModuleContext
@@ -183,9 +182,15 @@ export class ModuleHelper {
     this.inlineNitroExternals(name)
   }
 
+  /**
+   * Inline the path in the nitro server build (workaround for
+   * https://github.com/nuxt/nuxt/issues/28995).
+   *
+   * Nuxt passes build.transpile to externals.inline on Nitro v2 and to
+   * noExternals on Nitro v3. Nitro v3 no longer supports nitro.externals.
+   */
   public inlineNitroExternals(arg: ResolvedNuxtTemplate | string) {
     const path = typeof arg === 'string' ? arg : arg.dst
-    this.nitroExternals.push(path)
     this.transpile(path)
   }
 
@@ -194,11 +199,6 @@ export class ModuleHelper {
   }
 
   public applyBuildConfig() {
-    // Workaround for https://github.com/nuxt/nuxt/issues/28995
-    this.nuxt.options.nitro.externals ||= {}
-    this.nuxt.options.nitro.externals.inline ||= []
-    this.nuxt.options.nitro.externals.inline.push(...this.nitroExternals)
-
     // Currently needed due to a bug in Nuxt that does not add aliases for
     // nitro. As this has happened before in the past, let's leave it so that
     // we are guaranteed to have these aliases also for server types.
