@@ -79,6 +79,31 @@ test.describe('useDrupalRouteQuery()', () => {
     await expect(page.getByText('Page not found').first()).toBeVisible()
   })
 
+  // A 5xx of the route query is kept: a project whose onServerError answers
+  // 503 while Drupal is unavailable can show a maintenance page. Any other
+  // status is a 500, so that a page that exists never shows as not found.
+  for (const { status, shown } of [
+    { status: 503, shown: 503 },
+    { status: 404, shown: 500 },
+  ]) {
+    test(`shows ${shown} when the route query fails with ${status}`, async ({
+      page,
+    }) => {
+      await goto(page, '/de/ueber-uns')
+      await page.route(/\/query\/route\w+\?/, (route) =>
+        route.fulfill({ status, body: '' }),
+      )
+      await page
+        .locator('.navbar')
+        .getByRole('link', { name: 'Artikel' })
+        .click()
+      await expect(
+        page.getByText(String(shown), { exact: true }).first(),
+      ).toBeVisible()
+      await expect(page.getByText('Page not found')).toHaveCount(0)
+    })
+  }
+
   test('does not throw with noError for a path unknown to Drupal', async ({
     page,
   }, testInfo) => {
